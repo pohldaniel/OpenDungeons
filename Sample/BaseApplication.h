@@ -27,6 +27,7 @@ http://www.ogre3d.org/wiki/
 #include <OgreRenderWindow.h>
 #include <OgreConfigFile.h>
 #include <OgreOverlaySystem.h>
+#include <OgreTextureManager.h>
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #  include <OIS/OISEvents.h>
 #  include <OIS/OISInputManager.h>
@@ -66,7 +67,7 @@ http://www.ogre3d.org/wiki/
 
 //---------------------------------------------------------------------------
 
-class BaseApplication : public Ogre::FrameListener, public OIS::KeyListener, public OIS::MouseListener
+class BaseApplication : public OIS::KeyListener, public OIS::MouseListener
 {
 public:
     BaseApplication(void);

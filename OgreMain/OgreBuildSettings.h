@@ -11,8 +11,8 @@
 #define OGRE_BUILD_RENDERSYSTEM_D3D11
 #define OGRE_BUILD_RENDERSYSTEM_GL
 #define OGRE_BUILD_RENDERSYSTEM_GL3PLUS
-/* #undef OGRE_BUILD_RENDERSYSTEM_GLES */
-/* #undef OGRE_BUILD_RENDERSYSTEM_GLES2 */
+#define OGRE_BUILD_RENDERSYSTEM_GLES
+#define OGRE_BUILD_RENDERSYSTEM_GLES2
 #define OGRE_BUILD_PLUGIN_BSP
 #define OGRE_BUILD_PLUGIN_OCTREE
 #define OGRE_BUILD_PLUGIN_PCZ
@@ -105,19 +105,19 @@ OGRE_THREAD_PROVIDER = 4
 #define OGRE_NO_MESHLOD 0
 
 /** Disables use of the FreeImage image library for loading images. */
-#define OGRE_NO_FREEIMAGE 1
+#define OGRE_NO_FREEIMAGE 0
 
 /** Disables use of the internal image codec for loading DDS files. */
 #define OGRE_NO_DDS_CODEC 0
 
 /** Disables use of the internal image codec for loading PVRTC files. */
-#define OGRE_NO_PVRTC_CODEC 1
+#define OGRE_NO_PVRTC_CODEC 0
 
 /** Disables use of the internal image codec for loading ETC files. */
 #define OGRE_NO_ETC_CODEC 0
 
 /** Disables use of the internal image codec for loading image files. */
-#define OGRE_NO_STBI_CODEC 0
+#define OGRE_NO_STBI_CODEC 1
 
 #define OGRE_NO_ASTC_CODEC 1
 
@@ -128,13 +128,13 @@ WARNING: Disabling this will make the samples unusable.
 
 #define OGRE_NO_VIEWPORT_ORIENTATIONMODE 1
 
-#define OGRE_NO_GLES2_CG_SUPPORT 1
+#define OGRE_NO_GLES2_CG_SUPPORT 0
 
-#define OGRE_NO_GLES2_GLSL_OPTIMISER 1
+#define OGRE_NO_GLES2_GLSL_OPTIMISER 0
 
 #define OGRE_NO_GL_STATE_CACHE_SUPPORT 1
 
-#define OGRE_NO_GLES3_SUPPORT 1
+#define OGRE_NO_GLES3_SUPPORT 0
 
 #define OGRE_NO_TBB_SCHEDULER 0
 

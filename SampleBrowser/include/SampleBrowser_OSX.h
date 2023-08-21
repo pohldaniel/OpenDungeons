@@ -39,8 +39,15 @@
 
 #define USE_DISPLAYLINK 0
 
+#include <AppKit/NSWindow.h>
+
+#if USE_DISPLAYLINK
+// FIXME file located at GLSupport/include/OSX
 #import "OgreOSXCocoaWindow.h"
+#endif
+
 #import <QuartzCore/CVDisplayLink.h>
+#include <iostream>
 
 #include "SampleBrowser.h"
 
@@ -154,7 +161,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         Ogre::Root::getSingleton().getRenderSystem()->_initRenderTargets();
 
         // Clear event times
-		Ogre::Root::getSingleton().clearEventTimes();
+        Ogre::Root::getSingleton().clearEventTimes();
     } catch( Ogre::Exception& e ) {
         std::cerr << "An exception has occurred: " <<
         e.getFullDescription().c_str() << std::endl;
@@ -177,9 +184,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     // Activate the display link
     ret = CVDisplayLinkStart(mDisplayLink);
 #else
-	mTimer = [[NSTimer timerWithTimeInterval: 0.001 target:self selector:@selector(renderOneFrame:) userInfo:self repeats:true] retain];
-	[[NSRunLoop currentRunLoop] addTimer:mTimer forMode: NSDefaultRunLoopMode];
-	[[NSRunLoop currentRunLoop] addTimer:mTimer forMode: NSEventTrackingRunLoopMode]; // Ensure timer fires during resize
+    mTimer = [[NSTimer timerWithTimeInterval: 0.001 target:self selector:@selector(renderOneFrame:) userInfo:self repeats:true] retain];
+    [[NSRunLoop currentRunLoop] addTimer:mTimer forMode: NSDefaultRunLoopMode];
+    [[NSRunLoop currentRunLoop] addTimer:mTimer forMode: NSEventTrackingRunLoopMode]; // Ensure timer fires during resize
 #endif
     [pool release];
 }

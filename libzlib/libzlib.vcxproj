@@ -154,6 +154,7 @@
       <CompileAs>CompileAsC</CompileAs>
       <DisableSpecificWarnings>4131;4127;4244;4244;4996</DisableSpecificWarnings>
       <DebugInformationFormat>None</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

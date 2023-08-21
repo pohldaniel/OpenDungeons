@@ -657,9 +657,6 @@
     <ClInclude Include="include\OgreStaticGeometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreSTBICodec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgreStdHeaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -821,6 +818,12 @@
     </ClInclude>
     <ClInclude Include="src\WIN32\resource.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreExports.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OgrePVRTCCodec.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1310,9 +1313,6 @@
     <ClCompile Include="src\OgreStaticGeometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OgreSTBICodec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\OgreStreamSerialiser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1410,6 +1410,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WIN32\OgreTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreFreeImageCodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgrePVRTCCodec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

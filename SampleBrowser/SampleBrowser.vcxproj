@@ -18,6 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\SampleBrowser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common\include\Sample.h" />
+    <ClInclude Include="Common\include\SampleContext.h" />
+    <ClInclude Include="Common\include\SamplePlugin.h" />
+    <ClInclude Include="include\SampleBrowser.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ecdedb15-cb6a-4814-93da-f38d0246eaff}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -96,16 +105,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;INCLUDE_RTSHADER_SYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;Common\include;..\OgreMain;..\OgreMain\include;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;Common\include;..\OgreMain;..\OgreMain\include;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OgreBites\include;..\OIS\include;..\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>%(AdditionalOptions) /Zm256</AdditionalOptions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\libd\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;OIS.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,16 +125,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;INCLUDE_RTSHADER_SYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;Common\include;..\OgreMain;..\OgreMain\include;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;Common\include;..\OgreMain;..\OgreMain\include;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OgreBites\include;..\OIS\include;..\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>%(AdditionalOptions) /Zm256</AdditionalOptions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\libd\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;OIS.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,19 +145,20 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;INCLUDE_RTSHADER_SYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;Common\include;..\OgreMain;..\OgreMain\include;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;Common\include;..\OgreMain;..\OgreMain\include;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OgreBites\include;..\OIS\include;..\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>%(AdditionalOptions) /Zm256</AdditionalOptions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;OIS.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -161,9 +173,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;INCLUDE_RTSHADER_SYSTEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;Common\include;..\OgreMain;..\OgreMain\include;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;Common\include;..\OgreMain;..\OgreMain\include;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OgreBites\include;..\OIS\include;..\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>%(AdditionalOptions) /Zm256</AdditionalOptions>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,7 +184,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;OIS.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

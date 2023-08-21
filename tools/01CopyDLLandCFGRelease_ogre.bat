@@ -1,6 +1,7 @@
 
 copy ..\lib\x86\OgreMain.dll ..\Release
 copy ..\lib\x86\OgreOverlay.dll ..\Release
+copy ..\lib\x86\OgreBites.dll ..\Release
 copy ..\lib\x86\OgrePaging.dll ..\Release
 copy ..\lib\x86\OgreRTShaderSystem.dll ..\Release
 copy ..\lib\x86\OgreTerrain.dll ..\Release
@@ -18,6 +19,7 @@ copy ..\lib\x86\RenderSystem_GL.dll ..\Release
 copy ..\lib\x86\Sample_BSP.dll ..\Release
 
 copy ..\lib\x86\OIS.dll ..\Release
+copy ..\lib\x86\SDL2.dll ..\Release
 copy ..\libCG\x86\cg.dll ..\Release
 
 copy ..\OgreData\plugins.cfg ..\Release

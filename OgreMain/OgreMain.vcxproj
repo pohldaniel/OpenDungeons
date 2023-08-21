@@ -173,6 +173,7 @@
     <ClInclude Include="include\OgrePrefabFactory.h" />
     <ClInclude Include="include\OgrePrerequisites.h" />
     <ClInclude Include="include\OgreProfiler.h" />
+    <ClInclude Include="include\OgrePVRTCCodec.h" />
     <ClInclude Include="include\OgreQuaternion.h" />
     <ClInclude Include="include\OgreRadixSort.h" />
     <ClInclude Include="include\OgreRay.h" />
@@ -233,7 +234,6 @@
     <ClInclude Include="include\OgreStableHeaders.h" />
     <ClInclude Include="include\OgreStaticFaceGroup.h" />
     <ClInclude Include="include\OgreStaticGeometry.h" />
-    <ClInclude Include="include\OgreSTBICodec.h" />
     <ClInclude Include="include\OgreStdHeaders.h" />
     <ClInclude Include="include\OgreStreamSerialiser.h" />
     <ClInclude Include="include\OgreString.h" />
@@ -284,6 +284,7 @@
     <ClInclude Include="include\WIN32\OgreMinGWSupport.h" />
     <ClInclude Include="include\WIN32\OgreTimerImp.h" />
     <ClInclude Include="OgreBuildSettings.h" />
+    <ClInclude Include="OgreExports.h" />
     <ClInclude Include="src\OgreImageResampler.h" />
     <ClInclude Include="src\OgrePixelConversions.h" />
     <ClInclude Include="src\OgreSIMDHelper.h" />
@@ -760,6 +761,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OgreStableHeaders.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\OgreFreeImageCodec.cpp" />
     <ClCompile Include="src\OgreFrustum.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OgreStableHeaders.h</PrecompiledHeaderFile>
@@ -1470,6 +1472,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OgreStableHeaders.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\OgrePVRTCCodec.cpp" />
     <ClCompile Include="src\OgreQuaternion.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OgreStableHeaders.h</PrecompiledHeaderFile>
@@ -1901,16 +1904,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OgreStableHeaders.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\OgreStaticGeometry.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OgreStableHeaders.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">OgreStableHeaders.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OgreStableHeaders.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OgreStableHeaders.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="src\OgreSTBICodec.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OgreStableHeaders.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>

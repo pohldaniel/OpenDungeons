@@ -133,7 +133,7 @@ void BaseApplication::createFrameListener(void)
     items.push_back("Filtering");
     items.push_back("Poly Mode");
 
-    mRoot->addFrameListener(this);
+
 }
 //---------------------------------------------------------------------------
 void BaseApplication::destroyScene(void)

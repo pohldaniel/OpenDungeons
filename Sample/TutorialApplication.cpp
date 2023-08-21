@@ -1,3 +1,4 @@
+#include <OgreSceneNode.h>
 #include "TutorialApplication.h"
 
 TutorialApplication::TutorialApplication(void)
