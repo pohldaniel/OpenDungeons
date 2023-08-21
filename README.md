@@ -8,7 +8,7 @@ Used major libraries <br/>
 &emsp;FreeImag 3.18.0 [https://freeimage.sourceforge.io/download.html](https://freeimage.sourceforge.io/download.html)<br/>
 &emsp;MyGui 3.4.0 [http://mygui.info](http://mygui.info)<br/>
 &emsp;SDL2 2.0.22 [https://www.libsdl.org](https://www.libsdl.org)<br/>
-&emsp;[https://www.boost.org/users/history/version_1_66_0.html.5](https://www.boost.org/users/history/version_1_66_0.html)<br/>
+&emsp;[https://www.boost.org/users/history/version_1_66_0.html](https://www.boost.org/users/history/version_1_66_0.html)<br/>
 
 **Installing Boost:** Out of the "VS Native Command Prompt"
 
