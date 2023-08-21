@@ -35,12 +35,12 @@ THE SOFTWARE.
 
 namespace Ogre 
 {
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Animation
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Animation
+    *  @{
+    */
 
     /** A bone in a skeleton.
     @remarks
@@ -57,6 +57,11 @@ namespace Ogre
         Bone(const String& name, unsigned short handle, Skeleton* creator);
         ~Bone();
 
+    private:
+        // Intentionally hide base implementations of createChild methods. This will also suppress
+        // warnings like 'Ogre::Bone::createChild' hides overloaded virtual functions
+        using Node::createChild;
+    public:
         /** Creates a new Bone as a child of this bone.
         @remarks
             This method creates a new bone which will inherit the transforms of this
@@ -70,7 +75,6 @@ namespace Ogre
         */
         Bone* createChild(unsigned short handle, 
             const Vector3& translate = Vector3::ZERO, const Quaternion& rotate = Quaternion::IDENTITY);
-
 
         /** Gets the numeric handle for this bone (unique within the skeleton). */
         unsigned short getHandle(void) const;
@@ -95,10 +99,10 @@ namespace Ogre
             that you should also make sure that there are no AnimationTrack objects
             referencing this bone, or if there are, you should disable them using
             pAnimation->destroyTrack(pBone->getHandle());
-		@par
-			You can also use AnimationState::setBlendMask to mask out animation from 
-		    chosen tracks if you want to prevent application of a scripted animation 
-		    to a bone without altering the Animation definition.
+        @par
+            You can also use AnimationState::setBlendMask to mask out animation from 
+            chosen tracks if you want to prevent application of a scripted animation 
+            to a bone without altering the Animation definition.
         */
         void setManuallyControlled(bool manuallyControlled);
 
@@ -112,15 +116,15 @@ namespace Ogre
         */
         void _getOffsetTransform(Matrix4& m) const;
 
-		/** Gets the inverted binding pose scale. */
-		const Vector3& _getBindingPoseInverseScale(void) const { return mBindDerivedInverseScale; }
-		/** Gets the inverted binding pose position. */
-		const Vector3& _getBindingPoseInversePosition(void) const { return mBindDerivedInversePosition; }
-		/** Gets the inverted binding pose orientation. */
-		const Quaternion& _getBindingPoseInverseOrientation(void) const { return mBindDerivedInverseOrientation; }
+        /** Gets the inverted binding pose scale. */
+        const Vector3& _getBindingPoseInverseScale(void) const { return mBindDerivedInverseScale; }
+        /** Gets the inverted binding pose position. */
+        const Vector3& _getBindingPoseInversePosition(void) const { return mBindDerivedInversePosition; }
+        /** Gets the inverted binding pose orientation. */
+        const Quaternion& _getBindingPoseInverseOrientation(void) const { return mBindDerivedInverseOrientation; }
 
-		/// @see Node::needUpdate
-		void needUpdate(bool forceParentUpdate = false);
+        /// @see Node::needUpdate
+        void needUpdate(bool forceParentUpdate = false);
 
 
     protected:
@@ -146,8 +150,8 @@ namespace Ogre
         Vector3 mBindDerivedInversePosition;
     };
 
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 

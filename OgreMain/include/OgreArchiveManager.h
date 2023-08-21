@@ -30,18 +30,18 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 
-#include "OgreResourceManager.h"
 #include "OgreSingleton.h"
+#include "OgreIteratorWrappers.h"
 #include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Resources
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Resources
+    *  @{
+    */
     /** This class manages the available ArchiveFactory plugins. 
     */
     class _OgreExport ArchiveManager : public Singleton<ArchiveManager>, public ArchiveAlloc
@@ -70,6 +70,8 @@ namespace Ogre {
                 The filename that will be opened
             @param archiveType
                 The type of archive that this is. For example: "Zip".
+            @param readOnly
+                Whether the Archive is read only
             @return
                 If the function succeeds, a valid pointer to an Archive
                 object is returned.
@@ -78,19 +80,19 @@ namespace Ogre {
         */
         Archive* load( const String& filename, const String& archiveType, bool readOnly);
 
-		/** Unloads an archive.
-		@remarks
-			You must ensure that this archive is not being used before removing it.
-		*/
-		void unload(Archive* arch);
-		/** Unloads an archive by name.
-		@remarks
-			You must ensure that this archive is not being used before removing it.
-		*/
-		void unload(const String& filename);
-		typedef MapIterator<ArchiveMap> ArchiveMapIterator;
-		/** Get an iterator over the Archives in this Manager. */
-		ArchiveMapIterator getArchiveIterator(void);
+        /** Unloads an archive.
+        @remarks
+            You must ensure that this archive is not being used before removing it.
+        */
+        void unload(Archive* arch);
+        /** Unloads an archive by name.
+        @remarks
+            You must ensure that this archive is not being used before removing it.
+        */
+        void unload(const String& filename);
+        typedef MapIterator<ArchiveMap> ArchiveMapIterator;
+        /** Get an iterator over the Archives in this Manager. */
+        ArchiveMapIterator getArchiveIterator(void);
 
         /** Adds a new ArchiveFactory to the list of available factories.
             @remarks
@@ -99,41 +101,13 @@ namespace Ogre {
                 Archive subclasses for their archive type.
         */
         void addArchiveFactory(ArchiveFactory* factory);
-        /** Override standard Singleton retrieval.
-        @remarks
-        Why do we do this? Well, it's because the Singleton
-        implementation is in a .h file, which means it gets compiled
-        into anybody who includes it. This is needed for the
-        Singleton template to work, but we actually only want it
-        compiled into the implementation of the class based on the
-        Singleton, not all of them. If we don't change this, we get
-        link errors when trying to use the Singleton-based class from
-        an outside dll.
-        @par
-        This method just delegates to the template version anyway,
-        but the implementation stays in this single compilation unit,
-        preventing link errors.
-        */
+        /// @copydoc Singleton::getSingleton()
         static ArchiveManager& getSingleton(void);
-        /** Override standard Singleton retrieval.
-        @remarks
-        Why do we do this? Well, it's because the Singleton
-        implementation is in a .h file, which means it gets compiled
-        into anybody who includes it. This is needed for the
-        Singleton template to work, but we actually only want it
-        compiled into the implementation of the class based on the
-        Singleton, not all of them. If we don't change this, we get
-        link errors when trying to use the Singleton-based class from
-        an outside dll.
-        @par
-        This method just delegates to the template version anyway,
-        but the implementation stays in this single compilation unit,
-        preventing link errors.
-        */
+        /// @copydoc Singleton::getSingleton()
         static ArchiveManager* getSingletonPtr(void);
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 

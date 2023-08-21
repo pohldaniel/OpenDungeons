@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\asm_math.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Ogre.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -46,6 +43,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreArchiveManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OgreASTCCodec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreAtomicObject.h">
@@ -177,6 +177,9 @@
     <ClInclude Include="include\OgreErrorDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\OgreETCCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\OgreException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -252,6 +255,12 @@
     <ClInclude Include="include\OgreHighLevelGpuProgramManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\OgreId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OgreIdString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\OgreImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -295,9 +304,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OgreLodConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreLodListener.h">
@@ -378,6 +384,9 @@
     <ClInclude Include="include\OgreMovablePlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\OgreMurmurHash3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\OgreNameGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -435,9 +444,6 @@
     <ClInclude Include="include\OgrePixelFormat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgrePixelFormatDescriptions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgrePlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -471,13 +477,7 @@
     <ClInclude Include="include\OgreProfiler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreProgressiveMeshGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgreQuaternion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OgreQueuedProgressiveMeshGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreRadixSort.h">
@@ -642,9 +642,6 @@
     <ClInclude Include="include\OgreSkeletonSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreSmallVector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgreSphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -658,6 +655,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreStaticGeometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OgreSTBICodec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreStdHeaders.h">
@@ -744,7 +744,7 @@
     <ClInclude Include="include\OgreZip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\OgreBuildSettings.h">
+    <ClInclude Include="include\Threading\OgreBarrier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Threading\OgreDefaultWorkQueue.h">
@@ -754,6 +754,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Threading\OgreDefaultWorkQueueTBB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Threading\OgreLightweightMutex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Threading\OgreThreadDefines.h">
@@ -768,6 +771,9 @@
     <ClInclude Include="include\Threading\OgreThreadDefinesPoco.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Threading\OgreThreadDefinesSTD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\Threading\OgreThreadDefinesTBB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -780,13 +786,25 @@
     <ClInclude Include="include\Threading\OgreThreadHeadersPoco.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Threading\OgreThreadHeadersSTD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\Threading\OgreThreadHeadersTBB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WIN32\OgreConfigDialogImp.h">
+    <ClInclude Include="include\Threading\OgreThreads.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreBuildSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WIN32\OgreComPtr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\WIN32\OgreErrorDialogImp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WIN32\OgreMinGWSupport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\WIN32\OgreTimerImp.h">
@@ -799,9 +817,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OgreSIMDHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\WIN32\OgreMinGWSupport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\WIN32\resource.h">
@@ -828,6 +843,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreArchiveManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreASTCCodec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreAtomicScalar.cpp">
@@ -890,9 +908,6 @@
     <ClCompile Include="src\OgreConfigFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OgreController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\OgreControllerManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -935,6 +950,9 @@
     <ClCompile Include="src\OgreEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OgreETCCodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\OgreException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -945,9 +963,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreFileSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreFreeImageCodec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreFrustum.cpp">
@@ -1088,6 +1103,9 @@
     <ClCompile Include="src\OgreMovablePlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OgreMurmurHash3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\OgreNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1160,13 +1178,7 @@
     <ClCompile Include="src\OgreProfiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OgreProgressiveMeshGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\OgreQuaternion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreQueuedProgressiveMeshGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreRectangle2D.cpp">
@@ -1295,10 +1307,10 @@
     <ClCompile Include="src\OgreSkeletonSerializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OgreSmallVector.cpp">
+    <ClCompile Include="src\OgreStaticGeometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OgreStaticGeometry.cpp">
+    <ClCompile Include="src\OgreSTBICodec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreStreamSerialiser.cpp">
@@ -1373,7 +1385,16 @@
     <ClCompile Include="src\OgreZip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Threading\OgreBarrierWin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\Threading\OgreDefaultWorkQueueStandard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Threading\OgreLightweightMutexWin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Threading\OgreThreadsWin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WIN32\OgreConfigDialog.cpp">
@@ -1383,6 +1404,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WIN32\OgreFileSystemLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WIN32\OgreOptimisedUtilDirectXMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\WIN32\OgreTimer.cpp">

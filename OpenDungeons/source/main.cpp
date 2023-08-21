@@ -47,19 +47,14 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT)
 int main(int argc, char** argv)
 #endif
 {
-	AllocConsole();
-	AttachConsole(GetCurrentProcessId());
-	freopen("CON", "w", stdout);
-	freopen("CON", "w", stderr);
-	SetConsoleTitle("Debug console");
+	//AllocConsole();
+	//AttachConsole(GetCurrentProcessId());
+	//freopen("CON", "w", stdout);
+	//freopen("CON", "w", stderr);
+	//SetConsoleTitle("Debug console");
 
-	MoveWindow(GetConsoleWindow(), 1300, 0, 550, 300, true);
-	std::cout << "right mouse      : capture game" << std::endl;
-	std::cout << "space            : capture ui" << std::endl;
-	std::cout << "ESC              : quit" << std::endl;
-	std::cout << "v                : toggle vsync" << std::endl;
-	std::cout << "alt + enter      : fullscreen" << std::endl;
-
+	//MoveWindow(GetConsoleWindow(), 1300, 0, 550, 300, true);
+	
     // To log segfaults
     StackTracePrint trace("crash.log");
 
@@ -106,8 +101,5 @@ int main(int argc, char** argv)
         std::cerr << "An exception has occurred: " << e.what();
 #endif
     }
-	while (true) {
-
-	}
     return 0;
 }

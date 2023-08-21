@@ -37,9 +37,7 @@ email                : janders@users.sf.net
 #ifndef OCTREECAMERA_H
 #define OCTREECAMERA_H
 
-#include <OgreCamera.h>
-#include <OgreHardwareBufferManager.h>
-#include <OgreSimpleRenderable.h>
+#include "OgreCamera.h"
 #include "OgreOctreePrerequisites.h"
 
 /**
@@ -48,10 +46,13 @@ email                : janders@users.sf.net
 
 namespace Ogre
 {
-
-class Octree;
-
-
+/** \addtogroup Plugins Plugins
+*  @{
+*/
+/** \addtogroup Octree OctreeSceneManager
+* Octree datastructure for managing scene nodes.
+*  @{
+*/
 /** Specialized viewpoint from which an Octree can be rendered.
 @remarks
 This class contains several specializations of the Ogre::Camera class. It
@@ -82,7 +83,8 @@ public:
     OctreeCamera::Visibility getVisibility( const AxisAlignedBox &bound );
 
 };
-
+/** @} */
+/** @} */
 }
 
 #endif

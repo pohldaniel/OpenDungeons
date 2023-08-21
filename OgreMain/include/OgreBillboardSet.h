@@ -129,8 +129,6 @@ namespace Ogre {
         /// Default height of each billboard
         Real mDefaultHeight;
 
-        /// Name of the material to use
-        String mMaterialName;
         /// Pointer to the material to use
         MaterialPtr mMaterial;
 
@@ -856,6 +854,9 @@ namespace Ogre {
             Calling this method will cause GPU buffers update in the next render queue update.
         */
         void notifyBillboardDataChanged(void) { mBillboardDataChanged = true; }
+
+        /** @copydoc MovableObject::_releaseManualHardwareResources */
+        void _releaseManualHardwareResources() { _destroyBuffers(); }
 
     };
 

@@ -30,14 +30,18 @@ THE SOFTWARE.
 
 #include "OgreVector3.h"
 
-#include "OgreVolumeSource.h"
-#include "OgreVolumeOctreeNode.h"
 #include "OgreVolumePrerequisites.h"
 
 namespace Ogre {
 namespace Volume {
-
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \addtogroup Volume
+    *  @{
+    */
     class OctreeNode;
+    class Source;
 
     /** The class deciding on whether to split an octree node or not
         when building the octree.
@@ -111,9 +115,10 @@ namespace Volume {
         @return
             true if the node should be split.
         */
-        bool doSplit(OctreeNode *node, const Real geometricError) const;
+        virtual bool doSplit(OctreeNode *node, const Real geometricError) const;
     };
-
+    /** @} */
+    /** @} */
 }
 }
 

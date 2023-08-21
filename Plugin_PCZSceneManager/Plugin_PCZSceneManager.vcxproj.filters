@@ -45,9 +45,6 @@
     <ClInclude Include="include\OgrePCZPlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgrePCZPrerequisites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgrePCZSceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

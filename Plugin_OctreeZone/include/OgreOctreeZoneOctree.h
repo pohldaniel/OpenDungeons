@@ -38,14 +38,18 @@ Modified slightly for use with PCZSceneManager Octree Zones by Eric Cha
 #ifndef OCTREE_H
 #define OCTREE_H
 
-#include <OgreAxisAlignedBox.h>
-#include <OgreWireBoundingBox.h>
+#include "OgreAxisAlignedBox.h"
 
 #include <list>
 
 namespace Ogre
 {
-
+/** \addtogroup Plugins
+*  @{
+*/
+/** \addtogroup OctreeZone
+*  @{
+    */
 class PCZSceneNode;
 class PCZone;
 
@@ -132,7 +136,7 @@ public:
     void _findNodes(const AxisAlignedBox &t, 
                     PCZSceneNodeList &list, 
                     PCZSceneNode *exclude, 
-					bool includeVisitors,
+                    bool includeVisitors,
                     bool full );
 
     /* Recurse through the Octree to find the scene nodes which intersect a ray
@@ -140,7 +144,7 @@ public:
     void _findNodes(const Ray &t, 
                     PCZSceneNodeList &list, 
                     PCZSceneNode *exclude, 
-					bool includeVisitors,
+                    bool includeVisitors,
                     bool full );
 
     /* Recurse through the Octree to find the scene nodes which intersect a sphere
@@ -148,7 +152,7 @@ public:
     void _findNodes(const Sphere &t, 
                     PCZSceneNodeList &list, 
                     PCZSceneNode *exclude, 
-					bool includeVisitors,
+                    bool includeVisitors,
                     bool full );
 
     /* Recurse through the Octree to find the scene nodes which intersect a PBV
@@ -156,15 +160,15 @@ public:
     void _findNodes(const PlaneBoundedVolume &t, 
                     PCZSceneNodeList &list, 
                     PCZSceneNode *exclude, 
-					bool includeVisitors,
+                    bool includeVisitors,
                     bool full );
 
     /** Public list of SceneNodes attached to this particular octree
     */
     PCZSceneNodeList mNodes;
 
-	/* Zone that this octree is in */
-	PCZone * mZone;
+    /* Zone that this octree is in */
+    PCZone * mZone;
 
 protected:
 
@@ -193,7 +197,8 @@ protected:
     Octree * mParent;
 
 };
-
+/** @} */
+/** @} */
 }
 
 #endif

@@ -1,7 +1,7 @@
 #ifdef _WIN32
 #  define WIN32_LEAN_AND_MEAN
 #  if !defined(NOMINMAX) && defined(_MSC_VER)
-#	define NOMINMAX // required to stop windows.h messing up std::min
+#   define NOMINMAX // required to stop windows.h messing up std::min
 #  endif
 #  include <windows.h>
 #else
@@ -88,7 +88,7 @@ void nvparse(const char * input_string, int argc /* = 0 */,...)
         return;
     }
     
-    char * instring = _strdup(input_string);
+    char * instring = strdup(input_string);
 
     // register combiners (1 and 2)
     if(is_rc10(instring))

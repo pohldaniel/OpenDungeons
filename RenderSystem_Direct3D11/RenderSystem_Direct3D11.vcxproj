@@ -21,9 +21,9 @@
   <ItemGroup>
     <ClInclude Include="include\OgreD3D11DepthBuffer.h" />
     <ClInclude Include="include\OgreD3D11Device.h" />
+    <ClInclude Include="include\OgreD3D11DeviceResource.h" />
     <ClInclude Include="include\OgreD3D11Driver.h" />
     <ClInclude Include="include\OgreD3D11DriverList.h" />
-    <ClInclude Include="include\OgreD3D11GpuProgram.h" />
     <ClInclude Include="include\OgreD3D11GpuProgramManager.h" />
     <ClInclude Include="include\OgreD3D11HardwareBuffer.h" />
     <ClInclude Include="include\OgreD3D11HardwareBufferManager.h" />
@@ -41,19 +41,25 @@
     <ClInclude Include="include\OgreD3D11RenderSystem.h" />
     <ClInclude Include="include\OgreD3D11RenderToVertexBuffer.h" />
     <ClInclude Include="include\OgreD3D11RenderWindow.h" />
+    <ClInclude Include="include\OgreD3D11StereoDriverAMD.h" />
+    <ClInclude Include="include\OgreD3D11StereoDriverBridge.h" />
+    <ClInclude Include="include\OgreD3D11StereoDriverImpl.h" />
+    <ClInclude Include="include\OgreD3D11StereoDriverNVIDIA.h" />
     <ClInclude Include="include\OgreD3D11Texture.h" />
     <ClInclude Include="include\OgreD3D11TextureManager.h" />
     <ClInclude Include="include\OgreD3D11VertexDeclaration.h" />
     <ClInclude Include="include\OgreD3D11VideoMode.h" />
     <ClInclude Include="include\OgreD3D11VideoModeList.h" />
+    <ClInclude Include="include\OgreMonitorInfo.h" />
+    <ClInclude Include="include\OgreNsightChecker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OgreD3D11DepthBuffer.cpp" />
     <ClCompile Include="src\OgreD3D11Device.cpp" />
+    <ClCompile Include="src\OgreD3D11DeviceResource.cpp" />
     <ClCompile Include="src\OgreD3D11Driver.cpp" />
     <ClCompile Include="src\OgreD3D11DriverList.cpp" />
     <ClCompile Include="src\OgreD3D11EngineDll.cpp" />
-    <ClCompile Include="src\OgreD3D11GpuProgram.cpp" />
     <ClCompile Include="src\OgreD3D11GpuProgramManager.cpp" />
     <ClCompile Include="src\OgreD3D11HardwareBuffer.cpp" />
     <ClCompile Include="src\OgreD3D11HardwareBufferManager.cpp" />
@@ -70,11 +76,16 @@
     <ClCompile Include="src\OgreD3D11RenderSystem.cpp" />
     <ClCompile Include="src\OgreD3D11RenderToVertexBuffer.cpp" />
     <ClCompile Include="src\OgreD3D11RenderWindow.cpp" />
+    <ClCompile Include="src\OgreD3D11StereoDriverAMD.cpp" />
+    <ClCompile Include="src\OgreD3D11StereoDriverBridge.cpp" />
+    <ClCompile Include="src\OgreD3D11StereoDriverNVIDIA.cpp" />
     <ClCompile Include="src\OgreD3D11Texture.cpp" />
     <ClCompile Include="src\OgreD3D11TextureManager.cpp" />
     <ClCompile Include="src\OgreD3D11VertexDeclaration.cpp" />
     <ClCompile Include="src\OgreD3D11VideoMode.cpp" />
     <ClCompile Include="src\OgreD3D11VideoModeList.cpp" />
+    <ClCompile Include="src\OgreMonitorInfo.cpp" />
+    <ClCompile Include="src\OgreNsightChecker.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4574df00-1cd3-46e0-abbf-469009f97da6}</ProjectGuid>
@@ -152,6 +163,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OGRED3DENGINEDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;C:\Program Files (x86)\Windows Kits\8.1\Include\um;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,6 +181,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OGRED3DENGINEDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;C:\Program Files (x86)\Windows Kits\8.1\Include\um;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -188,6 +201,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OGRED3DENGINEDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;C:\Program Files (x86)\Windows Kits\8.1\Include\um;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -209,6 +223,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OGRED3DENGINEDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;C:\Program Files (x86)\Windows Kits\8.1\Include\um;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -35,9 +35,10 @@ THE SOFTWARE.
 #ifndef __OgreStableHeaders__
 #define __OgreStableHeaders__
 
+#ifdef __cplusplus // xcode tries to create a PCH for C code using this
+
 #include "OgrePlatform.h"
 
-#if (OGRE_PLATFORM == OGRE_PLATFORM_WIN32 && !defined(__MINGW32__)) || OGRE_PLATFORM == OGRE_PLATFORM_WINRT || OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS
 #include "OgreArchive.h"
 #include "OgreAxisAlignedBox.h"
 #include "OgreBitwise.h"
@@ -74,7 +75,7 @@ THE SOFTWARE.
 #include "OgreVector4.h"
 #include "OgreWireBoundingBox.h"
 #if OGRE_NO_ZIP_ARCHIVE == 0
-#	include "OgreZip.h"
+#   include "OgreZip.h"
 #endif
 
 #endif

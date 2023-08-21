@@ -33,33 +33,51 @@ THE SOFTWARE.
 #include "OgreResource.h"
 #include "OgreImage.h"
 #include "OgreHeaderPrefix.h"
+#include "OgreSharedPtr.h"
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Resources
-	*  @{
-	*/
-	/** Enum identifying the texture usage
-    */
+    /** \addtogroup Core
+     *  @{
+     */
+    /** \addtogroup Resources
+     *  @{
+     */
+    /** Enum identifying the texture usage
+     */
     enum TextureUsage
     {
-		/// @copydoc HardwareBuffer::Usage
-		TU_STATIC = HardwareBuffer::HBU_STATIC,
-		TU_DYNAMIC = HardwareBuffer::HBU_DYNAMIC,
-		TU_WRITE_ONLY = HardwareBuffer::HBU_WRITE_ONLY,
-		TU_STATIC_WRITE_ONLY = HardwareBuffer::HBU_STATIC_WRITE_ONLY, 
-		TU_DYNAMIC_WRITE_ONLY = HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY,
-		TU_DYNAMIC_WRITE_ONLY_DISCARDABLE = HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY_DISCARDABLE,
-		/// Mipmaps will be automatically generated for this texture
-		TU_AUTOMIPMAP = 16,
-		/** This texture will be a render target, i.e. used as a target for render to texture
-		    setting this flag will ignore all other texture usages except TU_AUTOMIPMAP */
-		TU_RENDERTARGET = 32,
-		/// Default to automatic mipmap generation static textures
-		TU_DEFAULT = TU_AUTOMIPMAP | TU_STATIC_WRITE_ONLY
+        /// same as HardwareBuffer::HBU_STATIC
+        TU_STATIC = HardwareBuffer::HBU_STATIC,
+        /// same as HardwareBuffer::HBU_DYNAMIC
+        TU_DYNAMIC = HardwareBuffer::HBU_DYNAMIC,
+        /// same as HardwareBuffer::HBU_WRITE_ONLY
+        TU_WRITE_ONLY = HardwareBuffer::HBU_WRITE_ONLY,
+        /// same as HardwareBuffer::HBU_STATIC_WRITE_ONLY
+        TU_STATIC_WRITE_ONLY = HardwareBuffer::HBU_STATIC_WRITE_ONLY,
+        /// same as HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY
+        TU_DYNAMIC_WRITE_ONLY = HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY,
+        /// same as HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY_DISCARDABLE
+        TU_DYNAMIC_WRITE_ONLY_DISCARDABLE = HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY_DISCARDABLE,
+        /// Mipmaps will be automatically generated for this texture. The exact algorithm used is not
+        /// defined, but you can assume it to be a 2x2 box filter.
+        TU_AUTOMIPMAP = 16,
+        /** This texture will be a render target, i.e. used as a target for render to texture
+            setting this flag will ignore all other texture usages except TU_AUTOMIPMAP and TU_NOTSHADERRESOURCE */
+        TU_RENDERTARGET = 32,
+        /// Hint, that could be combined with TU_RENDERTARGET to remove possible limitations on some hardware
+        TU_NOTSHADERRESOURCE = 64,
+        /// Default to automatic mipmap generation static textures
+        TU_DEFAULT = TU_AUTOMIPMAP | TU_STATIC_WRITE_ONLY
+    };
+
+    /** Enum identifying the texture access privilege
+     */
+    enum TextureAccess
+    {
+        TA_READ = 0x01,
+        TA_WRITE = 0x10,
+        TA_READ_WRITE = TA_READ | TA_WRITE
     };
 
     /** Enum identifying the texture type
@@ -72,7 +90,8 @@ namespace Ogre {
         TEX_TYPE_2D = 2,
         /// 3D volume texture, used in combination with 3D texture coordinates
         TEX_TYPE_3D = 3,
-        /// 3D cube map, used in combination with 3D texture coordinates
+        /// cube map (six two dimensional textures, one for each cube face), used in combination with 3D
+        /// texture coordinates
         TEX_TYPE_CUBE_MAP = 4,
         /// 2D texture array
         TEX_TYPE_2D_ARRAY = 5,
@@ -80,15 +99,15 @@ namespace Ogre {
         TEX_TYPE_2D_RECT = 6
     };
 
-	/** Enum identifying special mipmap numbers
+    /** Enum identifying special mipmap numbers
     */
-	enum TextureMipmap
-	{
-		/// Generate mipmaps up to 1x1
-		MIP_UNLIMITED = 0x7FFFFFFF,
-		/// Use TextureManager default
-		MIP_DEFAULT = -1
-	};
+    enum TextureMipmap
+    {
+        /// Generate mipmaps up to 1x1
+        MIP_UNLIMITED = 0x7FFFFFFF,
+        /// Use TextureManager default
+        MIP_DEFAULT = -1
+    };
 
     /** Abstract class representing a Texture resource.
         @remarks
@@ -109,137 +128,137 @@ namespace Ogre {
         
         /** Sets the type of texture; can only be changed before load() 
         */
-        virtual void setTextureType(TextureType ttype ) { mTextureType = ttype; }
+        void setTextureType(TextureType ttype ) { mTextureType = ttype; }
 
         /** Gets the type of texture 
         */
-        virtual TextureType getTextureType(void) const { return mTextureType; }
+        TextureType getTextureType(void) const { return mTextureType; }
 
         /** Gets the number of mipmaps to be used for this texture.
         */
-        virtual uint8 getNumMipmaps(void) const {return mNumMipmaps;}
+        uint32 getNumMipmaps(void) const {return mNumMipmaps;}
 
-		/** Sets the number of mipmaps to be used for this texture.
+        /** Sets the number of mipmaps to be used for this texture.
             @note
                 Must be set before calling any 'load' method.
         */
-        virtual void setNumMipmaps(uint8 num) {mNumRequestedMipmaps = mNumMipmaps = num;}
+        void setNumMipmaps(uint32 num) {mNumRequestedMipmaps = mNumMipmaps = num;}
 
-		/** Are mipmaps hardware generated?
-		@remarks
-			Will only be accurate after texture load, or createInternalResources
-		*/
-		virtual bool getMipmapsHardwareGenerated(void) const { return mMipmapsHardwareGenerated; }
+        /** Are mipmaps hardware generated?
+        @remarks
+            Will only be accurate after texture load, or createInternalResources
+        */
+        bool getMipmapsHardwareGenerated(void) const { return mMipmapsHardwareGenerated; }
 
         /** Returns the gamma adjustment factor applied to this texture on loading.
         */
-        virtual float getGamma(void) const { return mGamma; }
+        float getGamma(void) const { return mGamma; }
 
         /** Sets the gamma adjustment factor applied to this texture on loading the
-			data.
+            data.
             @note
                 Must be called before any 'load' method. This gamma factor will
-				be premultiplied in and may reduce the precision of your textures.
-				You can use setHardwareGamma if supported to apply gamma on 
-				sampling the texture instead.
+                be premultiplied in and may reduce the precision of your textures.
+                You can use setHardwareGamma if supported to apply gamma on 
+                sampling the texture instead.
         */
-        virtual void setGamma(float g) { mGamma = g; }
+        void setGamma(float g) { mGamma = g; }
 
-		/** Sets whether this texture will be set up so that on sampling it, 
-			hardware gamma correction is applied.
-		@remarks
-			24-bit textures are often saved in gamma colour space; this preserves
-			precision in the 'darks'. However, if you're performing blending on 
-			the sampled colours, you really want to be doing it in linear space. 
-			One way is to apply a gamma correction value on loading (see setGamma),
-			but this means you lose precision in those dark colours. An alternative
-			is to get the hardware to do the gamma correction when reading the 
-			texture and converting it to a floating point value for the rest of
-			the pipeline. This option allows you to do that; it's only supported
-			in relatively recent hardware (others will ignore it) but can improve
-			the quality of colour reproduction.
-		@note
-			Must be called before any 'load' method since it may affect the
-			construction of the underlying hardware resources.
-			Also note this only useful on textures using 8-bit colour channels.
-		*/
-		virtual void setHardwareGammaEnabled(bool enabled) { mHwGamma = enabled; }
-
-		/** Gets whether this texture will be set up so that on sampling it, 
-		hardware gamma correction is applied.
-		*/
-		virtual bool isHardwareGammaEnabled() const { return mHwGamma; }
-
-		/** Set the level of multisample AA to be used if this texture is a 
-			rendertarget.
-		@note This option will be ignored if TU_RENDERTARGET is not part of the
-			usage options on this texture, or if the hardware does not support it. 
-		@param fsaa The number of samples
-		@param fsaaHint Any hinting text (@see Root::createRenderWindow)
-		*/
-		virtual void setFSAA(uint fsaa, const String& fsaaHint) { mFSAA = fsaa; mFSAAHint = fsaaHint; }
-
-		/** Get the level of multisample AA to be used if this texture is a 
-		rendertarget.
-		*/
-		virtual uint getFSAA() const { return mFSAA; }
-
-		/** Get the multisample AA hint if this texture is a rendertarget.
-		*/
-		virtual const String& getFSAAHint() const { return mFSAAHint; }
-
-		/** Returns the height of the texture.
+        /** Sets whether this texture will be set up so that on sampling it, 
+            hardware gamma correction is applied.
+        @remarks
+            24-bit textures are often saved in gamma colour space; this preserves
+            precision in the 'darks'. However, if you're performing blending on 
+            the sampled colours, you really want to be doing it in linear space. 
+            One way is to apply a gamma correction value on loading (see setGamma),
+            but this means you lose precision in those dark colours. An alternative
+            is to get the hardware to do the gamma correction when reading the 
+            texture and converting it to a floating point value for the rest of
+            the pipeline. This option allows you to do that; it's only supported
+            in relatively recent hardware (others will ignore it) but can improve
+            the quality of colour reproduction.
+        @note
+            Must be called before any 'load' method since it may affect the
+            construction of the underlying hardware resources.
+            Also note this only useful on textures using 8-bit colour channels.
         */
-        virtual uint32 getHeight(void) const { return mHeight; }
+        void setHardwareGammaEnabled(bool enabled) { mHwGamma = enabled; }
+
+        /** Gets whether this texture will be set up so that on sampling it, 
+        hardware gamma correction is applied.
+        */
+        bool isHardwareGammaEnabled() const { return mHwGamma; }
+
+        /** Set the level of multisample AA to be used if this texture is a 
+            rendertarget.
+        @note This option will be ignored if TU_RENDERTARGET is not part of the
+            usage options on this texture, or if the hardware does not support it. 
+        @param fsaa The number of samples
+        @param fsaaHint Any hinting text (see Root::createRenderWindow)
+        */
+        void setFSAA(uint fsaa, const String& fsaaHint) { mFSAA = fsaa; mFSAAHint = fsaaHint; }
+
+        /** Get the level of multisample AA to be used if this texture is a 
+        rendertarget.
+        */
+        uint getFSAA() const { return mFSAA; }
+
+        /** Get the multisample AA hint if this texture is a rendertarget.
+        */
+        const String& getFSAAHint() const { return mFSAAHint; }
+
+        /** Returns the height of the texture.
+        */
+        uint32 getHeight(void) const { return mHeight; }
 
         /** Returns the width of the texture.
         */
-        virtual uint32 getWidth(void) const { return mWidth; }
+        uint32 getWidth(void) const { return mWidth; }
 
         /** Returns the depth of the texture (only applicable for 3D textures).
         */
-        virtual uint32 getDepth(void) const { return mDepth; }
+        uint32 getDepth(void) const { return mDepth; }
 
         /** Returns the height of the original input texture (may differ due to hardware requirements).
         */
-        virtual uint32 getSrcHeight(void) const { return mSrcHeight; }
+        uint32 getSrcHeight(void) const { return mSrcHeight; }
 
         /** Returns the width of the original input texture (may differ due to hardware requirements).
         */
-        virtual uint32 getSrcWidth(void) const { return mSrcWidth; }
+        uint32 getSrcWidth(void) const { return mSrcWidth; }
 
         /** Returns the original depth of the input texture (only applicable for 3D textures).
         */
-        virtual uint32 getSrcDepth(void) const { return mSrcDepth; }
+        uint32 getSrcDepth(void) const { return mSrcDepth; }
 
         /** Set the height of the texture; can only do this before load();
         */
-        virtual void setHeight(uint32 h) { mHeight = mSrcHeight = h; }
+        void setHeight(uint32 h) { mHeight = mSrcHeight = h; }
 
         /** Set the width of the texture; can only do this before load();
         */
-        virtual void setWidth(uint32 w) { mWidth = mSrcWidth = w; }
+        void setWidth(uint32 w) { mWidth = mSrcWidth = w; }
 
         /** Set the depth of the texture (only applicable for 3D textures);
             can only do this before load();
         */
-        virtual void setDepth(uint32 d)  { mDepth = mSrcDepth = d; }
+        void setDepth(uint32 d)  { mDepth = mSrcDepth = d; }
 
         /** Returns the TextureUsage identifier for this Texture
         */
-        virtual int getUsage() const
+        int getUsage() const
         {
             return mUsage;
         }
 
         /** Sets the TextureUsage identifier for this Texture; only useful before load()
-			
-			@param u is a combination of TU_STATIC, TU_DYNAMIC, TU_WRITE_ONLY 
-				TU_AUTOMIPMAP and TU_RENDERTARGET (see TextureUsage enum). You are
-            	strongly advised to use HBU_STATIC_WRITE_ONLY wherever possible, if you need to 
-            	update regularly, consider HBU_DYNAMIC_WRITE_ONLY.
+            
+            @param u is a combination of TU_STATIC, TU_DYNAMIC, TU_WRITE_ONLY 
+                TU_AUTOMIPMAP and TU_RENDERTARGET (see TextureUsage enum). You are
+                strongly advised to use HBU_STATIC_WRITE_ONLY wherever possible, if you need to 
+                update regularly, consider HBU_DYNAMIC_WRITE_ONLY.
         */
-        virtual void setUsage(int u) { mUsage = u; }
+        void setUsage(int u) { mUsage = u; }
 
         /** Creates the internal texture resources for this texture. 
         @remarks
@@ -252,52 +271,52 @@ namespace Ogre {
             or if you use one of the self-contained load...() methods, then it will be
             called for you.
         */
-        virtual void createInternalResources(void);
+        void createInternalResources(void);
 
         /** Frees internal texture resources for this texture. 
         */
-        virtual void freeInternalResources(void);
+        void freeInternalResources(void);
         
-		/** Copies (and maybe scales to fit) the contents of this texture to
-			another texture. */
-		virtual void copyToTexture( TexturePtr& target );
+        /** Copies (and maybe scales to fit) the contents of this texture to
+            another texture. */
+        virtual void copyToTexture( TexturePtr& target );
 
         /** Loads the data from an image.
-		@note Important: only call this from outside the load() routine of a 
-			Resource. Don't call it within (including ManualResourceLoader) - use
-			_loadImages() instead. This method is designed to be external, 
-			performs locking and checks the load status before loading.
+        @note Important: only call this from outside the load() routine of a 
+            Resource. Don't call it within (including ManualResourceLoader) - use
+            _loadImages() instead. This method is designed to be external, 
+            performs locking and checks the load status before loading.
         */
         virtual void loadImage( const Image &img );
-			
-		/** Loads the data from a raw stream.
-		@note Important: only call this from outside the load() routine of a 
-			Resource. Don't call it within (including ManualResourceLoader) - use
-			_loadImages() instead. This method is designed to be external, 
-			performs locking and checks the load status before loading.
-		@param stream Data stream containing the raw pixel data
-		@param uWidth Width of the image
-		@param uHeight Height of the image
-		@param eFormat The format of the pixel data
-		*/
-		virtual void loadRawData( DataStreamPtr& stream, 
-			ushort uWidth, ushort uHeight, PixelFormat eFormat);
+            
+        /** Loads the data from a raw stream.
+        @note Important: only call this from outside the load() routine of a 
+            Resource. Don't call it within (including ManualResourceLoader) - use
+            _loadImages() instead. This method is designed to be external, 
+            performs locking and checks the load status before loading.
+        @param stream Data stream containing the raw pixel data
+        @param uWidth Width of the image
+        @param uHeight Height of the image
+        @param eFormat The format of the pixel data
+        */
+        void loadRawData( DataStreamPtr& stream,
+            ushort uWidth, ushort uHeight, PixelFormat eFormat);
 
-		/** Internal method to load the texture from a set of images. 
-		@note Do NOT call this method unless you are inside the load() routine
-			already, e.g. a ManualResourceLoader. It is not threadsafe and does
-			not check or update resource loading status.
-		*/
-        virtual void _loadImages( const ConstImagePtrList& images );
+        /** Internal method to load the texture from a set of images. 
+        @note Do NOT call this method unless you are inside the load() routine
+            already, e.g. a ManualResourceLoader. It is not threadsafe and does
+            not check or update resource loading status.
+        */
+        void _loadImages( const ConstImagePtrList& images );
 
-		/** Returns the pixel format for the texture surface. */
-		virtual PixelFormat getFormat() const
-		{
-			return mFormat;
-		}
+        /** Returns the pixel format for the texture surface. */
+        PixelFormat getFormat() const
+        {
+            return mFormat;
+        }
 
         /** Returns the desired pixel format for the texture surface. */
-        virtual PixelFormat getDesiredFormat(void) const
+        PixelFormat getDesiredFormat(void) const
         {
             return mDesiredFormat;
         }
@@ -305,84 +324,95 @@ namespace Ogre {
         /** Returns the pixel format of the original input texture (may differ due to
             hardware requirements and pixel format conversion).
         */
-        virtual PixelFormat getSrcFormat(void) const
+        PixelFormat getSrcFormat(void) const
         {
             return mSrcFormat;
         }
 
         /** Sets the pixel format for the texture surface; can only be set before load(). */
-        virtual void setFormat(PixelFormat pf);
+        void setFormat(PixelFormat pf);
 
         /** Returns true if the texture has an alpha layer. */
-        virtual bool hasAlpha(void) const;
+        bool hasAlpha(void) const;
 
         /** Sets desired bit depth for integer pixel format textures.
-        @note
+
             Available values: 0, 16 and 32, where 0 (the default) means keep original format
             as it is. This value is number of bits for the pixel.
         */
-        virtual void setDesiredIntegerBitDepth(ushort bits);
+        void setDesiredIntegerBitDepth(ushort bits);
 
         /** gets desired bit depth for integer pixel format textures.
         */
-        virtual ushort getDesiredIntegerBitDepth(void) const;
+        ushort getDesiredIntegerBitDepth(void) const;
 
         /** Sets desired bit depth for float pixel format textures.
-        @note
+
             Available values: 0, 16 and 32, where 0 (the default) means keep original format
             as it is. This value is number of bits for a channel of the pixel.
         */
-        virtual void setDesiredFloatBitDepth(ushort bits);
+        void setDesiredFloatBitDepth(ushort bits);
 
         /** gets desired bit depth for float pixel format textures.
         */
-        virtual ushort getDesiredFloatBitDepth(void) const;
+        ushort getDesiredFloatBitDepth(void) const;
 
         /** Sets desired bit depth for integer and float pixel format.
         */
-        virtual void setDesiredBitDepths(ushort integerBits, ushort floatBits);
+        void setDesiredBitDepths(ushort integerBits, ushort floatBits);
 
         /** Sets whether luminace pixel format will treated as alpha format when load this texture.
         */
-        virtual void setTreatLuminanceAsAlpha(bool asAlpha);
+        void setTreatLuminanceAsAlpha(bool asAlpha);
 
         /** Gets whether luminace pixel format will treated as alpha format when load this texture.
         */
-        virtual bool getTreatLuminanceAsAlpha(void) const;
+        bool getTreatLuminanceAsAlpha(void) const;
 
         /** Return the number of faces this texture has. This will be 6 for a cubemap
-        	texture and 1 for a 1D, 2D or 3D one.
+            texture and 1 for a 1D, 2D or 3D one.
         */
-        virtual size_t getNumFaces() const;
+        size_t getNumFaces() const;
 
-		/** Return hardware pixel buffer for a surface. This buffer can then
-			be used to copy data from and to a particular level of the texture.
-			@param face 	Face number, in case of a cubemap texture. Must be 0
-							for other types of textures.
-                            For cubemaps, this is one of 
-                            +X (0), -X (1), +Y (2), -Y (3), +Z (4), -Z (5)
-			@param mipmap	Mipmap level. This goes from 0 for the first, largest
-							mipmap level to getNumMipmaps()-1 for the smallest.
-			@return	A shared pointer to a hardware pixel buffer
-			@remarks	The buffer is invalidated when the resource is unloaded or destroyed.
-						Do not use it after the lifetime of the containing texture.
-		*/
-		virtual HardwarePixelBufferSharedPtr getBuffer(size_t face=0, size_t mipmap=0) = 0;
+        /** Return hardware pixel buffer for a surface. This buffer can then
+            be used to copy data from and to a particular level of the texture.
+            @param face Face number, in case of a cubemap texture. Must be 0
+            for other types of textures.
+            For cubemaps, this is one of 
+            +X (0), -X (1), +Y (2), -Y (3), +Z (4), -Z (5)
+            @param mipmap Mipmap level. This goes from 0 for the first, largest
+            mipmap level to getNumMipmaps()-1 for the smallest.
+            @return A shared pointer to a hardware pixel buffer.
+            @remarks The buffer is invalidated when the resource is unloaded or destroyed.
+            Do not use it after the lifetime of the containing texture.
+        */
+        virtual HardwarePixelBufferSharedPtr getBuffer(size_t face=0, size_t mipmap=0) = 0;
 
 
-		/** Populate an Image with the contents of this texture. 
-		@param destImage The target image (contents will be overwritten)
-		@param includeMipMaps Whether to embed mipmaps in the image
-		*/
-		virtual void convertToImage(Image& destImage, bool includeMipMaps = false);
-		
-		/** Retrieve a platform or API-specific piece of information from this texture.
-		 This method of retrieving information should only be used if you know what you're doing.
-		 @param name The name of the attribute to retrieve
-		 @param pData Pointer to memory matching the type of data you want to retrieve.
-		*/
-		virtual void getCustomAttribute(const String& name, void* pData);
-		
+        /** Populate an Image with the contents of this texture. 
+            @param destImage The target image (contents will be overwritten)
+            @param includeMipMaps Whether to embed mipmaps in the image
+        */
+        void convertToImage(Image& destImage, bool includeMipMaps = false);
+        
+        /** Retrieve a platform or API-specific piece of information from this texture.
+            This method of retrieving information should only be used if you know what you're doing.
+            @param name The name of the attribute to retrieve.
+            @param pData Pointer to memory matching the type of data you want to retrieve.
+        */
+        virtual void getCustomAttribute(const String& name, void* pData);
+        
+
+        /** Enable read and/or write privileges to the texture from shaders.
+            @param bindPoint The buffer binding location for shader access. For OpenGL this must be unique and is not related to the texture binding point.
+            @param access The texture access privileges given to the shader.
+            @param mipmapLevel The texture mipmap level to use.
+            @param textureArrayIndex The index of the texture array to use. If texture is not a texture array, set to 0.
+            @param format Texture format to be read in by shader. For OpenGL this may be different than the bound texture format.
+        */
+        virtual void createShaderAccessPoint(uint bindPoint, TextureAccess access = TA_READ_WRITE,
+                                             int mipmapLevel = 0, int textureArrayIndex = 0,
+                                             PixelFormat* format = NULL) {}
 
 
     protected:
@@ -390,16 +420,16 @@ namespace Ogre {
         uint32 mWidth;
         uint32 mDepth;
 
-        uint8 mNumRequestedMipmaps;
-		uint8 mNumMipmaps;
-		bool mMipmapsHardwareGenerated;
+        uint32 mNumRequestedMipmaps;
+        uint32 mNumMipmaps;
+        bool mMipmapsHardwareGenerated;
         float mGamma;
-		bool mHwGamma;
-		uint mFSAA;
-		String mFSAAHint;
+        bool mHwGamma;
+        uint mFSAA;
+        String mFSAAHint;
 
         TextureType mTextureType;
-		PixelFormat mFormat;
+        PixelFormat mFormat;
         int mUsage; /// Bit field, so this can't be TextureUsage
 
         PixelFormat mSrcFormat;
@@ -410,31 +440,32 @@ namespace Ogre {
         unsigned short mDesiredFloatBitDepth;
         bool mTreatLuminanceAsAlpha;
 
-		bool mInternalResourcesCreated;
+        bool mInternalResourcesCreated;
 
-		/// @copydoc Resource::calculateSize
-		size_t calculateSize(void) const;
-		
+        /// @copydoc Resource::calculateSize
+        size_t calculateSize(void) const;
+        
 
-		/** Implementation of creating internal texture resources 
-		*/
-		virtual void createInternalResourcesImpl(void) = 0;
+        /** Implementation of creating internal texture resources 
+        */
+        virtual void createInternalResourcesImpl(void) = 0;
 
-		/** Implementation of freeing internal texture resources 
-		*/
-		virtual void freeInternalResourcesImpl(void) = 0;
+        /** Implementation of freeing internal texture resources 
+        */
+        virtual void freeInternalResourcesImpl(void) = 0;
 
-		/** Default implementation of unload which calls freeInternalResources */
-		void unloadImpl(void);
+        /** Default implementation of unload which calls freeInternalResources */
+        void unloadImpl(void);
 
-		/** Identify the source file type as a string, either from the extension
-			or from a magic number.
-		*/
-		String getSourceFileType() const;
+        /** Identify the source file type as a string, either from the extension
+            or from a magic number.
+        */
+        String getSourceFileType() const;
 
+        static const char* CUBEMAP_SUFFIXES[6];
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 

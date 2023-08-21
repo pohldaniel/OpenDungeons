@@ -33,23 +33,31 @@ THE SOFTWARE.
 
 namespace Ogre
 {
+    /** \addtogroup Plugins
+    *  @{
+    */
+    /** \addtogroup CgProgramManager
+    *  @{
+    */
     /** Factory class for Cg programs. */
     class CgProgramFactory : public HighLevelGpuProgramFactory
     {
     protected:
         CGcontext mCgContext;
-		static String sLanguageName;
+        static String sLanguageName;
     public:
         CgProgramFactory();
         ~CgProgramFactory();
-		/// Get the name of the language this factory creates programs for
-		const String& getLanguage(void) const;
+        /// Get the name of the language this factory creates programs for
+        const String& getLanguage(void) const;
         HighLevelGpuProgram* create(ResourceManager* creator, 
             const String& name, ResourceHandle handle,
             const String& group, bool isManual, ManualResourceLoader* loader);
-		void destroy(HighLevelGpuProgram* prog);
+        void destroy(HighLevelGpuProgram* prog);
 
     };
+    /** @} */
+    /** @} */
 }
 
 #endif

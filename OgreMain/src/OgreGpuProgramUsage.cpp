@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "OgreStableHeaders.h"
 #include "OgreGpuProgramUsage.h"
 #include "OgreGpuProgramManager.h"
+#include "OgrePass.h"
 #include "OgreException.h"
 
 namespace Ogre
@@ -37,56 +38,61 @@ namespace Ogre
         mType(gptype), mParent(parent), mProgram(), mRecreateParams(false)
     {
     }
-	//-----------------------------------------------------------------------------
-	GpuProgramUsage::GpuProgramUsage(const GpuProgramUsage& oth, Pass* parent)
+    //-----------------------------------------------------------------------------
+    GpuProgramUsage::GpuProgramUsage(const GpuProgramUsage& oth, Pass* parent)
         : mType(oth.mType)
-		, mParent(parent)
+        , mParent(parent)
         , mProgram(oth.mProgram)
         // nfz: parameters should be copied not just use a shared ptr to the original
-		, mParameters(OGRE_NEW GpuProgramParameters(*oth.mParameters))
-		, mRecreateParams(false)
-	{
-	}
-	//---------------------------------------------------------------------
-	GpuProgramUsage::~GpuProgramUsage()
-	{
-		if (!mProgram.isNull())
-			mProgram->removeListener(this);
-	}
-	//-----------------------------------------------------------------------------
-	void GpuProgramUsage::setProgramName(const String& name, bool resetParams)
-	{
-		if (!mProgram.isNull())
-		{
-			mProgram->removeListener(this);
-			mRecreateParams = true;
-		}
-
-		mProgram = GpuProgramManager::getSingleton().getByName(name);
-
-        if (mProgram.isNull())
+        , mParameters(OGRE_NEW GpuProgramParameters(*oth.mParameters))
+        , mRecreateParams(false)
+    {
+    }
+    //---------------------------------------------------------------------
+    GpuProgramUsage::~GpuProgramUsage()
+    {
+        if (mProgram)
+            mProgram->removeListener(this);
+    }
+    //-----------------------------------------------------------------------------
+    void GpuProgramUsage::setProgramName(const String& name, bool resetParams)
+    {
+        if (mProgram)
         {
-			String progType = "fragment";
-			if (mType == GPT_VERTEX_PROGRAM)
-			{
-				progType = "vertex";
-			}
-			else if (mType == GPT_GEOMETRY_PROGRAM)
-			{
-				progType = "geometry";
-			}
-			else if (mType == GPT_DOMAIN_PROGRAM)
-			{
-				progType = "domain";
-			}
-			else if (mType == GPT_HULL_PROGRAM)
-			{
-				progType = "hull";
-			}
-			else if (mType == GPT_COMPUTE_PROGRAM)
-			{
-				progType = "compute";
-			}
+            mProgram->removeListener(this);
+            mRecreateParams = true;
+        }
+
+        mProgram = GpuProgramManager::getSingleton().getByName(name, mParent->getResourceGroup());
+        
+        //Look again without the group if not found
+        if (!mProgram)
+            mProgram = GpuProgramManager::getSingleton().getByName(
+                name, ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
+
+        if (!mProgram)
+        {
+            String progType = "fragment";
+            if (mType == GPT_VERTEX_PROGRAM)
+            {
+                progType = "vertex";
+            }
+            else if (mType == GPT_GEOMETRY_PROGRAM)
+            {
+                progType = "geometry";
+            }
+            else if (mType == GPT_DOMAIN_PROGRAM)
+            {
+                progType = "domain";
+            }
+            else if (mType == GPT_HULL_PROGRAM)
+            {
+                progType = "hull";
+            }
+            else if (mType == GPT_COMPUTE_PROGRAM)
+            {
+                progType = "compute";
+            }
 
             OGRE_EXCEPT(Exception::ERR_ITEM_NOT_FOUND, 
                 "Unable to locate " + progType + " program called " + name + ".",
@@ -94,15 +100,15 @@ namespace Ogre
         }
 
         // Reset parameters 
-        if (resetParams || mParameters.isNull() || mRecreateParams)
-		{
-			recreateParameters();
-		}
+        if (resetParams || !mParameters || mRecreateParams)
+        {
+            recreateParameters();
+        }
 
-		// Listen in on reload events so we can regenerate params
-		mProgram->addListener(this);
+        // Listen in on reload events so we can regenerate params
+        mProgram->addListener(this);
 
-	}
+    }
     //-----------------------------------------------------------------------------
     void GpuProgramUsage::setParameters(GpuProgramParametersSharedPtr params)
     {
@@ -111,7 +117,7 @@ namespace Ogre
     //-----------------------------------------------------------------------------
     GpuProgramParametersSharedPtr GpuProgramUsage::getParameters(void)
     {
-        if (mParameters.isNull())
+        if (!mParameters)
         {
             OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "You must specify a program before "
                 "you can retrieve parameters.", "GpuProgramUsage::getParameters");
@@ -120,8 +126,8 @@ namespace Ogre
         return mParameters;
     }
     //-----------------------------------------------------------------------------
-	void GpuProgramUsage::setProgram(GpuProgramPtr& prog) 
-	{
+    void GpuProgramUsage::setProgram(GpuProgramPtr& prog) 
+    {
         mProgram = prog;
         // Reset parameters 
         mParameters = mProgram->createParameters();
@@ -135,9 +141,9 @@ namespace Ogre
         memSize += sizeof(bool);
 
         // Tally up passes
-        if(!mProgram.isNull())
+        if(mProgram)
             memSize += mProgram->calculateSize();
-        if(!mParameters.isNull())
+        if(mParameters)
             memSize += mParameters->calculateSize();
 
         return memSize;
@@ -148,96 +154,96 @@ namespace Ogre
         if (!mProgram->isLoaded())
             mProgram->load();
 
-		// check type
-		if (mProgram->isLoaded() && mProgram->getType() != mType)
-		{
-			String myType = "fragment";
-			if (mType == GPT_VERTEX_PROGRAM)
-			{
-				myType = "vertex";
-			}
-			else if (mType == GPT_GEOMETRY_PROGRAM)
-			{
-				myType = "geometry";
-			}
-			else if (mType == GPT_DOMAIN_PROGRAM)
-			{
-				myType = "domain";
-			}
-			else if (mType == GPT_HULL_PROGRAM)
-			{
-				myType = "hull";
-			}
-			else if (mType == GPT_COMPUTE_PROGRAM)
-			{
-				myType = "compute";
-			}
+        // check type
+        if (mProgram->isLoaded() && mProgram->getType() != mType)
+        {
+            String myType = "fragment";
+            if (mType == GPT_VERTEX_PROGRAM)
+            {
+                myType = "vertex";
+            }
+            else if (mType == GPT_GEOMETRY_PROGRAM)
+            {
+                myType = "geometry";
+            }
+            else if (mType == GPT_DOMAIN_PROGRAM)
+            {
+                myType = "domain";
+            }
+            else if (mType == GPT_HULL_PROGRAM)
+            {
+                myType = "hull";
+            }
+            else if (mType == GPT_COMPUTE_PROGRAM)
+            {
+                myType = "compute";
+            }
 
-			String yourType = "fragment";
-			if (mProgram->getType() == GPT_VERTEX_PROGRAM)
-			{
-				yourType = "vertex";
-			}
-			else if (mProgram->getType() == GPT_GEOMETRY_PROGRAM)
-			{
-				yourType = "geometry";
-			}
-			else if (mProgram->getType() == GPT_DOMAIN_PROGRAM)
-			{
-				yourType = "domain";
-			}
-			else if (mProgram->getType() == GPT_HULL_PROGRAM)
-			{
-				yourType = "hull";
-			}
-			else if (mType == GPT_COMPUTE_PROGRAM)
-			{
-				yourType = "compute";
-			}
+            String yourType = "fragment";
+            if (mProgram->getType() == GPT_VERTEX_PROGRAM)
+            {
+                yourType = "vertex";
+            }
+            else if (mProgram->getType() == GPT_GEOMETRY_PROGRAM)
+            {
+                yourType = "geometry";
+            }
+            else if (mProgram->getType() == GPT_DOMAIN_PROGRAM)
+            {
+                yourType = "domain";
+            }
+            else if (mProgram->getType() == GPT_HULL_PROGRAM)
+            {
+                yourType = "hull";
+            }
+            else if (mType == GPT_COMPUTE_PROGRAM)
+            {
+                yourType = "compute";
+            }
 
-			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, 
-				mProgram->getName() + "is a " + yourType + " program, but you are assigning it to a " 
-				+ myType + " program slot. This is invalid.",
-				"GpuProgramUsage::setProgramName");
+            OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, 
+                mProgram->getName() + " is a " + yourType + " program, but you are assigning it to a " 
+                + myType + " program slot. This is invalid.",
+                "GpuProgramUsage::setProgramName");
 
-		}
+        }
     }
     //-----------------------------------------------------------------------------
     void GpuProgramUsage::_unload(void)
     {
         // TODO?
     }
-	//---------------------------------------------------------------------
-	void GpuProgramUsage::unloadingComplete(Resource* prog)
-	{
-		mRecreateParams = true;
+    //---------------------------------------------------------------------
+    void GpuProgramUsage::unloadingComplete(Resource* prog)
+    {
+        mRecreateParams = true;
 
-	}
-	//---------------------------------------------------------------------
-	void GpuProgramUsage::loadingComplete(Resource* prog)
-	{
-		// Need to re-create parameters
-		if (mRecreateParams)
-			recreateParameters();
+    }
+    //---------------------------------------------------------------------
+    void GpuProgramUsage::loadingComplete(Resource* prog)
+    {
+        // Need to re-create parameters
+        if (mRecreateParams)
+            recreateParameters();
 
-	}
-	//---------------------------------------------------------------------
-	void GpuProgramUsage::recreateParameters()
-	{
-		// Keep a reference to old ones to copy
-		GpuProgramParametersSharedPtr savedParams = mParameters;
+    }
+    //---------------------------------------------------------------------
+    void GpuProgramUsage::recreateParameters()
+    {
+        // Keep a reference to old ones to copy
+        GpuProgramParametersSharedPtr savedParams = mParameters;
 
-		// Create new params
-		mParameters = mProgram->createParameters();
+        // Create new params
+        mParameters = mProgram->createParameters();
 
-		// Copy old (matching) values across
-		// Don't use copyConstantsFrom since program may be different
-		if (!savedParams.isNull())
-			mParameters->copyMatchingNamedConstantsFrom(*savedParams.get());
+        // Copy old (matching) values across
+        // Don't use copyConstantsFrom since program may be different
+        if (savedParams)
+            mParameters->copyMatchingNamedConstantsFrom(*savedParams.get());
 
-		mRecreateParams = false;
+        mRecreateParams = false;
 
-	}
+    }
 
 
 

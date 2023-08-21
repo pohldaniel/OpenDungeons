@@ -34,12 +34,12 @@ THE SOFTWARE.
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Resources
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Resources
+    *  @{
+    */
     /** Abstract factory class, archive codec plugins can register concrete
         subclasses of this.
         @remarks
@@ -62,6 +62,7 @@ namespace Ogre {
         virtual ~ArchiveFactory() {}
         /** Creates a new object.
         @param name Name of the object to create
+        @param readOnly whether the Archive is read only
         @return
             An object created by the factory. The type of the object depends on
             the factory.
@@ -70,8 +71,8 @@ namespace Ogre {
 
         virtual Archive* createInstance(const String& name) { return createInstance(name, true); }
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 } // namespace
 

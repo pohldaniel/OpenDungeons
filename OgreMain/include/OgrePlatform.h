@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define __Platform_H_
 
 #include "OgreConfig.h"
+#include "OgreExports.h"
 
 namespace Ogre {
 /* Initial platform/compiler-related stuff to set.
@@ -40,8 +41,8 @@ namespace Ogre {
 #define OGRE_PLATFORM_ANDROID 5
 #define OGRE_PLATFORM_NACL 6
 #define OGRE_PLATFORM_WINRT 7
-#define OGRE_PLATFORM_FLASHCC 8
-
+#define OGRE_PLATFORM_EMSCRIPTEN 8
+    
 #define OGRE_COMPILER_MSVC 1
 #define OGRE_COMPILER_GNUC 2
 #define OGRE_COMPILER_BORL 3
@@ -63,7 +64,7 @@ namespace Ogre {
 #elif defined( __GCCE__ )
 #   define OGRE_COMPILER OGRE_COMPILER_GCCE
 #   define OGRE_COMP_VER _MSC_VER
-//#	include <staticlibinit_gcce.h> // This is a GCCE toolchain workaround needed when compiling with GCCE 
+//# include <staticlibinit_gcce.h> // This is a GCCE toolchain workaround needed when compiling with GCCE 
 #elif defined( __WINSCW__ )
 #   define OGRE_COMPILER OGRE_COMPILER_WINSCW
 #   define OGRE_COMP_VER _MSC_VER
@@ -89,17 +90,15 @@ namespace Ogre {
 
 #endif
 
+#define OGRE_COMPILER_MIN_VERSION(COMPILER, VERSION) (OGRE_COMPILER == (COMPILER) && OGRE_COMP_VER >= (VERSION))
+
 /* See if we can use __forceinline or if we need to use __inline instead */
-#if OGRE_COMPILER == OGRE_COMPILER_MSVC
-#   if OGRE_COMP_VER >= 1200
-#       define FORCEINLINE __forceinline
-#   endif
-#elif defined(__MINGW32__)
-#   if !defined(FORCEINLINE)
-#       define FORCEINLINE __inline
-#   endif
+#if OGRE_COMPILER_MIN_VERSION(OGRE_COMPILER_MSVC, 1200)
+    #define OGRE_FORCE_INLINE __forceinline
+#elif OGRE_COMPILER_MIN_VERSION(OGRE_COMPILER_GNUC, 340)
+    #define OGRE_FORCE_INLINE inline __attribute__((always_inline))
 #else
-#   define FORCEINLINE __inline
+        #define OGRE_FORCE_INLINE __inline
 #endif
 
 /* define OGRE_NORETURN macro */
@@ -113,43 +112,40 @@ namespace Ogre {
 
 /* Finds the current platform */
 #if (defined( __WIN32__ ) || defined( _WIN32 )) && !defined(__ANDROID__)
-#	if defined(WINAPI_FAMILY)
-#		define __OGRE_HAVE_DIRECTXMATH 1
-#		include <winapifamily.h>
-#		if WINAPI_FAMILY == WINAPI_FAMILY_APP|| WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP
-#			define DESKTOP_APP 1
-#			define PHONE 2
-#			define OGRE_PLATFORM OGRE_PLATFORM_WINRT
-#           ifndef _CRT_SECURE_NO_WARNINGS
-#               define _CRT_SECURE_NO_WARNINGS
-#           endif
-#           ifndef _SCL_SECURE_NO_WARNINGS
-#               define _SCL_SECURE_NO_WARNINGS
-#           endif
-#			if WINAPI_FAMILY == WINAPI_FAMILY_APP
-#				define OGRE_WINRT_TARGET_TYPE DESKTOP_APP
-#			endif
-#			if WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP
-#				define OGRE_WINRT_TARGET_TYPE PHONE
-#			endif
-#		else
-#			define OGRE_PLATFORM OGRE_PLATFORM_WIN32
-#		endif
-#	else
-#		define OGRE_PLATFORM OGRE_PLATFORM_WIN32
-#	endif
-#elif defined(__FLASHCC__)
-#	define OGRE_PLATFORM OGRE_PLATFORM_FLASHCC
+#   include <sdkddkver.h>
+#   if defined(WINAPI_FAMILY)
+#       include <winapifamily.h>
+#       if WINAPI_FAMILY == WINAPI_FAMILY_APP|| WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP
+#           define OGRE_PLATFORM OGRE_PLATFORM_WINRT
+#       else
+#           define OGRE_PLATFORM OGRE_PLATFORM_WIN32
+#       endif
+#   else
+#       define OGRE_PLATFORM OGRE_PLATFORM_WIN32
+#   endif
+#   define __OGRE_WINRT_STORE     (OGRE_PLATFORM == OGRE_PLATFORM_WINRT && WINAPI_FAMILY == WINAPI_FAMILY_APP)        // WindowsStore 8.0 and 8.1
+#   define __OGRE_WINRT_PHONE     (OGRE_PLATFORM == OGRE_PLATFORM_WINRT && WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)  // WindowsPhone 8.0 and 8.1
+#   define __OGRE_WINRT_PHONE_80  (OGRE_PLATFORM == OGRE_PLATFORM_WINRT && WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP && _WIN32_WINNT <= _WIN32_WINNT_WIN8) // Windows Phone 8.0 often need special handling, while 8.1 is OK
+#   if defined(_WIN32_WINNT_WIN8) && _WIN32_WINNT >= _WIN32_WINNT_WIN8 // i.e. this is modern SDK and we compile for OS with guaranteed support for DirectXMath
+#       define __OGRE_HAVE_DIRECTXMATH 1
+#   endif
+#   ifndef _CRT_SECURE_NO_WARNINGS
+#       define _CRT_SECURE_NO_WARNINGS
+#   endif
+#   ifndef _SCL_SECURE_NO_WARNINGS
+#       define _SCL_SECURE_NO_WARNINGS
+#   endif
+#elif defined(__EMSCRIPTEN__)
+#   define OGRE_PLATFORM OGRE_PLATFORM_EMSCRIPTEN
 #elif defined( __APPLE_CC__)
-    // Device                                                     Simulator
-    // Both requiring OS version 6.0 or greater
-#   if __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__ >= 60000 || __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
+#   include "Availability.h"
+#   ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
 #       define OGRE_PLATFORM OGRE_PLATFORM_APPLE_IOS
 #   else
 #       define OGRE_PLATFORM OGRE_PLATFORM_APPLE
 #   endif
 #elif defined(__ANDROID__)
-#	define OGRE_PLATFORM OGRE_PLATFORM_ANDROID
+#   define OGRE_PLATFORM OGRE_PLATFORM_ANDROID
 #elif defined( __native_client__ ) 
 #   define OGRE_PLATFORM OGRE_PLATFORM_NACL
 #   ifndef OGRE_STATIC_LIB
@@ -169,7 +165,7 @@ namespace Ogre {
 #endif
 
     /* Find the arch type */
-#if defined(__x86_64__) || defined(_M_X64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__) || defined(__arm64__) || defined(__aarch64__) || defined(__mips64) || defined(__mips64_)
+#if defined(__x86_64__) || defined(_M_X64) || defined(_M_AMD64) || defined(_M_ARM64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__) || defined(__arm64__) || defined(__aarch64__) || defined(__mips64) || defined(__mips64_)
 #   define OGRE_ARCH_TYPE OGRE_ARCHITECTURE_64
 #else
 #   define OGRE_ARCH_TYPE OGRE_ARCHITECTURE_32
@@ -182,38 +178,16 @@ namespace Ogre {
 #define OGRE_QUOTE(x) OGRE_QUOTE_INPLACE(x)
 #define OGRE_WARN( x )  message( __FILE__ "(" QUOTE( __LINE__ ) ") : " x "\n" )
 
-// For marking functions as deprecated
-#if OGRE_COMPILER == OGRE_COMPILER_MSVC
-#   define OGRE_DEPRECATED __declspec(deprecated)
-#elif OGRE_COMPILER == OGRE_COMPILER_GNUC || OGRE_COMPILER == OGRE_COMPILER_CLANG
-#   define OGRE_DEPRECATED __attribute__ ((deprecated))
-#else
-#   pragma message("WARNING: You need to implement OGRE_DEPRECATED for this compiler")
-#   define OGRE_DEPRECATED
-#endif
-
 //----------------------------------------------------------------------------
 // Windows Settings
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_WINRT
 
-// If we're not including this from a client build, specify that the stuff
-// should get exported. Otherwise, import it.
-#	if defined( OGRE_STATIC_LIB )
-		// Linux compilers don't have symbol import/export directives.
-#   	define _OgreExport
-#   	define _OgrePrivate
-#   else
-#   	if defined( OGRE_NONCLIENT_BUILD )
-#       	define _OgreExport __declspec( dllexport )
-#   	else
-#           if defined( __MINGW32__ )
-#               define _OgreExport
-#           else
-#       	    define _OgreExport __declspec( dllimport )
-#           endif
-#   	endif
-#   	define _OgrePrivate
-#	endif
+// on windows we override OgreBuildSettings.h for convenience
+// see https://bitbucket.org/sinbad/ogre/pull-requests/728
+#ifdef OGRE_DEBUG_MODE
+#undef OGRE_DEBUG_MODE
+#endif
+
 // Win32 compilers use _DEBUG for specifying debug builds.
 // for MinGW, we set DEBUG
 #   if defined(_DEBUG) || defined(DEBUG)
@@ -248,27 +222,9 @@ namespace Ogre {
 #endif // OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_WINRT
 
 //----------------------------------------------------------------------------
-// Linux/Apple/iOS/Android/NaCl Settings
+// Linux/Apple/iOS/Android/NaCl/Emscripten Settings
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX || OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS || \
-    OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_NACL || OGRE_PLATFORM == OGRE_PLATFORM_FLASHCC
-
-// Enable GCC symbol visibility
-#   if defined( OGRE_GCC_VISIBILITY )
-#       define _OgreExport  __attribute__ ((visibility("default")))
-#       define _OgrePrivate __attribute__ ((visibility("hidden")))
-#   else
-#       define _OgreExport
-#       define _OgrePrivate
-#   endif
-
-// A quick define to overcome different names for the same function
-#   define stricmp strcasecmp
-
-#   ifdef DEBUG
-#       define OGRE_DEBUG_MODE 1
-#   else
-#       define OGRE_DEBUG_MODE 0
-#   endif
+    OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_NACL || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
 
 // Always enable unicode support for the moment
 // Perhaps disable in old versions of gcc if necessary
@@ -279,33 +235,8 @@ namespace Ogre {
 //----------------------------------------------------------------------------
 // Android Settings
 #if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
-#   ifdef OGRE_UNICODE_SUPPORT
-#       undef OGRE_UNICODE_SUPPORT
-#   endif
-#	define OGRE_UNICODE_SUPPORT 1
-    // A quick define to overcome different names for the same function
-#   define stricmp strcasecmp
-#   ifdef DEBUG
-#       define OGRE_DEBUG_MODE 1
-#   else
-#       define OGRE_DEBUG_MODE 0
-#   endif
 #   ifndef CLOCKS_PER_SEC
-#	    define CLOCKS_PER_SEC  1000
-#   endif
-#endif
-    
-//----------------------------------------------------------------------------
-// FlashCC Settings
-#if OGRE_PLATFORM == OGRE_PLATFORM_FLASHCC
-#   ifdef OGRE_UNICODE_SUPPORT
-#       undef OGRE_UNICODE_SUPPORT
-#   endif
-#	define OGRE_UNICODE_SUPPORT 0
-#   ifdef DEBUG
-#       define OGRE_DEBUG_MODE 1
-#   else
-#       define OGRE_DEBUG_MODE 0
+#       define CLOCKS_PER_SEC  1000
 #   endif
 #endif
 
@@ -325,8 +256,8 @@ namespace Ogre {
 //----------------------------------------------------------------------------
 // Set the default locale for strings
 #if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
-//	Locales are not supported by the C lib you have to go through JNI.
-#	define OGRE_DEFAULT_LOCALE ""
+//  Locales are not supported by the C lib you have to go through JNI.
+#   define OGRE_DEFAULT_LOCALE ""
 #else
 #   define OGRE_DEFAULT_LOCALE "C"
 #endif
@@ -334,10 +265,16 @@ namespace Ogre {
 //----------------------------------------------------------------------------
 // Library suffixes
 // "_d" for debug builds, nothing otherwise
-#if OGRE_DEBUG_MODE
+#if OGRE_DEBUG_MODE && OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #   define OGRE_BUILD_SUFFIX "_d"
 #else
 #   define OGRE_BUILD_SUFFIX ""
+#endif
+
+#if OGRE_COMPILER == OGRE_COMPILER_MSVC
+#define DECL_MALLOC __declspec(restrict) __declspec(noalias)
+#else
+#define DECL_MALLOC __attribute__ ((malloc))
 #endif
 
 // Integer formats of fixed bit width
@@ -349,59 +286,12 @@ typedef short int16;
 typedef signed char int8;
 // define uint64 type
 #if OGRE_COMPILER == OGRE_COMPILER_MSVC
-	typedef unsigned __int64 uint64;
-	typedef __int64 int64;
+    typedef unsigned __int64 uint64;
+    typedef __int64 int64;
 #else
-	typedef unsigned long long uint64;
-	typedef long long int64;
+    typedef unsigned long long uint64;
+    typedef long long int64;
 #endif
-
-// Disable these warnings (too much noise)
-#if OGRE_COMPILER == OGRE_COMPILER_MSVC
-#ifndef _CRT_SECURE_NO_WARNINGS
-#   define _CRT_SECURE_NO_WARNINGS
-#endif
-#ifndef _SCL_SECURE_NO_WARNINGS
-#   define _SCL_SECURE_NO_WARNINGS
-#endif
-// Turn off warnings generated by long std templates
-// This warns about truncation to 255 characters in debug/browse info
-#   pragma warning (disable : 4786)
-// Turn off warnings generated by long std templates
-// This warns about truncation to 255 characters in debug/browse info
-#   pragma warning (disable : 4503)
-// disable: "<type> needs to have dll-interface to be used by clients'
-// Happens on STL member variables which are not public therefore is ok
-#   pragma warning (disable : 4251)
-// disable: "non dll-interface class used as base for dll-interface class"
-// Happens when deriving from Singleton because bug in compiler ignores
-// template export
-#   pragma warning (disable : 4275)
-// disable: "C++ Exception Specification ignored"
-// This is because MSVC 6 did not implement all the C++ exception
-// specifications in the ANSI C++ draft.
-#   pragma warning( disable : 4290 )
-// disable: "no suitable definition provided for explicit template
-// instantiation request" Occurs in VC7 for no justifiable reason on all
-// #includes of Singleton
-#   pragma warning( disable: 4661)
-// disable: deprecation warnings when using CRT calls in VC8
-// These show up on all C runtime lib code in VC8, disable since they clutter
-// the warnings with things we may not be able to do anything about (e.g.
-// generated code from nvparse etc). I doubt very much that these calls
-// will ever be actually removed from VC anyway, it would break too much code.
-#   pragma warning( disable: 4996)
-// disable: "conditional expression constant", always occurs on 
-// OGRE_MUTEX_CONDITIONAL when no threading enabled
-#   pragma warning (disable : 201)
-// disable: "unreferenced formal parameter"
-// Many versions of VC have bugs which generate this error in cases where they shouldn't
-#   pragma warning (disable : 4100)
-// disable: "behavior change: an object of POD type constructed with an initializer of the form () will be default-initialized"
-// We have this issue in OgreMemorySTLAlloc.h - so we see it over and over
-#   pragma warning (disable : 4345)
-#endif
-
 }
 
 #endif

@@ -31,12 +31,9 @@ THE SOFTWARE.
 #include "OgrePrerequisites.h"
 
 #include "OgreColourValue.h"
-#include "OgreVector3.h"
 #include "OgreVector4.h"
-#include "OgreString.h"
 #include "OgreMovableObject.h"
 #include "OgrePlaneBoundedVolume.h"
-#include "OgreShadowCameraSetup.h"
 #include "OgreHeaderPrefix.h"
 
 namespace Ogre {
@@ -120,15 +117,7 @@ namespace Ogre {
         */
         void setDiffuseColour(Real red, Real green, Real blue);
 
-        /** Sets the colour of the diffuse light given off by this source.
-        @remarks
-            Material objects have ambient, diffuse and specular values which indicate how much of each type of
-            light an object reflects. This value denotes the amount and colour of this type of light the light
-            exudes into the scene. The actual appearance of objects is a combination of the two.
-        @par
-            Diffuse light simulates the typical light emanating from light sources and affects the base colour
-            of objects together with ambient light.
-        */
+        /// @overload
         void setDiffuseColour(const ColourValue& colour);
 
         /** Returns the colour of the diffuse light given off by this light source (see setDiffuseColour for more info).
@@ -146,15 +135,7 @@ namespace Ogre {
         */
         void setSpecularColour(Real red, Real green, Real blue);
 
-        /** Sets the colour of the specular light given off by this source.
-        @remarks
-            Material objects have ambient, diffuse and specular values which indicate how much of each type of
-            light an object reflects. This value denotes the amount and colour of this type of light the light
-            exudes into the scene. The actual appearance of objects is a combination of the two.
-        @par
-            Specular light affects the appearance of shiny highlights on objects, and is also dependent on the
-            'shininess' Material value.
-        */
+        /// @overload
         void setSpecularColour(const ColourValue& colour);
 
         /** Returns the colour of specular light given off by this light source.
@@ -203,42 +184,38 @@ namespace Ogre {
             Applicable to point lights and spotlights only.
         @note
             This will be overridden if the light is attached to a SceneNode.
+        @deprecated attach to SceneNode and use SceneNode::setPosition
         */
-        void setPosition(Real x, Real y, Real z);
+        OGRE_DEPRECATED void setPosition(Real x, Real y, Real z);
 
-        /** Sets the position of the light.
-        @remarks
-            Applicable to point lights and spotlights only.
-        @note
-            This will be overridden if the light is attached to a SceneNode.
-        */
+        /// @overload
+        /// @deprecated attach to SceneNode and use SceneNode::setPosition
         void setPosition(const Vector3& vec);
 
         /** Returns the position of the light.
         @note
             Applicable to point lights and spotlights only.
+        @deprecated attach to SceneNode and use SceneNode::getPosition
         */
-        const Vector3& getPosition(void) const;
+        OGRE_DEPRECATED const Vector3& getPosition(void) const;
 
         /** Sets the direction in which a light points.
         @remarks
             Applicable only to the spotlight and directional light types.
         @note
             This will be overridden if the light is attached to a SceneNode.
+        @deprecated only call with (0, 0, -1), then attach to SceneNode and use SceneNode::setDirection
         */
         void setDirection(Real x, Real y, Real z);
 
-        /** Sets the direction in which a light points.
-        @remarks
-            Applicable only to the spotlight and directional light types.
-        @note
-            This will be overridden if the light is attached to a SceneNode.
-        */
+        /// @overload
+        /// @deprecated only call with Vector3::NEGATIVE_UNIT_Z, then attach to SceneNode and use SceneNode::setDirection
         void setDirection(const Vector3& vec);
 
         /** Returns the light's direction.
         @remarks
             Applicable only to the spotlight and directional light types.
+        @deprecated attach to SceneNode and use SceneNode::getLocalAxes
         */
         const Vector3& getDirection(void) const;
 
@@ -331,12 +308,12 @@ namespace Ogre {
         /** Retrieves the direction of the light including any transform from nodes it is attached to. */
         const Vector3& getDerivedDirection(void) const;
 
-        /** @copydoc MovableObject::setVisible.
+        /** @copydoc MovableObject::setVisible
         @remarks
             Although lights themselves are not 'visible', setting a light to invisible
             means it no longer affects the scene.
         */
-        void setVisible(bool visible);
+        void setVisible(bool visible) { MovableObject::setVisible(visible); }
 
         /** @copydoc MovableObject::getBoundingRadius */
         Real getBoundingRadius(void) const { return 0; /* not visible */ }
@@ -544,7 +521,7 @@ namespace Ogre {
         */
         bool isInLightRange(const Ogre::Sphere& sphere) const;
         
-        /** Check whether a bounding box is included in the lighted	area of the light
+        /** Check whether a bounding box is included in the lighted area of the light
         @note 
             The function trades accuracy for efficiency. As a result you may get
             false-positives (The function should not return any false-negatives).
@@ -554,11 +531,6 @@ namespace Ogre {
     protected:
         /// Internal method for synchronising with parent node (if any)
         virtual void update(void) const;
-
-        /// @copydoc AnimableObject::getAnimableDictionaryName
-        const String& getAnimableDictionaryName(void) const;
-        /// @copydoc AnimableObject::initialiseAnimableDictionary
-        void initialiseAnimableDictionary(StringVector& vec) const;
 
         LightTypes mLightType;
         Vector3 mPosition;
@@ -626,8 +598,7 @@ namespace Ogre {
     /** @} */
     /** @} */
 
-} // namespace Ogre
-
 #include "OgreHeaderSuffix.h"
 
+} // namespace Ogre
 #endif // _LIGHT_H__

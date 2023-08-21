@@ -73,6 +73,7 @@
     <ClCompile Include="src\FontManager.cpp" />
     <ClCompile Include="src\Font_xmlHandler.cpp" />
     <ClCompile Include="src\FormattedRenderedString.cpp" />
+    <ClCompile Include="src\FreeTypeFont.cpp" />
     <ClCompile Include="src\GeometryBuffer.cpp" />
     <ClCompile Include="src\GlobalEventSet.cpp" />
     <ClCompile Include="src\GUIContext.cpp" />
@@ -174,6 +175,222 @@
     <ClCompile Include="src\XMLParser.cpp" />
     <ClCompile Include="src\XMLSerializer.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\CEGUI\Affector.h" />
+    <ClInclude Include="include\CEGUI\Animation.h" />
+    <ClInclude Include="include\CEGUI\AnimationInstance.h" />
+    <ClInclude Include="include\CEGUI\AnimationManager.h" />
+    <ClInclude Include="include\CEGUI\Animation_xmlHandler.h" />
+    <ClInclude Include="include\CEGUI\Base.h" />
+    <ClInclude Include="include\CEGUI\BasicImage.h" />
+    <ClInclude Include="include\CEGUI\BasicRenderedStringParser.h" />
+    <ClInclude Include="include\CEGUI\BidiVisualMapping.h" />
+    <ClInclude Include="include\CEGUI\BoundSlot.h" />
+    <ClInclude Include="include\CEGUI\CEGUI.h" />
+    <ClInclude Include="include\CEGUI\CentredRenderedString.h" />
+    <ClInclude Include="include\CEGUI\ChainedXMLHandler.h" />
+    <ClInclude Include="include\CEGUI\Clipboard.h" />
+    <ClInclude Include="include\CEGUI\Colour.h" />
+    <ClInclude Include="include\CEGUI\ColourRect.h" />
+    <ClInclude Include="include\CEGUI\CompositeResourceProvider.h" />
+    <ClInclude Include="include\CEGUI\Config.h" />
+    <ClInclude Include="include\CEGUI\Config_xmlHandler.h" />
+    <ClInclude Include="include\CEGUI\CoordConverter.h" />
+    <ClInclude Include="include\CEGUI\DataContainer.h" />
+    <ClInclude Include="include\CEGUI\DefaultLogger.h" />
+    <ClInclude Include="include\CEGUI\DefaultRenderedStringParser.h" />
+    <ClInclude Include="include\CEGUI\DefaultResourceProvider.h" />
+    <ClInclude Include="include\CEGUI\DynamicModule.h" />
+    <ClInclude Include="include\CEGUI\Element.h" />
+    <ClInclude Include="include\CEGUI\Event.h" />
+    <ClInclude Include="include\CEGUI\EventArgs.h" />
+    <ClInclude Include="include\CEGUI\EventSet.h" />
+    <ClInclude Include="include\CEGUI\Exceptions.h" />
+    <ClInclude Include="include\CEGUI\FactoryModule.h" />
+    <ClInclude Include="include\CEGUI\FactoryRegisterer.h" />
+    <ClInclude Include="include\CEGUI\falagard\ComponentBase.h" />
+    <ClInclude Include="include\CEGUI\falagard\Dimensions.h" />
+    <ClInclude Include="include\CEGUI\falagard\Enums.h" />
+    <ClInclude Include="include\CEGUI\falagard\EventAction.h" />
+    <ClInclude Include="include\CEGUI\falagard\EventLinkDefinition.h" />
+    <ClInclude Include="include\CEGUI\falagard\FalagardPropertyBase.h" />
+    <ClInclude Include="include\CEGUI\falagard\FormattingSetting.h" />
+    <ClInclude Include="include\CEGUI\falagard\FrameComponent.h" />
+    <ClInclude Include="include\CEGUI\falagard\ImageryComponent.h" />
+    <ClInclude Include="include\CEGUI\falagard\ImagerySection.h" />
+    <ClInclude Include="include\CEGUI\falagard\LayerSpecification.h" />
+    <ClInclude Include="include\CEGUI\falagard\NamedArea.h" />
+    <ClInclude Include="include\CEGUI\falagard\NamedDefinitionCollator.h" />
+    <ClInclude Include="include\CEGUI\falagard\PropertyDefinition.h" />
+    <ClInclude Include="include\CEGUI\falagard\PropertyDefinitionBase.h" />
+    <ClInclude Include="include\CEGUI\falagard\PropertyInitialiser.h" />
+    <ClInclude Include="include\CEGUI\falagard\PropertyLinkDefinition.h" />
+    <ClInclude Include="include\CEGUI\falagard\SectionSpecification.h" />
+    <ClInclude Include="include\CEGUI\falagard\StateImagery.h" />
+    <ClInclude Include="include\CEGUI\falagard\TextComponent.h" />
+    <ClInclude Include="include\CEGUI\falagard\WidgetComponent.h" />
+    <ClInclude Include="include\CEGUI\falagard\WidgetLookFeel.h" />
+    <ClInclude Include="include\CEGUI\falagard\WidgetLookManager.h" />
+    <ClInclude Include="include\CEGUI\falagard\XMLEnumHelper.h" />
+    <ClInclude Include="include\CEGUI\falagard\XMLHandler.h" />
+    <ClInclude Include="include\CEGUI\Font.h" />
+    <ClInclude Include="include\CEGUI\FontGlyph.h" />
+    <ClInclude Include="include\CEGUI\FontManager.h" />
+    <ClInclude Include="include\CEGUI\Font_xmlHandler.h" />
+    <ClInclude Include="include\CEGUI\FormattedRenderedString.h" />
+    <ClInclude Include="include\CEGUI\ForwardRefs.h" />
+    <ClInclude Include="include\CEGUI\FreeFunctionSlot.h" />
+    <ClInclude Include="include\CEGUI\FreeTypeFont.h" />
+    <ClInclude Include="include\CEGUI\FribidiVisualMapping.h" />
+    <ClInclude Include="include\CEGUI\FunctorCopySlot.h" />
+    <ClInclude Include="include\CEGUI\FunctorPointerSlot.h" />
+    <ClInclude Include="include\CEGUI\FunctorReferenceBinder.h" />
+    <ClInclude Include="include\CEGUI\FunctorReferenceSlot.h" />
+    <ClInclude Include="include\CEGUI\GeometryBuffer.h" />
+    <ClInclude Include="include\CEGUI\GlobalEventSet.h" />
+    <ClInclude Include="include\CEGUI\GUIContext.h" />
+    <ClInclude Include="include\CEGUI\GUILayout_xmlHandler.h" />
+    <ClInclude Include="include\CEGUI\IconvStringTranscoder.h" />
+    <ClInclude Include="include\CEGUI\Image.h" />
+    <ClInclude Include="include\CEGUI\ImageCodec.h" />
+    <ClInclude Include="include\CEGUI\ImageFactory.h" />
+    <ClInclude Include="include\CEGUI\ImageManager.h" />
+    <ClInclude Include="include\CEGUI\InjectedInputReceiver.h" />
+    <ClInclude Include="include\CEGUI\InputEvent.h" />
+    <ClInclude Include="include\CEGUI\Interpolator.h" />
+    <ClInclude Include="include\CEGUI\IteratorBase.h" />
+    <ClInclude Include="include\CEGUI\JustifiedRenderedString.h" />
+    <ClInclude Include="include\CEGUI\KeyFrame.h" />
+    <ClInclude Include="include\CEGUI\LeftAlignedRenderedString.h" />
+    <ClInclude Include="include\CEGUI\LinkedEvent.h" />
+    <ClInclude Include="include\CEGUI\Logger.h" />
+    <ClInclude Include="include\CEGUI\MemberFunctionSlot.h" />
+    <ClInclude Include="include\CEGUI\MemoryAllocatedObject.h" />
+    <ClInclude Include="include\CEGUI\MemoryAllocation.h" />
+    <ClInclude Include="include\CEGUI\MemoryOgreAllocator.h" />
+    <ClInclude Include="include\CEGUI\MemoryStdAllocator.h" />
+    <ClInclude Include="include\CEGUI\MemorySTLWrapper.h" />
+    <ClInclude Include="include\CEGUI\MinibidiVisualMapping.h" />
+    <ClInclude Include="include\CEGUI\MinizipResourceProvider.h" />
+    <ClInclude Include="include\CEGUI\ModuleConfig.h" />
+    <ClInclude Include="include\CEGUI\MouseCursor.h" />
+    <ClInclude Include="include\CEGUI\NamedElement.h" />
+    <ClInclude Include="include\CEGUI\NamedXMLResourceManager.h" />
+    <ClInclude Include="include\CEGUI\PCRERegexMatcher.h" />
+    <ClInclude Include="include\CEGUI\PixmapFont.h" />
+    <ClInclude Include="include\CEGUI\Property.h" />
+    <ClInclude Include="include\CEGUI\PropertyHelper.h" />
+    <ClInclude Include="include\CEGUI\PropertySet.h" />
+    <ClInclude Include="include\CEGUI\Quaternion.h" />
+    <ClInclude Include="include\CEGUI\Rect.h" />
+    <ClInclude Include="include\CEGUI\RefCounted.h" />
+    <ClInclude Include="include\CEGUI\RegexMatcher.h" />
+    <ClInclude Include="include\CEGUI\RenderedString.h" />
+    <ClInclude Include="include\CEGUI\RenderedStringComponent.h" />
+    <ClInclude Include="include\CEGUI\RenderedStringImageComponent.h" />
+    <ClInclude Include="include\CEGUI\RenderedStringParser.h" />
+    <ClInclude Include="include\CEGUI\RenderedStringTextComponent.h" />
+    <ClInclude Include="include\CEGUI\RenderedStringWidgetComponent.h" />
+    <ClInclude Include="include\CEGUI\RenderedStringWordWrapper.h" />
+    <ClInclude Include="include\CEGUI\RenderEffect.h" />
+    <ClInclude Include="include\CEGUI\RenderEffectFactory.h" />
+    <ClInclude Include="include\CEGUI\RenderEffectManager.h" />
+    <ClInclude Include="include\CEGUI\Renderer.h" />
+    <ClInclude Include="include\CEGUI\RenderingContext.h" />
+    <ClInclude Include="include\CEGUI\RenderingSurface.h" />
+    <ClInclude Include="include\CEGUI\RenderingWindow.h" />
+    <ClInclude Include="include\CEGUI\RenderQueue.h" />
+    <ClInclude Include="include\CEGUI\RenderTarget.h" />
+    <ClInclude Include="include\CEGUI\ResourceProvider.h" />
+    <ClInclude Include="include\CEGUI\RightAlignedRenderedString.h" />
+    <ClInclude Include="include\CEGUI\Scheme.h" />
+    <ClInclude Include="include\CEGUI\SchemeManager.h" />
+    <ClInclude Include="include\CEGUI\Scheme_xmlHandler.h" />
+    <ClInclude Include="include\CEGUI\ScriptModule.h" />
+    <ClInclude Include="include\CEGUI\SimpleTimer.h" />
+    <ClInclude Include="include\CEGUI\Singleton.h" />
+    <ClInclude Include="include\CEGUI\Size.h" />
+    <ClInclude Include="include\CEGUI\SlotFunctorBase.h" />
+    <ClInclude Include="include\CEGUI\String.h" />
+    <ClInclude Include="include\CEGUI\StringTranscoder.h" />
+    <ClInclude Include="include\CEGUI\SubscriberSlot.h" />
+    <ClInclude Include="include\CEGUI\System.h" />
+    <ClInclude Include="include\CEGUI\SystemKeys.h" />
+    <ClInclude Include="include\CEGUI\Texture.h" />
+    <ClInclude Include="include\CEGUI\TextureTarget.h" />
+    <ClInclude Include="include\CEGUI\TextUtils.h" />
+    <ClInclude Include="include\CEGUI\TplInterpolators.h" />
+    <ClInclude Include="include\CEGUI\TplProperty.h" />
+    <ClInclude Include="include\CEGUI\TplWindowFactory.h" />
+    <ClInclude Include="include\CEGUI\TplWindowFactoryRegisterer.h" />
+    <ClInclude Include="include\CEGUI\TplWindowProperty.h" />
+    <ClInclude Include="include\CEGUI\TplWindowRendererFactory.h" />
+    <ClInclude Include="include\CEGUI\TplWindowRendererProperty.h" />
+    <ClInclude Include="include\CEGUI\TplWRFactoryRegisterer.h" />
+    <ClInclude Include="include\CEGUI\TypedProperty.h" />
+    <ClInclude Include="include\CEGUI\UDim.h" />
+    <ClInclude Include="include\CEGUI\Vector.h" />
+    <ClInclude Include="include\CEGUI\Version.h" />
+    <ClInclude Include="include\CEGUI\Vertex.h" />
+    <ClInclude Include="include\CEGUI\widgets\All.h" />
+    <ClInclude Include="include\CEGUI\widgets\ButtonBase.h" />
+    <ClInclude Include="include\CEGUI\widgets\ClippedContainer.h" />
+    <ClInclude Include="include\CEGUI\widgets\Combobox.h" />
+    <ClInclude Include="include\CEGUI\widgets\ComboDropList.h" />
+    <ClInclude Include="include\CEGUI\widgets\DefaultWindow.h" />
+    <ClInclude Include="include\CEGUI\widgets\DragContainer.h" />
+    <ClInclude Include="include\CEGUI\widgets\Editbox.h" />
+    <ClInclude Include="include\CEGUI\widgets\FrameWindow.h" />
+    <ClInclude Include="include\CEGUI\widgets\GridLayoutContainer.h" />
+    <ClInclude Include="include\CEGUI\widgets\GroupBox.h" />
+    <ClInclude Include="include\CEGUI\widgets\HorizontalLayoutContainer.h" />
+    <ClInclude Include="include\CEGUI\widgets\ItemEntry.h" />
+    <ClInclude Include="include\CEGUI\widgets\ItemListBase.h" />
+    <ClInclude Include="include\CEGUI\widgets\ItemListbox.h" />
+    <ClInclude Include="include\CEGUI\widgets\LayoutCell.h" />
+    <ClInclude Include="include\CEGUI\widgets\LayoutContainer.h" />
+    <ClInclude Include="include\CEGUI\widgets\Listbox.h" />
+    <ClInclude Include="include\CEGUI\widgets\ListboxItem.h" />
+    <ClInclude Include="include\CEGUI\widgets\ListboxTextItem.h" />
+    <ClInclude Include="include\CEGUI\widgets\ListHeader.h" />
+    <ClInclude Include="include\CEGUI\widgets\ListHeaderSegment.h" />
+    <ClInclude Include="include\CEGUI\widgets\Menubar.h" />
+    <ClInclude Include="include\CEGUI\widgets\MenuBase.h" />
+    <ClInclude Include="include\CEGUI\widgets\MenuItem.h" />
+    <ClInclude Include="include\CEGUI\widgets\MultiColumnList.h" />
+    <ClInclude Include="include\CEGUI\widgets\MultiLineEditbox.h" />
+    <ClInclude Include="include\CEGUI\widgets\PopupMenu.h" />
+    <ClInclude Include="include\CEGUI\widgets\ProgressBar.h" />
+    <ClInclude Include="include\CEGUI\widgets\PushButton.h" />
+    <ClInclude Include="include\CEGUI\widgets\RadioButton.h" />
+    <ClInclude Include="include\CEGUI\widgets\ScrollablePane.h" />
+    <ClInclude Include="include\CEGUI\widgets\Scrollbar.h" />
+    <ClInclude Include="include\CEGUI\widgets\ScrolledContainer.h" />
+    <ClInclude Include="include\CEGUI\widgets\ScrolledItemListBase.h" />
+    <ClInclude Include="include\CEGUI\widgets\SequentialLayoutContainer.h" />
+    <ClInclude Include="include\CEGUI\widgets\Slider.h" />
+    <ClInclude Include="include\CEGUI\widgets\Spinner.h" />
+    <ClInclude Include="include\CEGUI\widgets\TabButton.h" />
+    <ClInclude Include="include\CEGUI\widgets\TabControl.h" />
+    <ClInclude Include="include\CEGUI\widgets\Thumb.h" />
+    <ClInclude Include="include\CEGUI\widgets\Titlebar.h" />
+    <ClInclude Include="include\CEGUI\widgets\ToggleButton.h" />
+    <ClInclude Include="include\CEGUI\widgets\Tooltip.h" />
+    <ClInclude Include="include\CEGUI\widgets\Tree.h" />
+    <ClInclude Include="include\CEGUI\widgets\TreeItem.h" />
+    <ClInclude Include="include\CEGUI\widgets\VerticalLayoutContainer.h" />
+    <ClInclude Include="include\CEGUI\Win32StringTranscoder.h" />
+    <ClInclude Include="include\CEGUI\Window.h" />
+    <ClInclude Include="include\CEGUI\WindowFactory.h" />
+    <ClInclude Include="include\CEGUI\WindowFactoryManager.h" />
+    <ClInclude Include="include\CEGUI\WindowManager.h" />
+    <ClInclude Include="include\CEGUI\WindowRenderer.h" />
+    <ClInclude Include="include\CEGUI\WindowRendererManager.h" />
+    <ClInclude Include="include\CEGUI\XMLAttributes.h" />
+    <ClInclude Include="include\CEGUI\XMLHandler.h" />
+    <ClInclude Include="include\CEGUI\XMLParser.h" />
+    <ClInclude Include="include\CEGUI\XMLSerializer.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A4BB4C53-4B15-4EBD-90E1-1E86B0C682BC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -244,7 +461,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;CEGUI_STATIC;CEGUI_BUILD_STATIC_FACTORY_MODULE;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\libfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -258,7 +475,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;CEGUI_STATIC;CEGUI_BUILD_STATIC_FACTORY_MODULE;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\libfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -274,7 +491,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;CEGUI_STATIC;CEGUI_BUILD_STATIC_FACTORY_MODULE;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\libfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -292,7 +509,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;CEGUI_STATIC;CEGUI_BUILD_STATIC_FACTORY_MODULE;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\libfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>

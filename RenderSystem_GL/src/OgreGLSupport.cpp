@@ -34,25 +34,10 @@ THE SOFTWARE.
 
 namespace Ogre {
 
-	void GLSupport::setConfigOption(const String &name, const String &value)
-	{
-		ConfigOptionMap::iterator it = mOptions.find(name);
-
-        if (it != mOptions.end())
-            it->second.currentValue = value;
-	}
-
-	ConfigOptionMap& GLSupport::getConfigOptions(void)
-	{
-		return mOptions;
-	}
-
     void GLSupport::initialiseExtensions(void)
     {
         // Set version string
         const GLubyte* pcVer = glGetString(GL_VERSION);
-
-
         assert(pcVer && "Problems getting GL version string using glGetString");
        
         String tmpStr = (const char*)pcVer;
@@ -71,13 +56,12 @@ namespace Ogre {
         LogManager::getSingleton().logMessage("GL_RENDERER = " + tmpStr);
 
         // Set extension list
-		StringStream ext;
+        StringStream ext;
         String str;
 
         const GLubyte* pcExt = glGetString(GL_EXTENSIONS);
-        LogManager::getSingleton().logMessage("GL_EXTENSIONS = " + String((const char*)pcExt));
-
         assert(pcExt && "Problems getting GL extension string using glGetString");
+        LogManager::getSingleton().logMessage("GL_EXTENSIONS = " + String((const char*)pcExt));
 
         ext << pcExt;
 
@@ -87,7 +71,7 @@ namespace Ogre {
         }
     }
 
-    bool GLSupport::checkMinGLVersion(const String& v) const
+    bool GLSupport::hasMinGLVersion(const String& v) const
     {
         unsigned int first, second, third;
         unsigned int cardFirst, cardSecond, cardThird;
@@ -126,22 +110,14 @@ namespace Ogre {
 
     bool GLSupport::checkExtension(const String& ext) const
     {
-		assert(extensionList.size() > 0 && "ExtensionList is empty!" );
+        assert(!extensionList.empty() && "ExtensionList is empty!" );
 
-        if(extensionList.find(ext) == extensionList.end())
-            return false; 
-        
-        return true;
+        return extensionList.find(ext) != extensionList.end() || mNative->checkExtension(ext);
     }
     
     bool GLSupport::supportsPBuffers()
     {
         return (GLEW_ARB_pixel_buffer_object || GLEW_EXT_pixel_buffer_object) != GL_FALSE;
-    }
-
-    GLPBuffer* GLSupport::createPBuffer(PixelComponentType format, size_t width, size_t height)
-    {
-        return 0;
     }
 
 }

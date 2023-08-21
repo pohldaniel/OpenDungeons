@@ -29,9 +29,13 @@ THE SOFTWARE.
 #include "OgreRoot.h"
 #include "OgreBspSceneManagerPlugin.h"
 
-Ogre::BspSceneManagerPlugin* bspPlugin;
 //-----------------------------------------------------------------------
 #ifndef OGRE_STATIC_LIB
+static Ogre::BspSceneManagerPlugin* bspPlugin;
+
+extern "C" void _OgreBspPluginExport dllStartPlugin(void);
+extern "C" void _OgreBspPluginExport dllStopPlugin(void);
+
 extern "C" void _OgreBspPluginExport dllStartPlugin(void)
 {
     // Create new scene manager
@@ -44,7 +48,7 @@ extern "C" void _OgreBspPluginExport dllStartPlugin(void)
 }
 extern "C" void _OgreBspPluginExport dllStopPlugin(void)
 {
-	Ogre::Root::getSingleton().uninstallPlugin(bspPlugin);
+    Ogre::Root::getSingleton().uninstallPlugin(bspPlugin);
     OGRE_DELETE bspPlugin;
 }
 #endif

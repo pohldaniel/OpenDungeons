@@ -31,12 +31,10 @@ THE SOFTWARE.
 #include "OgrePrerequisites.h"
 #include "OgreCommon.h"
 
-#include "OgreString.h"
 #include "OgreMovableObject.h"
 #include "OgreQuaternion.h"
 #include "OgreVector3.h"
 #include "OgreHardwareBufferManager.h"
-#include "OgreMesh.h"
 #include "OgreRenderable.h"
 #include "OgreResourceGroupManager.h"
 #include "OgreHeaderPrefix.h"
@@ -88,7 +86,7 @@ namespace Ogre {
         
         typedef set<Entity*>::type EntitySet;
         typedef map<unsigned short, bool>::type SchemeHardwareAnimMap;
-
+        typedef vector<SubEntity*>::type SubEntityList;
     protected:
 
         /** Private constructor (instances cannot be created directly).
@@ -104,7 +102,6 @@ namespace Ogre {
 
         /** List of SubEntities (point to SubMeshes).
         */
-        typedef vector<SubEntity*>::type SubEntityList;
         SubEntityList mSubEntityList;
 
 
@@ -225,8 +222,10 @@ namespace Ogre {
         bool mSkipAnimStateUpdates;
         /// Flag indicating whether to update the main entity skeleton even when an LOD is displayed.
         bool mAlwaysUpdateMainSkeleton;
+        /// Flag indicating whether to update the bounding box from the bones of the skeleton.
+        bool mUpdateBoundingBoxFromSkeleton;
 
-
+#if !OGRE_NO_MESHLOD
         /// The LOD number of the mesh to use, calculated by _notifyCurrentCamera.
         ushort mMeshLodIndex;
 
@@ -253,7 +252,16 @@ namespace Ogre {
         */
         typedef vector<Entity*>::type LODEntityList;
         LODEntityList mLodEntityList;
-
+#else
+        const ushort mMeshLodIndex;
+        const Real mMeshLodFactorTransformed;
+        const ushort mMinMeshLodIndex;
+        const ushort mMaxMeshLodIndex;
+        const Real mMaterialLodFactor;
+        const Real mMaterialLodFactorTransformed;
+        const ushort mMinMaterialLodIndex;
+        const ushort mMaxMaterialLodIndex;
+#endif
         /** This Entity's personal copy of the skeleton, if skeletally animated.
         */
         SkeletonInstance* mSkeletonInstance;
@@ -307,7 +315,7 @@ namespace Ogre {
 
 
         /// Bounding box that 'contains' all the mesh of each child entity.
-        mutable AxisAlignedBox mFullBoundingBox;
+        mutable AxisAlignedBox mFullBoundingBox;  // note: this exists only so that getBoundingBox() can return an AAB by reference
 
         ShadowRenderableList mShadowRenderables;
 
@@ -357,8 +365,9 @@ namespace Ogre {
         const MeshPtr& getMesh(void) const;
 
         /** Gets a pointer to a SubEntity, ie a part of an Entity.
+         @deprecated use getSubEntities()
         */
-        SubEntity* getSubEntity(unsigned int index) const;
+        SubEntity* getSubEntity(size_t index) const;
 
         /** Gets a pointer to a SubEntity by name
         @remarks 
@@ -367,8 +376,15 @@ namespace Ogre {
         SubEntity* getSubEntity( const String& name ) const;
 
         /** Retrieves the number of SubEntity objects making up this entity.
+        * @deprecated use getSubEntities()
         */
-        unsigned int getNumSubEntities(void) const;
+        size_t getNumSubEntities(void) const;
+
+        /** Retrieves SubEntity objects making up this entity.
+        */
+        const SubEntityList& getSubEntities() const {
+            return mSubEntityList;
+        }
 
         /** Clones this entity and returns a pointer to the clone.
         @remarks
@@ -402,24 +418,29 @@ namespace Ogre {
         */
         void setMaterial(const MaterialPtr& material);
 
-        /** @copydoc MovableObject::_notifyCurrentCamera.
+        /** @copydoc MovableObject::_releaseManualHardwareResources */
+        void _releaseManualHardwareResources();
+        /** @copydoc MovableObject::_restoreManualHardwareResources */
+        void _restoreManualHardwareResources();
+
+        /** @copydoc MovableObject::_notifyCurrentCamera
         */
         void _notifyCurrentCamera(Camera* cam);
 
-        /// @copydoc MovableObject::setRenderQueueGroup.
+        /// @copydoc MovableObject::setRenderQueueGroup
         void setRenderQueueGroup(uint8 queueID);
 
-        /// @copydoc MovableObject::setRenderQueueGroupAndPriority.
+        /// @copydoc MovableObject::setRenderQueueGroupAndPriority
         void setRenderQueueGroupAndPriority(uint8 queueID, ushort priority);
 
-        /** @copydoc MovableObject::getBoundingBox.
+        /** @copydoc MovableObject::getBoundingBox
         */
         const AxisAlignedBox& getBoundingBox(void) const;
 
         /// Merge all the child object Bounds a return it.
         AxisAlignedBox getChildObjectsBoundingBox(void) const;
 
-        /** @copydoc MovableObject::_updateRenderQueue.
+        /** @copydoc MovableObject::_updateRenderQueue
         */
         void _updateRenderQueue(RenderQueue* queue);
 
@@ -454,14 +475,6 @@ namespace Ogre {
         */
         bool getDisplaySkeleton(void) const;
 
-
-        /** Gets a pointer to the entity representing the numbered manual level of detail.
-        @remarks
-            The zero-based index never includes the original entity, unlike
-            Mesh::getLodLevel.
-        */
-        Entity* getManualLodLevel(size_t index) const;
-
         /** Returns the number of manual levels of detail that this entity supports.
         @remarks
             This number never includes the original entity, it is difference
@@ -473,6 +486,14 @@ namespace Ogre {
         */
         ushort getCurrentLodIndex() { return mMeshLodIndex; }
 
+        /** Gets a pointer to the entity representing the numbered manual level of detail.
+        @remarks
+            The zero-based index never includes the original entity, unlike
+            Mesh::getLodLevel.
+        */
+        Entity* getManualLodLevel(size_t index) const;
+
+#if !OGRE_NO_MESHLOD
         /** Sets a level-of-detail bias for the mesh detail of this entity.
         @remarks
             Level of detail reduction is normally applied automatically based on the Mesh
@@ -534,7 +555,7 @@ namespace Ogre {
             LOD will be limited by the number of LOD indexes used in the Material).
         */
         void setMaterialLodBias(Real factor, ushort maxDetailIndex = 0, ushort minDetailIndex = 99);
-
+#endif
         /** Sets whether the polygon mode of this entire entity may be
             overridden by the camera detail settings.
         */
@@ -592,15 +613,15 @@ namespace Ogre {
         /** @copydoc MovableObject::getWorldBoundingSphere */
         const Sphere& getWorldBoundingSphere(bool derive = false) const;
 
-        /** @copydoc ShadowCaster::getEdgeList. */
+        /** @copydoc ShadowCaster::getEdgeList */
         EdgeData* getEdgeList(void);
-        /** @copydoc ShadowCaster::hasEdgeList. */
+        /** @copydoc ShadowCaster::hasEdgeList */
         bool hasEdgeList(void);
-        /** @copydoc ShadowCaster::getShadowVolumeRenderableIterator. */
+        /** @copydoc ShadowCaster::getShadowVolumeRenderableIterator */
         ShadowRenderableListIterator getShadowVolumeRenderableIterator(
             ShadowTechnique shadowTechnique, const Light* light,
             HardwareIndexBufferSharedPtr* indexBuffer, size_t* indexBufferUsedSize,
-            bool extrudeVertices, Real extrusionDistance, unsigned long flags = 0 );
+            bool extrudeVertices, Real extrusionDistance, unsigned long flags = 0);
 
         /** Internal method for retrieving bone matrix information. */
         const Matrix4* _getBoneMatrices(void) const { return mBoneMatrices;}
@@ -851,6 +872,24 @@ namespace Ogre {
         */
         bool getAlwaysUpdateMainSkeleton() const {
             return mAlwaysUpdateMainSkeleton;
+        }
+
+        /** If true, the skeleton of the entity will be used to update the bounding box for culling.
+            Useful if you have skeletal animations that move the bones away from the root.  Otherwise, the
+            bounding box of the mesh in the binding pose will be used.
+        @remarks
+            When true, the bounding box will be generated to only enclose the bones that are used for skinning.
+            Also the resulting bounding box will be expanded by the amount of GetMesh()->getBoneBoundingRadius().
+            The expansion amount can be changed on the mesh to achieve a better fitting bounding box.
+        */
+        void setUpdateBoundingBoxFromSkeleton(bool update);
+
+        /** If true, the skeleton of the entity will be used to update the bounding box for culling.
+            Useful if you have skeletal animations that move the bones away from the root.  Otherwise, the
+            bounding box of the mesh in the binding pose will be used.
+        */
+        bool getUpdateBoundingBoxFromSkeleton() const {
+            return mUpdateBoundingBoxFromSkeleton;
         }
 
         

@@ -28,13 +28,19 @@ THE SOFTWARE.
 #ifndef __Ogre_Volume_Source_H__
 #define __Ogre_Volume_Source_H__
 
-#include <float.h>
 #include "OgreVector3.h"
 #include "OgreVolumePrerequisites.h"
-#include "OgreRay.h"
 
 namespace Ogre {
 namespace Volume {
+
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \defgroup Volume Volume
+    * %Volume Rendering with LOD aimed at terrain
+    *  @{
+    */
 
     /** Abstract class defining the density function.
     */
@@ -153,6 +159,8 @@ namespace Volume {
         Real getVolumeSpaceToWorldSpaceFactor(void) const;
     };
 
+    /** @} */
+    /** @} */
 }
 }
 

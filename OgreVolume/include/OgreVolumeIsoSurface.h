@@ -28,12 +28,19 @@ THE SOFTWARE.
 #ifndef __Ogre_Volume_IsoSurface_H__
 #define __Ogre_Volume_IsoSurface_H__
 
-#include "OgreVolumeMeshBuilder.h"
-#include "OgreVolumeSource.h"
 #include "OgreVolumePrerequisites.h"
+#include "OgrePrerequisites.h"
 
 namespace Ogre {
 namespace Volume {
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \addtogroup Volume
+    *  @{
+    */
+    class Source;
+    class MeshBuilder;
 
     /** Abstract IsoSurface.
      */
@@ -99,6 +106,8 @@ namespace Volume {
         */
         virtual void addMarchingSquaresTriangles(const Vector3 *corners, const Vector4 *volumeValues, const size_t *indices, const Real maxDistance, MeshBuilder *mb) const = 0;
     };
+    /** @} */
+    /** @} */
 }
 }
 

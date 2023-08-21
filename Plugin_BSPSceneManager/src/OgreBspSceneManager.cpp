@@ -52,7 +52,7 @@ namespace Ogre {
 
     //-----------------------------------------------------------------------
     BspSceneManager::BspSceneManager(const String& name)
-		: SceneManager(name)
+        : SceneManager(name)
     {
         // Set features for debugging render
         mShowNodeAABs = false;
@@ -62,19 +62,19 @@ namespace Ogre {
         mSkyBoxEnabled = false;
         mSkyDomeEnabled = false;
 
-        mLevel.setNull();
+        mLevel.reset();
 
     }
-	//-----------------------------------------------------------------------
-	const String& BspSceneManager::getTypeName(void) const
-	{
-		return BspSceneManagerFactory::FACTORY_TYPE_NAME;
-	}
+    //-----------------------------------------------------------------------
+    const String& BspSceneManager::getTypeName(void) const
+    {
+        return BspSceneManagerFactory::FACTORY_TYPE_NAME;
+    }
     //-----------------------------------------------------------------------
     BspSceneManager::~BspSceneManager()
     {
         freeMemory();
-        mLevel.setNull();
+        mLevel.reset();
     }
     //-----------------------------------------------------------------------
     size_t BspSceneManager::estimateWorldGeometry(const String& filename)
@@ -84,7 +84,7 @@ namespace Ogre {
     }
     //-----------------------------------------------------------------------
     size_t BspSceneManager::estimateWorldGeometry(DataStreamPtr& stream, 
-		const String& typeName)
+        const String& typeName)
     {
         return BspLevel::calculateLoadingStages(stream);
         
@@ -92,45 +92,45 @@ namespace Ogre {
     //-----------------------------------------------------------------------
     void BspSceneManager::setWorldGeometry(const String& filename)
     {
-        mLevel.setNull();
+        mLevel.reset();
         // Check extension is .bsp
         char extension[6];
         size_t pos = filename.find_last_of(".");
-		if( pos == String::npos )
+        if( pos == String::npos )
             OGRE_EXCEPT(
-				Exception::ERR_INVALIDPARAMS,
+                Exception::ERR_INVALIDPARAMS,
                 "Unable to load world geometry. Invalid extension (must be .bsp).",
                 "BspSceneManager::setWorldGeometry");
 
         strncpy(extension, filename.substr(pos + 1, filename.length() - pos).c_str(), 5);
-		extension[5] = 0;
+        extension[5] = 0;
 
 #if  OGRE_COMPILER == OGRE_COMPILER_MSVC
-		if (_stricmp(extension, "bsp"))
+        if (_stricmp(extension, "bsp"))
 #else
-		if (stricmp(extension, "bsp"))
+        if (stricmp(extension, "bsp"))
 #endif
             OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS,
-			"Unable to load world geometry. Invalid extension (must be .bsp).",
+            "Unable to load world geometry. Invalid extension (must be .bsp).",
             "BspSceneManager::setWorldGeometry");
 
         // Load using resource manager
-        mLevel = BspResourceManager::getSingleton().load(filename, 
-            ResourceGroupManager::getSingleton().getWorldResourceGroupName()).staticCast<BspLevel>();
+        mLevel = static_pointer_cast<BspLevel>(BspResourceManager::getSingleton().load(filename,
+            ResourceGroupManager::getSingleton().getWorldResourceGroupName()));
 
-		if (mLevel->isSkyEnabled())
-		{
-			// Quake3 is always aligned with Z upwards
-			Quaternion q;
-			q.FromAngleAxis(Radian(Math::HALF_PI), Vector3::UNIT_X);
-			// Also draw last, and make close to camera (far clip plane is shorter)
-			setSkyDome(true, mLevel->getSkyMaterialName(),
-				mLevel->getSkyCurvature(), 12, 2000, false, q);
-		}
-		else
-		{
-			setSkyDome(false, StringUtil::BLANK);
-		}
+        if (mLevel->isSkyEnabled())
+        {
+            // Quake3 is always aligned with Z upwards
+            Quaternion q;
+            q.FromAngleAxis(Radian(Math::HALF_PI), Vector3::UNIT_X);
+            // Also draw last, and make close to camera (far clip plane is shorter)
+            setSkyDome(true, mLevel->getSkyMaterialName(),
+                mLevel->getSkyCurvature(), 12, 2000, false, q);
+        }
+        else
+        {
+            setSkyDome(false, BLANKSTRING);
+        }
 
         // Init static render operation
         mRenderOp.vertexData = mLevel->mVertexData;
@@ -152,27 +152,27 @@ namespace Ogre {
     }
     //-----------------------------------------------------------------------
     void BspSceneManager::setWorldGeometry(DataStreamPtr& stream, 
-		const String& typeName)
+        const String& typeName)
     {
-        mLevel.setNull();
+        mLevel.reset();
 
         // Load using resource manager
-        mLevel = BspResourceManager::getSingleton().load(stream, 
-			ResourceGroupManager::getSingleton().getWorldResourceGroupName()).staticCast<BspLevel>();
+        mLevel = static_pointer_cast<BspLevel>(BspResourceManager::getSingleton().load(stream,
+            ResourceGroupManager::getSingleton().getWorldResourceGroupName()));
 
-		if (mLevel->isSkyEnabled())
-		{
-			// Quake3 is always aligned with Z upwards
-			Quaternion q;
-			q.FromAngleAxis(Radian(Math::HALF_PI), Vector3::UNIT_X);
-			// Also draw last, and make close to camera (far clip plane is shorter)
-			setSkyDome(true, mLevel->getSkyMaterialName(),
-				mLevel->getSkyCurvature(), 12, 2000, false, q);
-		}
-		else
-		{
-			setSkyDome(false, StringUtil::BLANK);
-		}
+        if (mLevel->isSkyEnabled())
+        {
+            // Quake3 is always aligned with Z upwards
+            Quaternion q;
+            q.FromAngleAxis(Radian(Math::HALF_PI), Vector3::UNIT_X);
+            // Also draw last, and make close to camera (far clip plane is shorter)
+            setSkyDome(true, mLevel->getSkyMaterialName(),
+                mLevel->getSkyCurvature(), 12, 2000, false, q);
+        }
+        else
+        {
+            setSkyDome(false, BLANKSTRING);
+        }
 
         // Init static render operation
         mRenderOp.vertexData = mLevel->mVertexData;
@@ -194,41 +194,41 @@ namespace Ogre {
     }
     //-----------------------------------------------------------------------
     void BspSceneManager::_findVisibleObjects(Camera* cam, 
-		VisibleObjectsBoundsInfo* visibleBounds, bool onlyShadowCasters)
+        VisibleObjectsBoundsInfo* visibleBounds, bool onlyShadowCasters)
     {
         // Clear unique list of movables for this frame
         mMovablesForRendering.clear();
 
-		// Assemble an AAB on the fly which contains the scene elements visible
-		// by the camera.
-		CamVisibleObjectsMap::iterator findIt = mCamVisibleObjectsMap.find( cam );
+        // Assemble an AAB on the fly which contains the scene elements visible
+        // by the camera.
+        CamVisibleObjectsMap::iterator findIt = mCamVisibleObjectsMap.find( cam );
 
         // Walk the tree, tag static geometry, return camera's node (for info only)
         // Movables are now added to the render queue in processVisibleLeaf
         walkTree(cam, &(findIt->second), onlyShadowCasters);
     }
-	//---------------------------------------------------------------------
-	bool BspSceneManager::fireRenderQueueEnded(uint8 id, const String& invocation)
-	{
-		bool repeat = SceneManager::fireRenderQueueEnded(id, invocation);
-		// Trigger level render just after skies
-		// can't trigger on mWorldGeometryRenderQueue because we're not queueing there
-		if (id == RENDER_QUEUE_SKIES_EARLY)
-		{
-			renderStaticGeometry();
-		}
-		return repeat;
+    //---------------------------------------------------------------------
+    bool BspSceneManager::fireRenderQueueEnded(uint8 id, const String& invocation)
+    {
+        bool repeat = SceneManager::fireRenderQueueEnded(id, invocation);
+        // Trigger level render just after skies
+        // can't trigger on mWorldGeometryRenderQueue because we're not queueing there
+        if (id == RENDER_QUEUE_SKIES_EARLY)
+        {
+            renderStaticGeometry();
+        }
+        return repeat;
 
-	}
+    }
     //-----------------------------------------------------------------------
     void BspSceneManager::renderStaticGeometry(void)
     {
-		// Check we should be rendering
-		if (!isRenderQueueToBeProcessed(mWorldGeometryRenderQueue))
-			return;
+        // Check we should be rendering
+        if (!isRenderQueueToBeProcessed(mWorldGeometryRenderQueue))
+            return;
 
         // Cache vertex/face data first
-		vector<StaticFaceGroup*>::type::const_iterator faceGrpi;
+        vector<StaticFaceGroup*>::type::const_iterator faceGrpi;
         static RenderOperation patchOp;
         
         // no world transform required
@@ -244,7 +244,7 @@ namespace Ogre {
         {
             // Get Material
             Material* thisMaterial = mati->first;
-
+            thisMaterial->touch();
             // Empty existing cache
             mRenderOp.indexData->indexCount = 0;
             // lock index buffer ready to receive data
@@ -265,15 +265,22 @@ namespace Ogre {
             if (mRenderOp.indexData->indexCount == 0)
                 continue;
 
-            Technique::PassIterator pit = thisMaterial->getBestTechnique()->getPassIterator();
-
-            while (pit.hasMoreElements())
+            const Technique::Passes& passes = thisMaterial->getBestTechnique ()->getPasses();
+            for (size_t p = 0; p < passes.size(); p++)
             {
-                _setPass(pit.getNext());
+                Pass* pass = passes[p];
+                _setPass(pass);
 
+                // Do we need to update GPU program parameters?
+                if (pass->isProgrammable())
+                {
+                    mAutoParamDataSource->setCurrentRenderable(0);
+                    mAutoParamDataSource->setCurrentSceneManager(this);
+                    mAutoParamDataSource->setWorldMatrices(&Matrix4::IDENTITY, 1);
+                    mAutoParamDataSource->setCurrentCamera(mCameraInProgress, false);
+                    updateGpuProgramParameters(pass);
+                }
                 mDestRenderSystem->_render(mRenderOp);
-
-
             } 
 
 
@@ -296,9 +303,9 @@ namespace Ogre {
     //-----------------------------------------------------------------------
     //-----------------------------------------------------------------------
     BspNode* BspSceneManager::walkTree(Camera* camera, 
-		VisibleObjectsBoundsInfo *visibleBounds, bool onlyShadowCasters)
+        VisibleObjectsBoundsInfo *visibleBounds, bool onlyShadowCasters)
     {
-		if (mLevel.isNull()) return 0;
+        if (!mLevel) return 0;
 
         // Locate the leaf node where the camera is located
         BspNode* cameraNode = mLevel->findLeaf(camera->getDerivedPosition());
@@ -368,7 +375,7 @@ namespace Ogre {
     }
     //-----------------------------------------------------------------------
     void BspSceneManager::processVisibleLeaf(BspNode* leaf, Camera* cam, 
-		VisibleObjectsBoundsInfo* visibleBounds, bool onlyShadowCasters)
+        VisibleObjectsBoundsInfo* visibleBounds, bool onlyShadowCasters)
     {
         MaterialPtr pMat;
         // Skip world geometry if we're only supposed to process shadow casters
@@ -387,8 +394,8 @@ namespace Ogre {
                     continue;
                 StaticFaceGroup* faceGroup = mLevel->mFaceGroups + realIndex;
                 // Get Material pointer by handle
-                pMat = MaterialManager::getSingleton().getByHandle(faceGroup->materialHandle).staticCast<Material>();
-                assert (!pMat.isNull());
+                pMat = static_pointer_cast<Material>(MaterialManager::getSingleton().getByHandle(faceGroup->materialHandle));
+                assert (pMat);
                 // Check normal (manual culling)
                 ManualCullingMode cullMode = pMat->getTechnique(0)->getPass(0)->getManualCullingMode();
                 if (cullMode != MANUAL_CULL_NONE)
@@ -402,7 +409,7 @@ namespace Ogre {
                 // Try to insert, will find existing if already there
                 std::pair<MaterialFaceGroupMap::iterator, bool> matgrpi;
                 matgrpi = mMatFaceGroupMap.insert(
-					MaterialFaceGroupMap::value_type(pMat.getPointer(), vector<StaticFaceGroup*>::type())
+                    MaterialFaceGroupMap::value_type(pMat.get(), vector<StaticFaceGroup*>::type())
                     );
                 // Whatever happened, matgrpi.first is map iterator
                 // Need to get second part of that to get vector
@@ -426,7 +433,7 @@ namespace Ogre {
                 // It hasn't been seen yet
                 MovableObject *mov = const_cast<MovableObject*>(*oi); // hacky
 
-				getRenderQueue()->processVisibleObject(mov, cam, onlyShadowCasters, visibleBounds);
+                getRenderQueue()->processVisibleObject(mov, cam, onlyShadowCasters, visibleBounds);
 
             }
         }
@@ -456,11 +463,11 @@ namespace Ogre {
             numIdx = faceGroup->patchSurf->getCurrentIndexCount();
             vertexStart = faceGroup->patchSurf->getVertexOffset();
         }
-		else
-		{
-			// Unsupported face type
-			return 0;
-		}
+        else
+        {
+            // Unsupported face type
+            return 0;
+        }
 
 
         // Copy index data
@@ -489,7 +496,7 @@ namespace Ogre {
     {
         // no need to delete index buffer, will be handled by shared pointer
         OGRE_DELETE mRenderOp.indexData;
-		mRenderOp.indexData = 0;
+        mRenderOp.indexData = 0;
     }
     //-----------------------------------------------------------------------
     void BspSceneManager::showNodeBoxes(bool show)
@@ -571,7 +578,7 @@ namespace Ogre {
     //-----------------------------------------------------------------------
     ViewPoint BspSceneManager::getSuggestedViewpoint(bool random)
     {
-        if (mLevel.isNull() || mLevel->mPlayerStarts.empty())
+        if (!mLevel || mLevel->mPlayerStarts.empty())
         {
             // No level, use default
             return SceneManager::getSuggestedViewpoint(random);
@@ -606,27 +613,27 @@ namespace Ogre {
     void BspSceneManager::_notifyObjectMoved(const MovableObject* mov, 
         const Vector3& pos)
     {
-		if (!mLevel.isNull())
-		{
-			mLevel->_notifyObjectMoved(mov, pos);
-		}
+        if (mLevel)
+        {
+            mLevel->_notifyObjectMoved(mov, pos);
+        }
     }
     //-----------------------------------------------------------------------
-	void BspSceneManager::_notifyObjectDetached(const MovableObject* mov)
-	{
-		if (!mLevel.isNull())
-		{
-			mLevel->_notifyObjectDetached(mov);
-		}
-	}
-	//-----------------------------------------------------------------------
-	void BspSceneManager::clearScene(void)
-	{
-		SceneManager::clearScene();
-		freeMemory();
-		// Clear level
-		mLevel.setNull();
-	}
+    void BspSceneManager::_notifyObjectDetached(const MovableObject* mov)
+    {
+        if (mLevel)
+        {
+            mLevel->_notifyObjectDetached(mov);
+        }
+    }
+    //-----------------------------------------------------------------------
+    void BspSceneManager::clearScene(void)
+    {
+        SceneManager::clearScene();
+        freeMemory();
+        // Clear level
+        mLevel.reset();
+    }
     //-----------------------------------------------------------------------
     /*
     AxisAlignedBoxSceneQuery* BspSceneManager::
@@ -677,7 +684,7 @@ namespace Ogre {
         overlap 2 leaves?
         */
         const BspLevelPtr& lvl = ((BspSceneManager*)mParentSceneMgr)->getLevel();
-		if (lvl.isNull()) return;
+        if (!lvl) return;
 
         BspNode* leaf = lvl->getLeafStart();
         int numLeaves = lvl->getNumLeaves();
@@ -695,8 +702,8 @@ namespace Ogre {
                 const MovableObject* aObj = *a;
                 // Skip this object if collision not enabled
                 if (!(aObj->getQueryFlags() & mQueryMask) ||
-					!(aObj->getTypeFlags() & mQueryTypeMask) ||
-					!aObj->isInScene())
+                    !(aObj->getTypeFlags() & mQueryTypeMask) ||
+                    !aObj->isInScene())
                     continue;
 
                 if (oi < (numObjects-1))
@@ -708,8 +715,8 @@ namespace Ogre {
                         const MovableObject* bObj = *b;
                         // Apply mask to b (both must pass)
                         if ((bObj->getQueryFlags() & mQueryMask) && 
-							(bObj->getTypeFlags() & mQueryTypeMask) && 
-							bObj->isInScene())
+                            (bObj->getTypeFlags() & mQueryTypeMask) && 
+                            bObj->isInScene())
                         {
                             const AxisAlignedBox& box1 = aObj->getWorldBoundingBox();
                             const AxisAlignedBox& box2 = bObj->getWorldBoundingBox();
@@ -718,7 +725,7 @@ namespace Ogre {
                             {
                                 if (!listener->queryResult(const_cast<MovableObject*>(aObj), 
                                     const_cast<MovableObject*>(bObj)))
-									return; 
+                                    return; 
                             }
                         }
                     }
@@ -734,7 +741,7 @@ namespace Ogre {
 
                     for (bi = brushes.begin(); bi != biend; ++bi)
                     {
-						list<Plane>::type::const_iterator planeit, planeitend;
+                        list<Plane>::type::const_iterator planeit, planeitend;
                         planeitend = (*bi)->planes.end();
                         bool brushIntersect = true; // Assume intersecting for now
 
@@ -754,7 +761,7 @@ namespace Ogre {
                             assert((*bi)->fragment.fragmentType == SceneQuery::WFT_PLANE_BOUNDED_REGION);
                             if (!listener->queryResult(const_cast<MovableObject*>(aObj), 
                                     const_cast<WorldFragment*>(&((*bi)->fragment))))
-								return; 
+                                return; 
                         }
 
                     }
@@ -782,13 +789,13 @@ namespace Ogre {
     void BspRaySceneQuery::execute(RaySceneQueryListener* listener)
     {
         clearTemporaries();
-		BspLevelPtr lvl = static_cast<BspSceneManager*>(mParentSceneMgr)->getLevel();
-		if (!lvl.isNull())
-		{
-			processNode(
-				lvl->getRootNode(), 
-				mRay, listener);
-		}
+        BspLevelPtr lvl = static_cast<BspSceneManager*>(mParentSceneMgr)->getLevel();
+        if (lvl)
+        {
+            processNode(
+                lvl->getRootNode(), 
+                mRay, listener);
+        }
     }
     //-----------------------------------------------------------------------
     BspRaySceneQuery::~BspRaySceneQuery()
@@ -799,7 +806,7 @@ namespace Ogre {
     void BspRaySceneQuery::clearTemporaries(void)
     {
         mObjsThisQuery.clear();
-		vector<WorldFragment*>::type::iterator i;
+        vector<WorldFragment*>::type::iterator i;
         for (i = mSingleIntersections.begin(); i != mSingleIntersections.end(); ++i)
         {
             OGRE_FREE(*i, MEMCATEGORY_SCENE_CONTROL);
@@ -872,7 +879,7 @@ namespace Ogre {
             MovableObject* obj = const_cast<MovableObject*>(*i);
             // Skip this object if not enabled
             if(!(obj->getQueryFlags() & mQueryMask) ||
-				!((obj->getTypeFlags() & mQueryTypeMask)))
+                !((obj->getTypeFlags() & mQueryTypeMask)))
                 continue;
 
             // check we haven't reported this one already
@@ -888,7 +895,7 @@ namespace Ogre {
             if(result.first && result.second <= maxDistance)
             {
                 if (!listener->queryResult(obj, result.second + traceDistance))
-					return false;
+                    return false;
             }
         }
 
@@ -921,7 +928,7 @@ namespace Ogre {
                         // save this so we can clean up later
                         mSingleIntersections.push_back(wf);
                         if (!listener->queryResult(wf, result.second + traceDistance))
-							return false;
+                            return false;
                     }
                     else if (mWorldFragmentType ==  SceneQuery::WFT_PLANE_BOUNDED_REGION)
                     {
@@ -929,7 +936,7 @@ namespace Ogre {
                         assert((*bi)->fragment.fragmentType == SceneQuery::WFT_PLANE_BOUNDED_REGION);
                         if (!listener->queryResult(const_cast<WorldFragment*>(&(brush->fragment)), 
                             result.second + traceDistance))
-							return false; 
+                            return false; 
 
                     }
                 }
@@ -944,27 +951,27 @@ namespace Ogre {
 
     } 
     //-----------------------------------------------------------------------
-	//-----------------------------------------------------------------------
-	const String BspSceneManagerFactory::FACTORY_TYPE_NAME = "BspSceneManager";
-	//-----------------------------------------------------------------------
-	void BspSceneManagerFactory::initMetaData(void) const
-	{
-		mMetaData.typeName = FACTORY_TYPE_NAME;
-		mMetaData.description = "Scene manager for loading Quake3 .bsp files.";
-		mMetaData.sceneTypeMask = ST_INTERIOR;
-		mMetaData.worldGeometrySupported = true;
-	}
-	//-----------------------------------------------------------------------
-	SceneManager* BspSceneManagerFactory::createInstance(
-		const String& instanceName)
-	{
-		return OGRE_NEW BspSceneManager(instanceName);
-	}
-	//-----------------------------------------------------------------------
-	void BspSceneManagerFactory::destroyInstance(SceneManager* instance)
-	{
-		OGRE_DELETE instance;
-	}
+    //-----------------------------------------------------------------------
+    const String BspSceneManagerFactory::FACTORY_TYPE_NAME = "BspSceneManager";
+    //-----------------------------------------------------------------------
+    void BspSceneManagerFactory::initMetaData(void) const
+    {
+        mMetaData.typeName = FACTORY_TYPE_NAME;
+        mMetaData.description = "Scene manager for loading Quake3 .bsp files.";
+        mMetaData.sceneTypeMask = ST_INTERIOR;
+        mMetaData.worldGeometrySupported = true;
+    }
+    //-----------------------------------------------------------------------
+    SceneManager* BspSceneManagerFactory::createInstance(
+        const String& instanceName)
+    {
+        return OGRE_NEW BspSceneManager(instanceName);
+    }
+    //-----------------------------------------------------------------------
+    void BspSceneManagerFactory::destroyInstance(SceneManager* instance)
+    {
+        OGRE_DELETE instance;
+    }
 
 }
 

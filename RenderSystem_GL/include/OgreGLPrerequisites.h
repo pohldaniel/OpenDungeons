@@ -42,46 +42,28 @@ namespace Ogre {
     class GLFBOManager;
     class GLHardwarePixelBuffer;
     class GLRenderBuffer;
-	class GLDepthBuffer;
+    class GLDepthBuffer;
 
     typedef SharedPtr<GLGpuProgram> GLGpuProgramPtr;
     typedef SharedPtr<GLTexture> GLTexturePtr;
 }
 
-#if OGRE_THREAD_SUPPORT == 1
-#	define GLEW_MX
-#endif
-
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #if !defined( __MINGW32__ )
 #   define WIN32_LEAN_AND_MEAN
 #  ifndef NOMINMAX
-#	define NOMINMAX // required to stop windows.h messing up std::min
+#   define NOMINMAX // required to stop windows.h messing up std::min
 #  endif
 #endif
 #   include <windows.h>
 #   include <wingdi.h>
 #   include <GL/glew.h>
 #   include <GL/wglew.h>
-#   include <GL/glu.h>
 #elif OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 #   include <GL/glew.h>
-#   include <GL/glu.h>
 #   define GL_GLEXT_PROTOTYPES
 #elif OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #   include <GL/glew.h>
-#   include <OpenGL/glu.h>
-#endif
-
-#if OGRE_THREAD_SUPPORT == 1
-	// implemented in OgreGLContext.cpp
-	GLEWContext * glewGetContext();
-
-#	if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	// implemented in OgreWin32Context.cpp
-	WGLEWContext * wglewGetContext();
-#	endif
-
 #endif
 
 /// Lots of generated code in here which triggers the new VC CRT security warnings
@@ -90,15 +72,15 @@ namespace Ogre {
 #endif
 
 #if (OGRE_PLATFORM == OGRE_PLATFORM_WIN32) && !defined(__MINGW32__) && !defined(OGRE_STATIC_LIB)
-#	ifdef OGRE_GLPLUGIN_EXPORTS
-#		define _OgreGLExport __declspec(dllexport)
-#	else
+#   ifdef OGRE_GLPLUGIN_EXPORTS
+#       define _OgreGLExport __declspec(dllexport)
+#   else
 #       if defined( __MINGW32__ )
 #           define _OgreGLExport
 #       else
-#    		define _OgreGLExport __declspec(dllimport)
+#           define _OgreGLExport __declspec(dllimport)
 #       endif
-#	endif
+#   endif
 #elif defined ( OGRE_GCC_VISIBILITY )
 #    define _OgreGLExport  __attribute__ ((visibility("default")))
 #else

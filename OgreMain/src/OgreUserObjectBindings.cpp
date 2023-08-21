@@ -30,99 +30,108 @@ THE SOFTWARE.
 
 namespace Ogre {
 
-	Any UserObjectBindings::msEmptyAny;
-	
-	//--------------------------------------------------------------------------
-	UserObjectBindings::UserObjectBindings()
-	{
-		mAttributes = NULL;
-	}
+    Any UserObjectBindings::msEmptyAny;
 
-	//--------------------------------------------------------------------------
-	UserObjectBindings::~UserObjectBindings()
-	{
-		clear();
-	}
+    //--------------------------------------------------------------------------
+    UserObjectBindings::UserObjectBindings() :
+        mAttributes(NULL)
+    {
 
-	//-----------------------------------------------------------------------
-	void UserObjectBindings::setUserAny( const Any& anything )
-	{
-		// Allocate attributes on demand.
-		if (mAttributes == NULL)
-			mAttributes = OGRE_NEW UserObjectBindings::Attributes;
-		
-		mAttributes->mKeylessAny = anything;
-	}
+    }
 
-	//-----------------------------------------------------------------------
-	const Any& UserObjectBindings::getUserAny( void ) const
-	{
-		// Allocate attributes on demand.
-		if (mAttributes == NULL)
-			mAttributes = OGRE_NEW UserObjectBindings::Attributes;
+    //--------------------------------------------------------------------------
+    UserObjectBindings::UserObjectBindings(const UserObjectBindings& other) :
+        mAttributes(NULL)
+    {
+        if (other.mAttributes != NULL)
+            mAttributes = OGRE_NEW UserObjectBindings::Attributes(*other.mAttributes);
+    }
 
-		return mAttributes->mKeylessAny;
-	}
+    //--------------------------------------------------------------------------
+    UserObjectBindings::~UserObjectBindings()
+    {
+        clear();
+    }
 
-	//-----------------------------------------------------------------------
-	void UserObjectBindings::setUserAny(const String& key, const Any& anything)
-	{
-		// Allocate attributes on demand.
-		if (mAttributes == NULL)
-			mAttributes = OGRE_NEW UserObjectBindings::Attributes;
+    //-----------------------------------------------------------------------
+    void UserObjectBindings::setUserAny( const Any& anything )
+    {
+        // Allocate attributes on demand.
+        if (mAttributes == NULL)
+            mAttributes = OGRE_NEW UserObjectBindings::Attributes;
 
-		// Case map doesn't exists.
-		if (mAttributes->mUserObjectsMap == NULL)
-			mAttributes->mUserObjectsMap = new UserObjectsMap;
+        mAttributes->mKeylessAny = anything;
+    }
 
-		(*mAttributes->mUserObjectsMap)[key] = anything;
-	}	
+    //-----------------------------------------------------------------------
+    const Any& UserObjectBindings::getUserAny( void ) const
+    {
+        // Allocate attributes on demand.
+        if (mAttributes == NULL)
+            mAttributes = OGRE_NEW UserObjectBindings::Attributes;
 
-	//-----------------------------------------------------------------------
-	const Any& UserObjectBindings::getUserAny(const String& key) const
-	{
-		// Allocate attributes on demand.
-		if (mAttributes == NULL)
-			mAttributes = OGRE_NEW UserObjectBindings::Attributes;
+        return mAttributes->mKeylessAny;
+    }
 
-		// Case map doesn't exists.
-		if (mAttributes->mUserObjectsMap == NULL)
-			return msEmptyAny;
+    //-----------------------------------------------------------------------
+    void UserObjectBindings::setUserAny(const String& key, const Any& anything)
+    {
+        // Allocate attributes on demand.
+        if (mAttributes == NULL)
+            mAttributes = OGRE_NEW UserObjectBindings::Attributes;
 
-		UserObjectsMapConstIterator it = mAttributes->mUserObjectsMap->find(key);
+        // Case map doesn't exists.
+        if (mAttributes->mUserObjectsMap == NULL)
+            mAttributes->mUserObjectsMap = OGRE_NEW_T(UserObjectsMap, MEMCATEGORY_GENERAL) ();
 
-		// Case user data found.
-		if (it != mAttributes->mUserObjectsMap->end())
-		{
-			return it->second;
-		}
-		
-		return msEmptyAny;
-	}
+        (*mAttributes->mUserObjectsMap)[key] = anything;
+    }
 
-	//-----------------------------------------------------------------------
-	void UserObjectBindings::eraseUserAny(const String& key)
-	{
-		// Case attributes and map allocated.
-		if (mAttributes != NULL && mAttributes->mUserObjectsMap != NULL)
-		{
-			UserObjectsMapIterator it = mAttributes->mUserObjectsMap->find(key);
+    //-----------------------------------------------------------------------
+    const Any& UserObjectBindings::getUserAny(const String& key) const
+    {
+        // Allocate attributes on demand.
+        if (mAttributes == NULL)
+            mAttributes = OGRE_NEW UserObjectBindings::Attributes;
 
-			// Case object found -> erase it from the map.
-			if (it != mAttributes->mUserObjectsMap->end())
-			{
-				mAttributes->mUserObjectsMap->erase(it);
-			}
-		}
-	}
+        // Case map doesn't exists.
+        if (mAttributes->mUserObjectsMap == NULL)
+            return msEmptyAny;
 
-	//-----------------------------------------------------------------------
-	void UserObjectBindings::clear() const
-	{
-		if (mAttributes != NULL)
-		{			
-			OGRE_DELETE mAttributes;
-			mAttributes = NULL;
-		}
-	}
+        UserObjectsMapConstIterator it = mAttributes->mUserObjectsMap->find(key);
+
+        // Case user data found.
+        if (it != mAttributes->mUserObjectsMap->end())
+        {
+            return it->second;
+        }
+
+        return msEmptyAny;
+    }
+
+    //-----------------------------------------------------------------------
+    void UserObjectBindings::eraseUserAny(const String& key)
+    {
+        // Case attributes and map allocated.
+        if (mAttributes != NULL && mAttributes->mUserObjectsMap != NULL)
+        {
+            UserObjectsMapIterator it = mAttributes->mUserObjectsMap->find(key);
+
+            // Case object found -> erase it from the map.
+            if (it != mAttributes->mUserObjectsMap->end())
+            {
+                mAttributes->mUserObjectsMap->erase(it);
+            }
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    void UserObjectBindings::clear() const
+    {
+        if (mAttributes != NULL)
+        {
+            OGRE_DELETE mAttributes;
+            mAttributes = NULL;
+        }
+    }
 }

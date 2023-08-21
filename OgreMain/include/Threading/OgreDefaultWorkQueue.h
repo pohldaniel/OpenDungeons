@@ -27,13 +27,15 @@ THE SOFTWARE
 #define __OgreDefaultWorkQueue_H__
 
 #if OGRE_THREAD_PROVIDER == 0
-	#include "OgreDefaultWorkQueueStandard.h"
+    #include "OgreDefaultWorkQueueStandard.h"
 #elif OGRE_THREAD_PROVIDER == 1
-	#include "OgreDefaultWorkQueueStandard.h"
+    #include "OgreDefaultWorkQueueStandard.h"
 #elif OGRE_THREAD_PROVIDER == 2
-	#include "OgreDefaultWorkQueueStandard.h"
+    #include "OgreDefaultWorkQueueStandard.h"
 #elif OGRE_THREAD_PROVIDER == 3
-	#include "OgreDefaultWorkQueueTBB.h"
+    #include "OgreDefaultWorkQueueTBB.h"
+#elif OGRE_THREAD_PROVIDER == 4
+	#include "OgreDefaultWorkQueueStandard.h"
 #endif
 
 #endif

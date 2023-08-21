@@ -24,9 +24,6 @@
     <ClInclude Include="include\OgreOctreeZonePlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreOctreeZonePrerequisites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OgreOctreeZone.cpp">

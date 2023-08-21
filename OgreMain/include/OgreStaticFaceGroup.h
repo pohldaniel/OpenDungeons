@@ -35,13 +35,13 @@ THE SOFTWARE.
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Scene
-	*  @{
-	*/
-	/** A type of face group, i.e. face list of procedural etc */
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Scene
+    *  @{
+    */
+    /** A type of face group, i.e. face list of procedural etc */
     enum FaceGroupType {
         FGT_FACE_LIST,
         FGT_PATCH,
@@ -110,7 +110,7 @@ namespace Ogre {
         PatchSurface* patchSurf;
 
 
-        _OgreExport friend std::ostream& operator<<(std::ostream& o, const StaticFaceGroup& s)
+        friend std::ostream& operator<<(std::ostream& o, const StaticFaceGroup& s)
         {
             o << "StaticFaceGroup(";
             if (s.fType == FGT_FACE_LIST)
@@ -133,8 +133,8 @@ namespace Ogre {
 
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 } // namespace
 

@@ -31,18 +31,19 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 
-#include "OgreVector3.h"
 #include "OgreColourValue.h"
 #include "OgreCommon.h"
 #include "OgreHeaderPrefix.h"
+#include "OgreMath.h"
+#include "OgreVector3.h"
 
 namespace Ogre {
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Effects
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Effects
+    *  @{
+    */
 
     /** A billboard is a primitive which always faces the camera in every frame.
         @remarks
@@ -64,7 +65,7 @@ namespace Ogre {
             BillboardSet
     */
 
-	class _OgreExport Billboard : public FXAlloc
+    class _OgreExport Billboard : public FXAlloc
     {
         friend class BillboardSet;
         friend class BillboardParticleRenderer;
@@ -218,8 +219,8 @@ namespace Ogre {
         const FloatRect& getTexcoordRect(void) const { return mTexcoordRect; }
     };
 
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 

@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "OgrePanelOverlayElement.h"
 
 namespace Ogre {
-    /** \addtogroup Core
+    /** \addtogroup Optional
     *  @{
     */
     /** \addtogroup Overlays
@@ -63,6 +63,11 @@ namespace Ogre {
         virtual ~BorderPanelOverlayElement();
 
         virtual void initialise(void);
+
+        /** @copydoc OverlayElement::_releaseManualHardwareResources */
+        virtual void _releaseManualHardwareResources();
+        /** @copydoc OverlayElement::_restoreManualHardwareResources */
+        virtual void _restoreManualHardwareResources();
 
         const String& getTypeName(void) const;
         /** Sets the size of the border.
@@ -270,7 +275,6 @@ namespace Ogre {
         ushort mPixelTopBorderSize;
         ushort mPixelBottomBorderSize;
 
-        String mBorderMaterialName;
         MaterialPtr mBorderMaterial;
 
         /// Render operation for the border area
@@ -278,9 +282,9 @@ namespace Ogre {
 
         static String msTypeName;
 
-        /// internal method for setting up geometry, called by OverlayElement::update
+        /// Internal method for setting up geometry, called by OverlayElement::update
         void updatePositionGeometry(void);
-        /// internal method for setting up geometry, called by OverlayElement::update
+        /// Internal method for setting up geometry, called by OverlayElement::update
         void updateTextureGeometry(void);
         /// Internal method for setting up parameters
         void addBaseParameters(void);

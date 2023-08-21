@@ -18,12 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\BSP.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\BSP.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{f5ed5563-cf5c-4cf6-a5ee-bfb801e02ed2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

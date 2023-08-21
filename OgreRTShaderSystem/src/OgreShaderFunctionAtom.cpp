@@ -26,6 +26,7 @@ THE SOFTWARE.
 */
 
 #include "OgreShaderFunctionAtom.h"
+#include "OgreShaderParameter.h"
 #include "OgreRoot.h"
 
 namespace Ogre {
@@ -37,158 +38,176 @@ Operand::Operand(ParameterPtr parameter, Operand::OpSemantic opSemantic, int opM
 //-----------------------------------------------------------------------------
 Operand::Operand(const Operand& other) 
 {
-	*this = other;
+    *this = other;
 }
 //-----------------------------------------------------------------------------
 Operand& Operand::operator= (const Operand & other)
 {
-	if (this != &other) 
-	{
-		mParameter = other.mParameter;
-		mSemantic = other.mSemantic;
-		mMask = other.mMask;
-		mIndirectionLevel = other.mIndirectionLevel;
-	}		
-	return *this;
+    if (this != &other) 
+    {
+        mParameter = other.mParameter;
+        mSemantic = other.mSemantic;
+        mMask = other.mMask;
+        mIndirectionLevel = other.mIndirectionLevel;
+    }       
+    return *this;
 }
 //-----------------------------------------------------------------------------
 Operand::~Operand()
 {
-	// nothing todo
+    // nothing to do
 }
+
+void Operand::setMaskToParamType()
+{
+    switch (mParameter->getType())
+    {
+    case GCT_FLOAT1:
+        mMask = OPM_X;
+        break;
+    case GCT_FLOAT2:
+        mMask = OPM_XY;
+        break;
+    case GCT_FLOAT3:
+        mMask = OPM_XYZ;
+        break;
+    default:
+        mMask = OPM_ALL;
+        break;
+    }
+}
+
 //-----------------------------------------------------------------------------
 String Operand::getMaskAsString(int mask)
 {
-	String retVal = "";
+    String retVal = "";
 
-	if (mask & ~OPM_ALL) 
-	{
-		if (mask & OPM_X)
-		{
-			retVal += "x";
-		}
+    if (mask & ~OPM_ALL) 
+    {
+        if (mask & OPM_X)
+        {
+            retVal += "x";
+        }
 
-		if (mask & OPM_Y)
-		{
-			retVal += "y";
-		}
+        if (mask & OPM_Y)
+        {
+            retVal += "y";
+        }
 
-		if (mask & OPM_Z)
-		{
-			retVal += "z";
-		}
+        if (mask & OPM_Z)
+        {
+            retVal += "z";
+        }
 
-		if (mask & OPM_W)
-		{
-			retVal += "w";
-		}
-	}
+        if (mask & OPM_W)
+        {
+            retVal += "w";
+        }
+    }
 
-	return retVal;
+    return retVal;
 }
 
 //-----------------------------------------------------------------------------
 int Operand::getFloatCount(int mask)
 {
-	int floatCount = 0;
+    int floatCount = 0;
 
-	while (mask != 0)
-	{
-		if ((mask & Operand::OPM_X) != 0)
-		{
-			floatCount++;
+    while (mask != 0)
+    {
+        if ((mask & Operand::OPM_X) != 0)
+        {
+            floatCount++;
 
-		}			
-		mask = mask >> 1;
-	}
+        }           
+        mask = mask >> 1;
+    }
 
-	return floatCount;
+    return floatCount;
 }
 
 //-----------------------------------------------------------------------------
-GpuConstantType	Operand::getGpuConstantType(int mask)
+GpuConstantType Operand::getGpuConstantType(int mask)
 {
-	int floatCount = getFloatCount(mask);
-	GpuConstantType type;
+    int floatCount = getFloatCount(mask);
+    GpuConstantType type;
 
-	switch (floatCount)
-	{
+    switch (floatCount)
+    {
 
-	case 1:
-		type = GCT_FLOAT1;
-		break;
+    case 1:
+        type = GCT_FLOAT1;
+        break;
 
-	case 2:
-		type = GCT_FLOAT2;
-		break;
+    case 2:
+        type = GCT_FLOAT2;
+        break;
 
-	case 3:
-		type = GCT_FLOAT3;
-		break;
+    case 3:
+        type = GCT_FLOAT3;
+        break;
 
-	case 4:
-		type = GCT_FLOAT4;
-		break;
+    case 4:
+        type = GCT_FLOAT4;
+        break;
 
-	default:
-		type = GCT_UNKNOWN;
-		break;
-	}
+    default:
+        type = GCT_UNKNOWN;
+        break;
+    }
 
-	return type;
+    return type;
 }
 
 //-----------------------------------------------------------------------------
 String Operand::toString() const
 {
-	String retVal = mParameter->toString();
-	if ((mMask & OPM_ALL) || ((mMask & OPM_X) && (mMask & OPM_Y) && (mMask & OPM_Z) && (mMask & OPM_W)))
-	{
-		return retVal;
-	}
+    String retVal = mParameter->toString();
+    if ((mMask & OPM_ALL) || ((mMask & OPM_X) && (mMask & OPM_Y) && (mMask & OPM_Z) && (mMask & OPM_W)))
+    {
+        return retVal;
+    }
 
-	retVal += "." + getMaskAsString(mMask);
+    retVal += "." + getMaskAsString(mMask);
 
-	return retVal;
+    return retVal;
 }
 
 //-----------------------------------------------------------------------------
 FunctionAtom::FunctionAtom()
 {
-	mGroupExecutionOrder   = -1;
-	mInternalExecutionOrder = -1;
+    mGroupExecutionOrder   = -1;
 }
 
 //-----------------------------------------------------------------------------
 int FunctionAtom::getGroupExecutionOrder() const
 {
-	return mGroupExecutionOrder;
+    return mGroupExecutionOrder;
 }
-
-//-----------------------------------------------------------------------------
-int	FunctionAtom::getInternalExecutionOrder() const
-{
-	return mInternalExecutionOrder;
-}
-
 
 String FunctionInvocation::Type = "FunctionInvocation";
 
 //-----------------------------------------------------------------------
-FunctionInvocation::FunctionInvocation(const String& functionName, 
-									   int groupOrder, int internalOrder, String returnType) :
+FunctionInvocation::FunctionInvocation(const String& functionName, int groupOrder,
+                                       const String& returnType)
+    : mFunctionName(functionName), mReturnType(returnType)
+{
+    mGroupExecutionOrder = groupOrder;
+}
+
+//-----------------------------------------------------------------------
+FunctionInvocation::FunctionInvocation(const String& functionName,
+                                       int groupOrder, int, String returnType) :
     mFunctionName(functionName), mReturnType(returnType)
 {
-	mGroupExecutionOrder = groupOrder;
-	mInternalExecutionOrder = internalOrder;
+    mGroupExecutionOrder = groupOrder;
 }
 
 //-----------------------------------------------------------------------------
 FunctionInvocation::FunctionInvocation(const FunctionInvocation& other) :
     mFunctionName(other.mFunctionName), mReturnType(other.mReturnType)
 {
-	mGroupExecutionOrder = other.mGroupExecutionOrder;
-	mInternalExecutionOrder = other.mInternalExecutionOrder;
+    mGroupExecutionOrder = other.mGroupExecutionOrder;
     
     for ( OperandVector::const_iterator it = other.mOperands.begin(); it != other.mOperands.end(); ++it)
         mOperands.push_back(Operand(*it));
@@ -197,56 +216,69 @@ FunctionInvocation::FunctionInvocation(const FunctionInvocation& other) :
 //-----------------------------------------------------------------------
 void FunctionInvocation::writeSourceCode(std::ostream& os, const String& targetLanguage) const
 {
-	// Write function name.
-	os << mFunctionName << "(";
+    // Write function name.
+    os << mFunctionName << "(";
+    writeOperands(os, mOperands.begin(), mOperands.end());
+    // Write function call closer.
+    os << ");";
+}
 
-	// Write parameters.
-	ushort curIndLevel = 0;
-	for (OperandVector::const_iterator it = mOperands.begin(); it != mOperands.end(); )
-	{
-		os << (*it).toString();
-		++it;
+void FunctionInvocation::writeOperands(std::ostream& os, OperandVector::const_iterator begin,
+                                       OperandVector::const_iterator end) const
+{
+    // Write parameters.
+    ushort curIndLevel = 0;
+    for (OperandVector::const_iterator it = begin; it != end; )
+    {
+        os << it->toString();
+        ++it;
 
-		ushort opIndLevel = 0;
-		if (it != mOperands.end())
-		{
-			opIndLevel = (*it).getIndirectionLevel();
-		}
+        ushort opIndLevel = 0;
+        if (it != mOperands.end())
+        {
+            opIndLevel = it->getIndirectionLevel();
+        }
 
-		if (curIndLevel < opIndLevel)
-		{
-			while (curIndLevel < opIndLevel)
-			{
-				++curIndLevel;
-				os << "[";
-			}
-		}
-		else //if (curIndLevel >= opIndLevel)
-		{
-			while (curIndLevel > opIndLevel)
-			{
-				--curIndLevel;
-				os << "]";
-			}
-			if (opIndLevel != 0)
-			{
-				os << "][";
-			}
-			else if (it != mOperands.end())
-			{
-				os << ", ";
-			}
-		}
-	}
-
-	// Write function call closer.
-	os << ");";
+        if (curIndLevel != 0)
+        {
+            os << ")";
+        }
+        if (curIndLevel < opIndLevel)
+        {
+            while (curIndLevel < opIndLevel)
+            {
+                ++curIndLevel;
+                os << "[";
+            }
+        }
+        else //if (curIndLevel >= opIndLevel)
+        {
+            while (curIndLevel > opIndLevel)
+            {
+                --curIndLevel;
+                os << "]";
+            }
+            if (opIndLevel != 0)
+            {
+                os << "][";
+            }
+            else if (it != end)
+            {
+                os << ", ";
+            }
+        }
+        if (curIndLevel != 0)
+        {
+            os << "int("; // required by GLSL
+        }
+    }
 }
 
 //-----------------------------------------------------------------------
 void FunctionInvocation::pushOperand(ParameterPtr parameter, Operand::OpSemantic opSemantic, int opMask, int indirectionLevel)
 {
-	mOperands.push_back(Operand(parameter, opSemantic, opMask, indirectionLevel));
+    OgreAssert(parameter, "NULL parameter not allowed");
+    mOperands.push_back(Operand(parameter, opSemantic, opMask, indirectionLevel));
 }
 
 //-----------------------------------------------------------------------
@@ -408,6 +440,26 @@ bool FunctionInvocation::FunctionInvocationCompare::operator ()(FunctionInvocati
 
     // Passed all tests, they are the same
     return true;
+}
+
+String AssignmentAtom::Type = "AssignmentAtom";
+AssignmentAtom::AssignmentAtom(ParameterPtr lhs, ParameterPtr rhs, int groupOrder) {
+    // do this backwards for compatibility with FFP_FUNC_ASSIGN calls
+    pushOperand(rhs, Operand::OPS_IN);
+    pushOperand(lhs, Operand::OPS_OUT);
+    mGroupExecutionOrder = groupOrder;
+}
+
+void AssignmentAtom::writeSourceCode(std::ostream& os, const String& targetLanguage) const
+{
+    OperandVector::const_iterator outOp = mOperands.begin();
+    // find the output operand
+    while(outOp->getSemantic() != Operand::OPS_OUT)
+        outOp++;
+    writeOperands(os, outOp, mOperands.end());
+    os << "\t=\t";
+    writeOperands(os, mOperands.begin(), outOp);
+    os << ";";
 }
 
 }

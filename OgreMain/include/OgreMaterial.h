@@ -36,19 +36,20 @@ THE SOFTWARE.
 #include "OgreColourValue.h"
 #include "OgreBlendMode.h"
 #include "OgreHeaderPrefix.h"
+#include "OgreSharedPtr.h"
 
 namespace Ogre {
 
-	// Forward declaration
+    // Forward declaration
     class LodStrategy;
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Materials
-	*  @{
-	*/
-	/** Class encapsulates rendering properties of an object.
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Materials
+    *  @{
+    */
+    /** Class encapsulates rendering properties of an object.
     @remarks
     Ogre's material class encapsulates ALL aspects of the visual appearance,
     of an object. It also includes other flags which 
@@ -92,8 +93,9 @@ namespace Ogre {
 
     public:
         /// distance list used to specify LOD
-		typedef vector<Real>::type LodValueList;
+        typedef vector<Real>::type LodValueList;
         typedef ConstVectorIterator<LodValueList> LodValueIterator;
+        typedef vector<Technique*>::type Techniques;
     protected:
 
 
@@ -101,61 +103,60 @@ namespace Ogre {
         */
         void applyDefaults(void);
 
-        typedef vector<Technique*>::type Techniques;
-		/// All techniques, supported and unsupported
+        /// All techniques, supported and unsupported
         Techniques mTechniques;
-		/// Supported techniques of any sort
+        /// Supported techniques of any sort
         Techniques mSupportedTechniques;
-		typedef map<unsigned short, Technique*>::type LodTechniques;
+        typedef map<unsigned short, Technique*>::type LodTechniques;
         typedef map<unsigned short, LodTechniques*>::type BestTechniquesBySchemeList;
-		/** Map of scheme -> list of LOD techniques. 
-			Current scheme is set on MaterialManager,
-			and can be set per Viewport for auto activation.
-		*/
+        /** Map of scheme -> list of LOD techniques. 
+            Current scheme is set on MaterialManager,
+            and can be set per Viewport for auto activation.
+        */
         BestTechniquesBySchemeList mBestTechniquesBySchemeList;
 
         LodValueList mUserLodValues;
         LodValueList mLodValues;
         const LodStrategy *mLodStrategy;
         bool mReceiveShadows;
-		bool mTransparencyCastsShadows;
+        bool mTransparencyCastsShadows;
         /// Does this material require compilation?
         bool mCompilationRequired;
-		/// Text description of why any techniques are not supported
-		String mUnsupportedReasons;
+        /// Text description of why any techniques are not supported
+        String mUnsupportedReasons;
 
-		/** Insert a supported technique into the local collections. */
-		void insertSupportedTechnique(Technique* t);
+        /** Insert a supported technique into the local collections. */
+        void insertSupportedTechnique(Technique* t);
 
-		/** Clear the best technique list.
-		*/
-		void clearBestTechniqueList(void);
+        /** Clear the best technique list.
+        */
+        void clearBestTechniqueList(void);
 
-		/** Overridden from Resource.
-		*/
-		void prepareImpl(void);
+        /** Overridden from Resource.
+        */
+        void prepareImpl(void);
 
-		/** Overridden from Resource.
-		*/
-		void unprepareImpl(void);
+        /** Overridden from Resource.
+        */
+        void unprepareImpl(void);
 
-		/** Overridden from Resource.
-		*/
-		void loadImpl(void);
+        /** Overridden from Resource.
+        */
+        void loadImpl(void);
 
-		/** Unloads the material, frees resources etc.
-		@see
-		Resource
-		*/
-		void unloadImpl(void);
-		/// @copydoc Resource::calculateSize
-		size_t calculateSize(void) const;
+        /** Unloads the material, frees resources etc.
+        @see
+        Resource
+        */
+        void unloadImpl(void);
+        /// @copydoc Resource::calculateSize
+        size_t calculateSize(void) const;
     public:
 
         /** Constructor - use resource manager's create method rather than this.
         */
-		Material(ResourceManager* creator, const String& name, ResourceHandle handle,
-			const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+        Material(ResourceManager* creator, const String& name, ResourceHandle handle,
+            const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
 
         ~Material();
         /** Assignment operator to allow easy copying between materials.
@@ -184,17 +185,17 @@ namespace Ogre {
         /** Returns whether or not objects using this material will receive shadows. */
         bool getReceiveShadows(void) const { return mReceiveShadows; }
 
-		/** Sets whether objects using this material be classified as opaque to	the shadow caster system.
-		@remarks
-		This method allows a material to cast a shadow, even if it is transparent.
-		By default, transparent materials neither cast nor receive shadows. Shadows
-		will not be cast on any objects unless the scene is set up to support shadows 
-		(@see SceneManager::setShadowTechnique), and not all techniques cast
-		shadows on all objects.
-		*/
-		void setTransparencyCastsShadows(bool enabled) { mTransparencyCastsShadows = enabled; }
-		/** Returns whether or not objects using this material be classified as opaque to the shadow caster system. */
-		bool getTransparencyCastsShadows(void) const { return mTransparencyCastsShadows; }
+        /** Sets whether objects using this material be classified as opaque to the shadow caster system.
+        @remarks
+        This method allows a material to cast a shadow, even if it is transparent.
+        By default, transparent materials neither cast nor receive shadows. Shadows
+        will not be cast on any objects unless the scene is set up to support shadows 
+        (@see SceneManager::setShadowTechnique), and not all techniques cast
+        shadows on all objects.
+        */
+        void setTransparencyCastsShadows(bool enabled) { mTransparencyCastsShadows = enabled; }
+        /** Returns whether or not objects using this material be classified as opaque to the shadow caster system. */
+        bool getTransparencyCastsShadows(void) const { return mTransparencyCastsShadows; }
 
         /** Creates a new Technique for this Material.
         @remarks
@@ -211,44 +212,60 @@ namespace Ogre {
             return the first one in the technique list which is supported by the hardware.
         */
         Technique* createTechnique(void);
-        /** Gets the indexed technique. */
+        /** Gets the indexed technique.
+         * @deprecated use getTechniques()  */
         Technique* getTechnique(unsigned short index);
         /** searches for the named technique.
             Return 0 if technique with name is not found
         */
         Technique* getTechnique(const String& name);
-		/** Retrieves the number of techniques. */
+        /** Retrieves the number of techniques.
+         * @deprecated use getTechniques()  */
         unsigned short getNumTechniques(void) const;
-        /** Removes the technique at the given index. */		
-        void removeTechnique(unsigned short index);		
+        /** Removes the technique at the given index. */        
+        void removeTechnique(unsigned short index);     
         /** Removes all the techniques in this Material. */
         void removeAllTechniques(void);
         typedef VectorIterator<Techniques> TechniqueIterator;
-        /** Get an iterator over the Techniques in this Material. */
-        TechniqueIterator getTechniqueIterator(void);
-        /** Gets an iterator over all the Techniques which are supported by the current card. 
+        /** Get an iterator over the Techniques in this Material.
+         * @deprecated use getTechniques() */
+        OGRE_DEPRECATED TechniqueIterator getTechniqueIterator(void);
+
+        /** Get the Techniques in this Material. */
+        const Techniques& getTechniques(void) const {
+            return mTechniques;
+        }
+
+        /** Gets all the Techniques which are supported by the current card.
         @remarks
             The supported technique list is only available after this material has been compiled,
             which typically happens on loading the material. Therefore, if this method returns
             an empty list, try calling Material::load.
         */
-        TechniqueIterator getSupportedTechniqueIterator(void);
-		
-		/** Gets the indexed supported technique. */
-        Technique* getSupportedTechnique(unsigned short index);
-		/** Retrieves the number of supported techniques. */
-        unsigned short getNumSupportedTechniques(void) const;
-		/** Gets a string explaining why any techniques are not supported. */
-		const String& getUnsupportedTechniquesExplanation() const { return mUnsupportedReasons; }
+        const Techniques& getSupportedTechniques(void) const {
+            return mSupportedTechniques;
+        }
+
+        /// @deprecated use getSupportedTechniques()
+        OGRE_DEPRECATED TechniqueIterator getSupportedTechniqueIterator(void);
+        
+        /** Gets the indexed supported technique.
+         * @deprecated use getSupportedTechniques() */
+        OGRE_DEPRECATED Technique* getSupportedTechnique(unsigned short index);
+        /** Retrieves the number of supported techniques.
+         * @deprecated use getSupportedTechniques() */
+        OGRE_DEPRECATED unsigned short getNumSupportedTechniques(void) const;
+        /** Gets a string explaining why any techniques are not supported. */
+        const String& getUnsupportedTechniquesExplanation() const { return mUnsupportedReasons; }
 
         /** Gets the number of levels-of-detail this material has in the 
-			given scheme, based on Technique::setLodIndex. 
+            given scheme, based on Technique::setLodIndex. 
         @remarks
             Note that this will not be up to date until the material has been compiled.
         */
         unsigned short getNumLodLevels(unsigned short schemeIndex) const;
         /** Gets the number of levels-of-detail this material has in the 
-			given scheme, based on Technique::setLodIndex. 
+            given scheme, based on Technique::setLodIndex. 
         @remarks
             Note that this will not be up to date until the material has been compiled.
         */
@@ -263,22 +280,22 @@ namespace Ogre {
             The best supported technique is only available after this material has been compiled,
             which typically happens on loading the material. Therefore, if this method returns
             NULL, try calling Material::load.
-		@param lodIndex The material LOD index to use
-		@param rend Optional parameter specifying the Renderable that is requesting
-			this technique. Only used if no valid technique for the active material 
-			scheme is found, at which point it is passed to 
-			MaterialManager::Listener::handleSchemeNotFound as information.
+        @param lodIndex The material LOD index to use
+        @param rend Optional parameter specifying the Renderable that is requesting
+            this technique. Only used if no valid technique for the active material 
+            scheme is found, at which point it is passed to 
+            MaterialManager::Listener::handleSchemeNotFound as information.
         */
         Technique* getBestTechnique(unsigned short lodIndex = 0, const Renderable* rend = 0);
 
 
         /** Creates a new copy of this material with the same settings but a new name.
-		@param newName The name for the cloned material
-		@param changeGroup If true, the resource group of the clone is changed
-		@param newGroup Only required if changeGroup is true; the new group to assign
+        @param newName The name for the cloned material
+        @param changeGroup If true, the resource group of the clone is changed
+        @param newGroup Only required if changeGroup is true; the new group to assign
         */
         MaterialPtr clone(const String& newName, bool changeGroup = false, 
-			const String& newGroup = StringUtil::BLANK) const;
+            const String& newGroup = BLANKSTRING) const;
 
         /** Copies the details of this material into another, preserving the target's handle and name
         (unlike operator=) but copying everything else.
@@ -330,15 +347,7 @@ namespace Ogre {
         */
         void setAmbient(Real red, Real green, Real blue);
 
-        /** Sets the ambient colour reflectance properties for every Pass in every Technique.
-        @note
-            This property has been moved to the Pass class, which is accessible via the 
-            Technique. For simplicity, this method allows you to set these properties for 
-            every current Technique, and for every current Pass within those Techniques. If 
-            you need more precision, retrieve the Technique and Pass instances and set the
-            property there.
-        @see Pass::setAmbient
-        */
+        /// @overload
         void setAmbient(const ColourValue& ambient);
 
         /** Sets the diffuse colour reflectance properties of every Pass in every Technique.
@@ -352,15 +361,7 @@ namespace Ogre {
         */
         void setDiffuse(Real red, Real green, Real blue, Real alpha);
 
-        /** Sets the diffuse colour reflectance properties of every Pass in every Technique.
-        @note
-            This property has been moved to the Pass class, which is accessible via the 
-            Technique. For simplicity, this method allows you to set these properties for 
-            every current Technique, and for every current Pass within those Techniques. If 
-            you need more precision, retrieve the Technique and Pass instances and set the
-            property there.
-        @see Pass::setDiffuse
-        */
+        /// @overload
         void setDiffuse(const ColourValue& diffuse);
 
         /** Sets the specular colour reflectance properties of every Pass in every Technique.
@@ -374,15 +375,7 @@ namespace Ogre {
         */
         void setSpecular(Real red, Real green, Real blue, Real alpha);
 
-        /** Sets the specular colour reflectance properties of every Pass in every Technique.
-        @note
-            This property has been moved to the Pass class, which is accessible via the 
-            Technique. For simplicity, this method allows you to set these properties for 
-            every current Technique, and for every current Pass within those Techniques. If 
-            you need more precision, retrieve the Technique and Pass instances and set the
-            property there.
-        @see Pass::setSpecular
-        */
+        /// @overload
         void setSpecular(const ColourValue& specular);
 
         /** Sets the shininess properties of every Pass in every Technique.
@@ -407,18 +400,10 @@ namespace Ogre {
         */
         void setSelfIllumination(Real red, Real green, Real blue);
 
-        /** Sets the amount of self-illumination of every Pass in every Technique.
-        @note
-            This property has been moved to the Pass class, which is accessible via the 
-            Technique. For simplicity, this method allows you to set these properties for 
-            every current Technique, and for every current Pass within those Techniques. If 
-            you need more precision, retrieve the Technique and Pass instances and set the
-            property there.
-        @see Pass::setSelfIllumination
-        */
+        /// @overload
         void setSelfIllumination(const ColourValue& selfIllum);
 
-		/** Sets whether or not each Pass renders with depth-buffer checking on or not.
+        /** Sets whether or not each Pass renders with depth-buffer checking on or not.
         @note
             This property has been moved to the Pass class, which is accessible via the 
             Technique. For simplicity, this method allows you to set these properties for 
@@ -451,7 +436,7 @@ namespace Ogre {
         */
         void setDepthFunction( CompareFunction func );
 
-		/** Sets whether or not colour buffer writing is enabled for each Pass.
+        /** Sets whether or not colour buffer writing is enabled for each Pass.
         @note
             This property has been moved to the Pass class, which is accessible via the 
             Technique. For simplicity, this method allows you to set these properties for 
@@ -459,8 +444,8 @@ namespace Ogre {
             you need more precision, retrieve the Technique and Pass instances and set the
             property there.
         @see Pass::setColourWriteEnabled
-		*/
-		void setColourWriteEnabled(bool enabled);
+        */
+        void setColourWriteEnabled(bool enabled);
 
         /** Sets the culling mode for each pass  based on the 'vertex winding'.
         @note
@@ -609,34 +594,44 @@ namespace Ogre {
             switch to lower details. They are listed in LOD index order, starting at index
             1 (ie the first level down from the highest level 0, which automatically applies
             from a value of 0). These are 'user values', before being potentially 
-			transformed by the strategy, so for the distance strategy this is an
-			unsquared distance for example.
+            transformed by the strategy, so for the distance strategy this is an
+            unsquared distance for example.
         */
         void setLodLevels(const LodValueList& lodValues);
 
-        /** Gets an iterator over the list of values transformed by the LodStrategy at which each LOD comes into effect. 
+        /** Gets the list of values transformed by the LodStrategy at which each LOD comes into effect.
         @remarks
             Note that the iterator returned from this method is not totally analogous to 
             the one passed in by calling setLodLevels - the list includes a zero
             entry at the start (since the highest LOD starts at value 0). Also, the
-			values returned are after being transformed by LodStrategy::transformUserValue.
+            values returned are after being transformed by LodStrategy::transformUserValue.
         */
-        LodValueIterator getLodValueIterator(void) const;
+        const LodValueList& getLodValues(void) const {
+            return mLodValues;
+        }
 
-        /** Gets an iterator over the user-defined list of values which are internally transfomed by the LodStrategy. 
+        /// @deprecated use getLodValues()
+        OGRE_DEPRECATED LodValueIterator getLodValueIterator(void) const;
+
+        /** Gets the user-defined list of values which are internally transfomed by the LodStrategy.
         @remarks
             Note that the iterator returned from this method is not totally analogous to 
             the one passed in by calling setLodLevels - the list includes a zero
             entry at the start (since the highest LOD starts at value 0). Also, the
-			values returned are after being transformed by LodStrategy::transformUserValue.
+            values returned are after being transformed by LodStrategy::transformUserValue.
         */
-        LodValueIterator getUserLodValueIterator(void) const;
+        const LodValueList& getUserLodValues(void) const {
+            return mUserLodValues;
+        }
+
+        /// @deprecated use getUserLodValues()
+        OGRE_DEPRECATED LodValueIterator getUserLodValueIterator(void) const;
 
         /** Gets the LOD index to use at the given value. 
-		@note The value passed in is the 'transformed' value. If you are dealing with
-		an original source value (e.g. distance), use LodStrategy::transformUserValue
-		to turn this into a lookup value.
-		*/
+        @note The value passed in is the 'transformed' value. If you are dealing with
+        an original source value (e.g. distance), use LodStrategy::transformUserValue
+        to turn this into a lookup value.
+        */
         ushort getLodIndex(Real value) const;
 
         /** Get LOD strategy used by this material. */
@@ -667,18 +662,18 @@ namespace Ogre {
         */
         bool applyTextureAliases(const AliasTextureNamePairList& aliasList, const bool apply = true) const;
 
-	    /** Gets the compilation status of the material.
+        /** Gets the compilation status of the material.
         @return True if the material needs recompilation.
         */
-	    bool getCompilationRequired() const
-	    {
-		    return mCompilationRequired;
-	    }
+        bool getCompilationRequired() const
+        {
+            return mCompilationRequired;
+        }
 
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 } //namespace 
 

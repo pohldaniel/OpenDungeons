@@ -43,7 +43,7 @@
 #include <OgreShaderGenerator.h>
 #if OGRE_VERSION > 0x10A00
 #include <OgreMaterialManager.h>
-#include <OgreSGTechniqueResolverListener.h>
+//#include <OgreSGTechniqueResolverListener.h>
 #endif
 
 #ifdef OD_USE_SFML_WINDOW
@@ -216,8 +216,8 @@ void ODApplication::startClient()
         return;
     }
 #if OGRE_VERSION > 0x10A00
-    auto sgListener = new OgreBites::SGTechniqueResolverListener(Ogre::RTShader::ShaderGenerator::getSingletonPtr());
-    Ogre::MaterialManager::getSingleton().addListener(sgListener);
+	//auto sgListener = new OgreBites::SGTechniqueResolverListener(Ogre::RTShader::ShaderGenerator::getSingletonPtr());
+	//Ogre::MaterialManager::getSingleton().addListener(sgListener);
 #endif
 
     Ogre::ResourceGroupManager::getSingletonPtr()->initialiseAllResourceGroups();
@@ -276,8 +276,8 @@ void ODApplication::startClient()
     server.stopServer();
     ogreRoot.removeFrameListener(&frameListener);
 #if OGRE_VERSION > 0x10A00
-    Ogre::MaterialManager::getSingleton().removeListener(sgListener);
-    delete sgListener;
+	//Ogre::MaterialManager::getSingleton().removeListener(sgListener);
+	//delete sgListener;
 #endif
     Ogre::RTShader::ShaderGenerator::destroy();
     ogreRoot.destroyRenderTarget(renderWindow);

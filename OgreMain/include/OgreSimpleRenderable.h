@@ -33,29 +33,28 @@ THE SOFTWARE.
 #include "OgreMovableObject.h"
 #include "OgreRenderable.h"
 #include "OgreAxisAlignedBox.h"
-#include "OgreMaterial.h"
+#include "OgreRenderOperation.h"
 #include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Scene
-	*  @{
-	*/
-	/** Simple implementation of MovableObject and Renderable for single-part custom objects. 
-	@see ManualObject for a simpler interface with more flexibility
-	*/
-	class _OgreExport SimpleRenderable : public MovableObject, public Renderable
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Scene
+    *  @{
+    */
+    /** Simple implementation of MovableObject and Renderable for single-part custom objects. 
+    @see ManualObject for a simpler interface with more flexibility
+    */
+    class _OgreExport SimpleRenderable : public MovableObject, public Renderable
     {
     protected:
         RenderOperation mRenderOp;
 
-        Matrix4 mWorldTransform;
+        Matrix4 mTransform;
         AxisAlignedBox mBox;
 
-        String mMatName;
         MaterialPtr mMaterial;
 
         /// The scene manager for the current frame.
@@ -74,13 +73,15 @@ namespace Ogre {
         /// Named constructor
         SimpleRenderable(const String& name);
 
-        virtual void setMaterial( const String& matName );
+        /// @deprecated use setMaterial(const MaterialPtr&)
+        OGRE_DEPRECATED virtual void setMaterial( const String& matName );
+        virtual void setMaterial(const MaterialPtr& mat);
         virtual const MaterialPtr& getMaterial(void) const;
 
         virtual void setRenderOperation( const RenderOperation& rend );
         virtual void getRenderOperation(RenderOperation& op);
 
-        void setWorldTransform( const Matrix4& xform );
+        void setTransform( const Matrix4& xform );
         virtual void getWorldTransforms( Matrix4* xform ) const;
 
 
@@ -90,12 +91,9 @@ namespace Ogre {
         virtual const AxisAlignedBox& getBoundingBox(void) const;
 
         virtual void _updateRenderQueue(RenderQueue* queue);
-		/// @copydoc MovableObject::visitRenderables
-		void visitRenderables(Renderable::Visitor* visitor, 
-			bool debugRenderables = false);
-
-        virtual ~SimpleRenderable();
-
+        /// @copydoc MovableObject::visitRenderables
+        void visitRenderables(Renderable::Visitor* visitor, 
+            bool debugRenderables = false);
 
         /** Overridden from MovableObject */
         virtual const String& getMovableType(void) const;
@@ -104,8 +102,8 @@ namespace Ogre {
         const LightList& getLights(void) const;
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 }
 
 #include "OgreHeaderSuffix.h"

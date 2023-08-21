@@ -28,7 +28,6 @@ THE SOFTWARE.
 #ifndef __Ogre_Volume_CacheSource_H__
 #define __Ogre_Volume_CacheSource_H__
 
-#include "OgreVector3.h"
 #include "OgreVector4.h"
 
 #include "OgreVolumeSource.h"
@@ -36,7 +35,12 @@ THE SOFTWARE.
 
 namespace Ogre {
 namespace Volume {
-    
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \addtogroup Volume
+    *  @{
+    */
     /** A less operator. 
     @note
         This operator is needed so that Vertex can serve as the key in a map structrue 
@@ -99,7 +103,8 @@ namespace Volume {
         virtual Real getValue(const Vector3 &position) const;
 
     };
-
+    /** @} */
+    /** @} */
 }
 }
 

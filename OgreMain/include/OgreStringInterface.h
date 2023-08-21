@@ -30,19 +30,18 @@ THE SOFTWARE.
 #define __StringInterface_H__
 
 #include "OgrePrerequisites.h"
-#include "OgreString.h"
 #include "OgreCommon.h"
 #include "Threading/OgreThreadHeaders.h"
 #include "OgreHeaderPrefix.h"
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup General
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup General
+    *  @{
+    */
 
     /// List of parameter types available
     enum ParameterType
@@ -68,10 +67,10 @@ namespace Ogre {
     {
     public:
         String name;
-        String description;
+        String description; //!< @deprecated use the manual instead
         ParameterType paramType;
         ParameterDef(const String& newName, const String& newDescription, ParameterType newType)
-            : name(newName), description(newDescription), paramType(newType) {}
+            : name(newName), paramType(newType) {}
     };
     typedef vector<ParameterDef>::type ParameterList;
 
@@ -111,7 +110,7 @@ namespace Ogre {
             }
         }
 
-		const ParamCommand* getParamCommand(const String& name) const
+        const ParamCommand* getParamCommand(const String& name) const
         {
             ParamCommandMap::const_iterator i = mParamCommands.find(name);
             if (i != mParamCommands.end())
@@ -170,9 +169,9 @@ namespace Ogre {
 
         /// Class name for this instance to be used as a lookup (must be initialised by subclasses)
         String mParamDictName;
-		ParamDictionary* mParamDict;
+        ParamDictionary* mParamDict;
 
-	protected:
+    protected:
         /** Internal method for creating a parameter dictionary for the class, if it does not already exist.
         @remarks
             This method will check to see if a parameter dictionary exist for this class yet,
@@ -187,24 +186,24 @@ namespace Ogre {
         {
             OGRE_LOCK_MUTEX( msDictionaryMutex );
 
-			ParamDictionaryMap::iterator it = msDictionary.find(className);
+            ParamDictionaryMap::iterator it = msDictionary.find(className);
 
-			if ( it == msDictionary.end() )
-			{
-				mParamDict = &msDictionary.insert( std::make_pair( className, ParamDictionary() ) ).first->second;
-				mParamDictName = className;
-				return true;
-			}
-			else
-			{
-				mParamDict = &it->second;
-				mParamDictName = className;
-				return false;
-			}
+            if ( it == msDictionary.end() )
+            {
+                mParamDict = &msDictionary.insert( std::make_pair( className, ParamDictionary() ) ).first->second;
+                mParamDictName = className;
+                return true;
+            }
+            else
+            {
+                mParamDict = &it->second;
+                mParamDictName = className;
+                return false;
+            }
         }
 
     public:
-		StringInterface() : mParamDict(NULL) { }
+        StringInterface() : mParamDict(NULL) { }
 
         /** Virtual destructor, see Effective C++ */
         virtual ~StringInterface() {}
@@ -218,12 +217,12 @@ namespace Ogre {
         */
         ParamDictionary* getParamDictionary(void)
         {
-			return mParamDict;
+            return mParamDict;
         }
 
-		const ParamDictionary* getParamDictionary(void) const
+        const ParamDictionary* getParamDictionary(void) const
         {
-			return mParamDict;
+            return mParamDict;
         }
 
         /** Retrieves a list of parameters valid for this object. 
@@ -247,7 +246,7 @@ namespace Ogre {
         @return
             true if set was successful, false otherwise (NB no exceptions thrown - tolerant method)
         */
-        virtual bool setParameter(const String& name, const String& value);
+        bool setParameter(const String& name, const String& value);
         /** Generic multiple parameter setting method.
         @remarks
             Call this method with a list of name / value pairs
@@ -257,7 +256,7 @@ namespace Ogre {
         @param
             paramList Name/value pair list
         */
-        virtual void setParameterList(const NameValuePairList& paramList);
+        void setParameterList(const NameValuePairList& paramList);
         /** Generic parameter retrieval method.
         @remarks
             Call this method with the name of a parameter to retrieve a string-format value of
@@ -269,7 +268,7 @@ namespace Ogre {
         @return
             String value of parameter, blank if not found
         */
-        virtual String getParameter(const String& name) const
+        String getParameter(const String& name) const
         {
             // Get dictionary
             const ParamDictionary* dict = getParamDictionary();
@@ -300,7 +299,7 @@ namespace Ogre {
         @param dest Pointer to object to have it's parameters set the same as this object.
 
         */
-        virtual void copyParametersTo(StringInterface* dest) const
+        void copyParametersTo(StringInterface* dest) const
         {
             // Get dictionary
             const ParamDictionary* dict = getParamDictionary();
@@ -327,8 +326,8 @@ namespace Ogre {
 
     };
 
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 
 }

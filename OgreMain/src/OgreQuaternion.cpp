@@ -35,10 +35,8 @@ THE SOFTWARE.
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
 
 #include "OgreQuaternion.h"
-
-#include "OgreMath.h"
 #include "OgreMatrix3.h"
-#include "OgreVector3.h"
+
 
 namespace Ogre {
 
@@ -313,7 +311,7 @@ namespace Ogre {
     //-----------------------------------------------------------------------
     Real Quaternion::Norm () const
     {
-        return w*w+x*x+y*y+z*z;
+        return Math::Sqrt(w * w + x * x + y * y + z * z);
     }
     //-----------------------------------------------------------------------
     Quaternion Quaternion::Inverse () const
@@ -340,27 +338,28 @@ namespace Ogre {
     Quaternion Quaternion::Exp () const
     {
         // If q = A*(x*i+y*j+z*k) where (x,y,z) is unit length, then
-        // exp(q) = cos(A)+sin(A)*(x*i+y*j+z*k).  If sin(A) is near zero,
-        // use exp(q) = cos(A)+A*(x*i+y*j+z*k) since A/sin(A) has limit 1.
+        // exp(q) = e^w(cos(A)+sin(A)*(x*i+y*j+z*k)).  If sin(A) is near zero,
+        // use exp(q) = e^w(cos(A)+(x*i+y*j+z*k)) since sin(A)/A has limit 1.
 
         Radian fAngle ( Math::Sqrt(x*x+y*y+z*z) );
         Real fSin = Math::Sin(fAngle);
+		Real fExpW = Math::Exp(w);
 
         Quaternion kResult;
-        kResult.w = Math::Cos(fAngle);
+        kResult.w = fExpW*Math::Cos(fAngle);
 
-        if ( Math::Abs(fSin) >= msEpsilon )
+        if ( Math::Abs(fAngle.valueRadians()) >= msEpsilon )
         {
-            Real fCoeff = fSin/(fAngle.valueRadians());
+            Real fCoeff = fExpW*(fSin/(fAngle.valueRadians()));
             kResult.x = fCoeff*x;
             kResult.y = fCoeff*y;
             kResult.z = fCoeff*z;
         }
         else
         {
-            kResult.x = x;
-            kResult.y = y;
-            kResult.z = z;
+            kResult.x = fExpW*x;
+            kResult.y = fExpW*y;
+            kResult.z = fExpW*z;
         }
 
         return kResult;
@@ -369,15 +368,19 @@ namespace Ogre {
     Quaternion Quaternion::Log () const
     {
         // If q = cos(A)+sin(A)*(x*i+y*j+z*k) where (x,y,z) is unit length, then
-        // log(q) = A*(x*i+y*j+z*k).  If sin(A) is near zero, use log(q) =
-        // sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1.
+        // log(q) = (A/sin(A))*(x*i+y*j+z*k).  If sin(A) is near zero, use
+        // log(q) = (x*i+y*j+z*k) since A/sin(A) has limit 1.
 
         Quaternion kResult;
         kResult.w = 0.0;
 
         if ( Math::Abs(w) < 1.0 )
         {
-            Radian fAngle ( Math::ACos(w) );
+            // According to Neil Dantam, atan2 has the best stability.
+            // http://www.neil.dantam.name/note/dantam-quaternion.pdf
+            Real fNormV = Math::Sqrt(x*x + y*y + z*z);
+            Radian fAngle ( Math::ATan2(fNormV, w) );
+
             Real fSin = Math::Sin(fAngle);
             if ( Math::Abs(fSin) >= msEpsilon )
             {
@@ -507,7 +510,7 @@ namespace Ogre {
     Real Quaternion::normalise(void)
     {
         Real len = Norm();
-        Real factor = 1.0f / Math::Sqrt(len);
+        Real factor = 1.0f / len;
         *this = *this * factor;
         return len;
     }

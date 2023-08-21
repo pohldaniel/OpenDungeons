@@ -29,22 +29,26 @@ THE SOFTWARE.
 #define __Ogre_Volume_Chunk_H__
 
 #include "OgreSimpleRenderable.h"
-#include "OgreSceneNode.h"
 #include "OgreResourceGroupManager.h"
 #include "OgreFrameListener.h"
+#include "OgreEntity.h"
 
 #include "OgreVolumePrerequisites.h"
-#include "OgreVolumeChunkHandler.h"
-#include "OgreVolumeSource.h"
-#include "OgreVolumeOctreeNode.h"
-#include "OgreVolumeDualGridGenerator.h"
-#include "OgreVolumeMeshBuilder.h"
-
 
 namespace Ogre {
 namespace Volume {
-
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \addtogroup Volume
+    *  @{
+    */
+    class Source;
+    class MeshBuilderCallback;
     class ChunkHandler;
+    class MeshBuilder;
+    class DualGridGenerator;
+    class OctreeNode;
 
     /** Parameters for loading the volume.
     */
@@ -364,7 +368,7 @@ namespace Volume {
         @param resourceGroup
             The resource group where to search for the configuration file.
         */
-        virtual void load(SceneNode *parent, SceneManager *sceneManager, const String& filename, bool validSourceResult = false, MeshBuilderCallback *lodCallback = 0, const String& resourceGroup = ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+        virtual void load(SceneNode *parent, SceneManager *sceneManager, const String& filename, bool validSourceResult = false, MeshBuilderCallback *lodCallback = 0, const String& resourceGroup = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
         
         /** Shows the debug visualization entity of the dualgrid.
         @param visible
@@ -413,11 +417,15 @@ namespace Volume {
             The created chunk.
         */
         virtual Chunk* createInstance(void);
-        
+
         /** Overridden from SimpleRenderable.
             Sets the material of this chunk and all of his children.
         */
-        virtual void setMaterial(const String& matName);
+        void setMaterial(const MaterialPtr& mat);
+
+        /// @overload
+        /// @deprecated use setMaterial(const MaterialPtr& mat)
+        OGRE_DEPRECATED void setMaterial(const String& matName);
 
         /** Sets the material of all chunks of a specific level in the tree.
         This allows LODs where the lower levels (== less detail and more far away)
@@ -427,7 +435,11 @@ namespace Volume {
         @param matName
             The material name to set.
         */
-        virtual void setMaterialOfLevel(size_t level, const String& matName);
+        void setMaterialOfLevel(size_t level, const MaterialPtr& mat);
+
+        /// @overload
+        /// @deprecated use setMaterialOfLevel(size_t level, const MaterialPtr& mat)
+        OGRE_DEPRECATED void setMaterialOfLevel(size_t level, const String& matName);
 
         /** A list of Chunks.
         */
@@ -449,6 +461,8 @@ namespace Volume {
         ChunkParameters* getChunkParameters(void);
 
     };
+    /** @} */
+    /** @} */
 }
 }
 

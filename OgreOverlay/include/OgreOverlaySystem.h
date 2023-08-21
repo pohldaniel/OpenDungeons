@@ -29,54 +29,57 @@ THE SOFTWARE.
 #ifndef __OverlaySystem_H__
 #define __OverlaySystem_H__
 
-#include "OgreOverlay.h"
-#include "OgreOverlayContainer.h"
-#include "OgreOverlayElement.h"
-#include "OgreOverlayManager.h"
-#include "OgreFontManager.h"
-#include "OgreBorderPanelOverlayElement.h"
-#include "OgreTextAreaOverlayElement.h"
-#include "OgreOverlayElementFactory.h"
+#include "OgreOverlayPrerequisites.h"
 #include "OgreRenderQueueListener.h"
+#include "OgreRenderSystem.h"
 
 #if OGRE_PROFILING
 #include "OgreOverlayProfileSessionListener.h"
 #endif
 
 namespace Ogre {
+    class OverlayManager;
+    class FontManager;
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Overlays
-	*  @{
-	*/
-	/** This class simplify initialization / finalization of the overlay system. 
-		OGRE root did this steps before the overlay system transformed into a component.
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \addtogroup Overlays
+    *  @{
+    */
+    /** This class simplify initialization / finalization of the overlay system. 
+        OGRE root did this steps before the overlay system transformed into a component.
     @remarks
         Before you create a concrete instance of the OverlaySystem the OGRE::Root must be created
-		but not initialized. In the ctor all relevant systems are created and registered. The dtor
-		must be called before you delete OGRE::Root.
-		To make the overlays visible (= render into your viewports) you have to register this
-		instance as a RenderQueueListener in your scenemanager(s).
+        but not initialized. In the ctor all relevant systems are created and registered. The dtor
+        must be called before you delete OGRE::Root.
+        To make the overlays visible (= render into your viewports) you have to register this
+        instance as a RenderQueueListener in your scenemanager(s).
     */
-	class _OgreOverlayExport OverlaySystem : public OverlayAlloc , public Ogre::RenderQueueListener
-	{
-	public:
-		OverlaySystem();
-		virtual ~OverlaySystem();
+    class _OgreOverlayExport OverlaySystem
+        : public OverlayAlloc
+        , public Ogre::RenderQueueListener
+        , public Ogre::RenderSystem::Listener
+    {
+    public:
+        OverlaySystem();
+        virtual ~OverlaySystem();
 
-		/// @see RenderQueueListener
-		virtual void renderQueueStarted(uint8 queueGroupId, const String& invocation, 
-			bool& skipThisInvocation);
-	private:
+        /// @see RenderQueueListener
+        virtual void renderQueueStarted(uint8 queueGroupId, const String& invocation, 
+            bool& skipThisInvocation);
+
+        /// @see RenderSystem::Listener
+        virtual void eventOccurred(const String& eventName, const NameValuePairList* parameters);
+
+    private:
         OverlayManager* mOverlayManager;
         FontManager* mFontManager;
 
 #if OGRE_PROFILING
-		OverlayProfileSessionListener* mProfileListener;
+        OverlayProfileSessionListener* mProfileListener;
 #endif
-	};
+    };
 
 }
 #endif

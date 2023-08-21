@@ -28,6 +28,12 @@ THE SOFTWARE.
 #include "OgreBspSceneNode.h"
 #include "OgreBspSceneManager.h"
 
+#if OGRE_NODE_STORAGE_LEGACY
+#define ITER_VAL(it) it->second
+#else
+#define ITER_VAL(it) (*it)
+#endif
+
 namespace Ogre {
 
 
@@ -51,7 +57,7 @@ namespace Ogre {
             itend = mObjectsByName.end();
             for (it = mObjectsByName.begin(); it != itend; ++it)
             {
-                MovableObject* mov = it->second;
+                MovableObject* mov = ITER_VAL(it);
 
                 static_cast<BspSceneManager*>(mCreator)->_notifyObjectMoved(
                     mov, this->_getDerivedPosition());
@@ -60,58 +66,58 @@ namespace Ogre {
         }
 
     }
-	//-------------------------------------------------------------------------
-	MovableObject* BspSceneNode::detachObject(unsigned short index)
-	{
-		MovableObject* ret = SceneNode::detachObject(index);
-		static_cast<BspSceneManager*>(mCreator)->_notifyObjectDetached(ret);
-		return ret;
-		
-	}
-	//-------------------------------------------------------------------------
-	MovableObject* BspSceneNode::detachObject(const String& name)
-	{
-		MovableObject* ret = SceneNode::detachObject(name);
-		static_cast<BspSceneManager*>(mCreator)->_notifyObjectDetached(ret);
-		return ret;
-	}
-	//-------------------------------------------------------------------------
-	void BspSceneNode::detachAllObjects(void)
-	{
-		ObjectMap::const_iterator i, iend;
-		iend = mObjectsByName.end();
-		for (i = mObjectsByName.begin(); i != iend; ++i)
-		{
-			static_cast<BspSceneManager*>(mCreator)
-				->_notifyObjectDetached(i->second);
-		}
-		SceneNode::detachAllObjects();
-	}
-	//-------------------------------------------------------------------------
-	void BspSceneNode::setInSceneGraph(bool inGraph)
-	{
-		if (mIsInSceneGraph != inGraph)
-		{
-			ObjectMap::const_iterator i, iend;
-			iend = mObjectsByName.end();
-			for (i = mObjectsByName.begin(); i != iend; ++i)
-			{
-				if (!inGraph)
-				{
-					// Equivalent to detaching
-					static_cast<BspSceneManager*>(mCreator)
-						->_notifyObjectDetached(i->second);
-				}
-				else
-				{
-					// move deals with re-adding
-	                static_cast<BspSceneManager*>(mCreator)->_notifyObjectMoved(
-    	                i->second, this->_getDerivedPosition());
-				}
-			}
-		}
-		mIsInSceneGraph = inGraph;
-	}
+    //-------------------------------------------------------------------------
+    MovableObject* BspSceneNode::detachObject(unsigned short index)
+    {
+        MovableObject* ret = SceneNode::detachObject(index);
+        static_cast<BspSceneManager*>(mCreator)->_notifyObjectDetached(ret);
+        return ret;
+        
+    }
+    //-------------------------------------------------------------------------
+    MovableObject* BspSceneNode::detachObject(const String& name)
+    {
+        MovableObject* ret = SceneNode::detachObject(name);
+        static_cast<BspSceneManager*>(mCreator)->_notifyObjectDetached(ret);
+        return ret;
+    }
+    //-------------------------------------------------------------------------
+    void BspSceneNode::detachAllObjects(void)
+    {
+        ObjectMap::const_iterator i, iend;
+        iend = mObjectsByName.end();
+        for (i = mObjectsByName.begin(); i != iend; ++i)
+        {
+            static_cast<BspSceneManager*>(mCreator)
+                ->_notifyObjectDetached(ITER_VAL(i));
+        }
+        SceneNode::detachAllObjects();
+    }
+    //-------------------------------------------------------------------------
+    void BspSceneNode::setInSceneGraph(bool inGraph)
+    {
+        if (mIsInSceneGraph != inGraph)
+        {
+            ObjectMap::const_iterator i, iend;
+            iend = mObjectsByName.end();
+            for (i = mObjectsByName.begin(); i != iend; ++i)
+            {
+                if (!inGraph)
+                {
+                    // Equivalent to detaching
+                    static_cast<BspSceneManager*>(mCreator)
+                        ->_notifyObjectDetached(ITER_VAL(i));
+                }
+                else
+                {
+                    // move deals with re-adding
+                    static_cast<BspSceneManager*>(mCreator)->_notifyObjectMoved(
+                        ITER_VAL(i), this->_getDerivedPosition());
+                }
+            }
+        }
+        mIsInSceneGraph = inGraph;
+    }
 
 }
 

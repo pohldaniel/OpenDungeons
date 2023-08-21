@@ -34,7 +34,7 @@ THE SOFTWARE.
 namespace Ogre {
 namespace RTShader {
 
-/** \addtogroup Core
+/** \addtogroup Optional
 *  @{
 */
 /** \addtogroup RTShader
@@ -50,29 +50,32 @@ class _OgreRTSSExport FFPTransform : public SubRenderState
 
 // Interface.
 public:
-	
-	/** 
-	@see SubRenderState::getType.
-	*/
-	virtual const String& getType() const;
+    
+    /** 
+    @see SubRenderState::getType.
+    */
+    virtual const String& getType() const;
 
-	/** 
-	@see SubRenderState::getExecutionOrder.
-	*/
-	virtual int getExecutionOrder() const;
+    /** 
+    @see SubRenderState::getExecutionOrder.
+    */
+    virtual int getExecutionOrder() const;
 
-	/** 
-	@see SubRenderState::copyFrom.
-	*/
-	virtual void copyFrom(const SubRenderState& rhs);
+    /** 
+    @see SubRenderState::copyFrom.
+    */
+    virtual void copyFrom(const SubRenderState& rhs);
 
-	/** 
-	@see SubRenderState::createCpuSubPrograms.
-	*/
-	virtual bool createCpuSubPrograms(ProgramSet* programSet);
+    /** 
+    @see SubRenderState::createCpuSubPrograms.
+    */
+    virtual bool createCpuSubPrograms(ProgramSet* programSet);
 
+    bool preAddToRenderState(const RenderState* renderState, Pass* srcPass, Pass* dstPass);
 
-	static String Type;
+    static String Type;
+protected:
+    bool mSetPointSize;
 };
 
 
@@ -84,27 +87,27 @@ class _OgreRTSSExport FFPTransformFactory : public SubRenderStateFactory
 {
 public:
 
-	/** 
-	@see SubRenderStateFactory::getType.
-	*/
-	virtual const String& getType() const;
+    /** 
+    @see SubRenderStateFactory::getType.
+    */
+    virtual const String& getType() const;
 
-	/** 
-	@see SubRenderStateFactory::createInstance.
-	*/
-	virtual SubRenderState* createInstance(ScriptCompiler* compiler, PropertyAbstractNode* prop, Pass* pass, SGScriptTranslator* translator);
+    /** 
+    @see SubRenderStateFactory::createInstance.
+    */
+    virtual SubRenderState* createInstance(ScriptCompiler* compiler, PropertyAbstractNode* prop, Pass* pass, SGScriptTranslator* translator);
 
-	/** 
-	@see SubRenderStateFactory::writeInstance.
-	*/
-	virtual void writeInstance(MaterialSerializer* ser, SubRenderState* subRenderState, Pass* srcPass, Pass* dstPass);
+    /** 
+    @see SubRenderStateFactory::writeInstance.
+    */
+    virtual void writeInstance(MaterialSerializer* ser, SubRenderState* subRenderState, Pass* srcPass, Pass* dstPass);
 
 protected:
 
-	/** 
-	@see SubRenderStateFactory::createInstanceImpl.
-	*/
-	virtual SubRenderState* createInstanceImpl();
+    /** 
+    @see SubRenderStateFactory::createInstanceImpl.
+    */
+    virtual SubRenderState* createInstanceImpl();
 
 
 

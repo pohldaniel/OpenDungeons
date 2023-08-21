@@ -39,7 +39,10 @@
 
 // Note - not in the original STL, but exists in SGI STL and STLport
 // For gcc 4.3 see http://gcc.gnu.org/gcc-4.3/changes.html
-#if (OGRE_COMPILER == OGRE_COMPILER_GNUC) && !defined(STLPORT)
+#if OGRE_USE_STD11
+#       include <unordered_map>
+#       include <unordered_set>
+#elif (OGRE_COMPILER == OGRE_COMPILER_GNUC) && !defined(STLPORT)
 #   if OGRE_COMP_VER >= 430
 #       include <tr1/unordered_map>
 #       include <tr1/unordered_set> 
@@ -57,14 +60,14 @@
 #   endif
 #elif !defined(STLPORT)
 #   if (OGRE_COMPILER == OGRE_COMPILER_MSVC) && _MSC_FULL_VER >= 150030729 // VC++ 9.0 SP1+
-#    	include <unordered_map>
-#    	include <unordered_set>
+#       include <unordered_map>
+#       include <unordered_set>
 #   elif OGRE_THREAD_PROVIDER == 1
 #       include <boost/unordered_map.hpp>
 #       include <boost/unordered_set.hpp>
 #   else
-#   	error "Your compiler doesn't support unordered_set and unordered_map. Try to compile Ogre with Boost or STLPort."
-#	endif
+#       error "Your compiler doesn't support unordered_set and unordered_map. Try to compile Ogre with Boost or STLPort."
+#   endif
 #endif 
 
 // STL algorithms & functions
@@ -74,8 +77,7 @@
 
 // C++ Stream stuff
 #include <fstream>
-#include <iostream>
-#include <iomanip>
+#include <iosfwd>
 #include <sstream>
 
 #ifdef __BORLANDC__
@@ -100,7 +102,7 @@ extern "C" {
 #  endif
 #endif
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX || OGRE_PLATFORM == OGRE_PLATFORM_ANDROID
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX || OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
 extern "C" {
 
 #   include <unistd.h>
@@ -115,6 +117,10 @@ extern "C" {
 #   include <sys/param.h>
 #   include <CoreFoundation/CoreFoundation.h>
 }
+#endif
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
+#   include <emscripten/emscripten.h>
 #endif
 
 #if defined ( OGRE_GCC_VISIBILITY ) && ((OGRE_PLATFORM == OGRE_PLATFORM_APPLE && !__LP64__) && OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS)

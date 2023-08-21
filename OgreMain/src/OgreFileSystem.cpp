@@ -27,46 +27,43 @@ THE SOFTWARE.
 */
 #include "OgreStableHeaders.h"
 #include "OgreFileSystem.h"
-#include "OgreLogManager.h"
 #include "OgreException.h"
 #include "OgreStringVector.h"
-#include "OgreRoot.h"
 
-#include <sys/types.h>
 #include <sys/stat.h>
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX || OGRE_PLATFORM == OGRE_PLATFORM_APPLE || \
     OGRE_PLATFORM == OGRE_PLATFORM_APPLE_IOS || \
     OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || \
     OGRE_PLATFORM == OGRE_PLATFORM_NACL || \
-    OGRE_PLATFORM == OGRE_PLATFORM_FLASHCC
+    OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
 #   include "OgreSearchOps.h"
 #   include <sys/param.h>
-#   define MAX_PATH MAXPATHLEN
 #endif
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_WINRT
 #  define WIN32_LEAN_AND_MEAN
 #  if !defined(NOMINMAX) && defined(_MSC_VER)
-#	define NOMINMAX // required to stop windows.h messing up std::min
+#   define NOMINMAX // required to stop windows.h messing up std::min
 #  endif
 #  include <windows.h>
 #  include <direct.h>
 #  include <io.h>
+//#  define _OGRE_FILESYSTEM_ARCHIVE_UNICODE // base path and resources subpathes expected to be in UTF-8 and wchar_t file IO routines are used
 #endif
 
 namespace Ogre {
 
-	bool FileSystemArchive::msIgnoreHidden = true;
+    bool FileSystemArchive::msIgnoreHidden = true;
 
     //-----------------------------------------------------------------------
     FileSystemArchive::FileSystemArchive(const String& name, const String& archType, bool readOnly )
         : Archive(name, archType)
     {
-		// Even failed attempt to write to read only location violates Apple AppStore validation process.
-		// And successful writing to some probe file does not prove that whole location with subfolders 
-		// is writable. Therefore we accept read only flag from outside and do not try to be too smart.
-		mReadOnly = readOnly;
+        // Even failed attempt to write to read only location violates Apple AppStore validation process.
+        // And successful writing to some probe file does not prove that whole location with subfolders 
+        // is writable. Therefore we accept read only flag from outside and do not try to be too smart.
+        mReadOnly = readOnly;
     }
     //-----------------------------------------------------------------------
     bool FileSystemArchive::isCaseSensitive(void) const
@@ -79,7 +76,11 @@ namespace Ogre {
 
     }
     //-----------------------------------------------------------------------
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+    static bool is_reserved_dir (const wchar_t *fn)
+#else
     static bool is_reserved_dir (const char *fn)
+#endif
     {
         return (fn [0] == '.' && (fn [1] == 0 || (fn [1] == '.' && fn [2] == 0)));
     }
@@ -100,12 +101,43 @@ namespace Ogre {
         else
             return base + '/' + name;
     }
+	//-----------------------------------------------------------------------
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+	std::wstring to_wpath(const String& text, unsigned codepage = CP_UTF8)
+	{
+		const int utf16Length = ::MultiByteToWideChar(codepage, 0, text.c_str(), (int)text.size(), NULL, 0);
+		if(utf16Length > 0)
+		{
+			std::wstring wt;
+			wt.resize(utf16Length);
+			if(0 != ::MultiByteToWideChar(codepage, 0, text.c_str(), (int)text.size(), &wt[0], (int)wt.size()))
+				return wt;
+		}
+		return L"";
+	}
+	String from_wpath(const std::wstring& text, unsigned codepage = CP_UTF8)
+	{
+		const int length = ::WideCharToMultiByte(codepage, 0, text.c_str(), (int)text.size(), NULL, 0, NULL, NULL);
+		if(length > 0)
+		{
+			String str;
+			str.resize(length);
+			if(0 != ::WideCharToMultiByte(codepage, 0, text.c_str(), (int)text.size(), &str[0], (int)str.size(), NULL, NULL))
+				return str;
+		}
+		return "";
+	}
+#endif
     //-----------------------------------------------------------------------
     void FileSystemArchive::findFiles(const String& pattern, bool recursive, 
         bool dirs, StringVector* simpleList, FileInfoList* detailList) const
     {
         intptr_t lHandle, res;
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+        struct _wfinddata_t tagData;
+#else
         struct _finddata_t tagData;
+#endif
 
         // pattern can contain a directory name, separate it from mask
         size_t pos1 = pattern.rfind ('/');
@@ -118,31 +150,48 @@ namespace Ogre {
 
         String full_pattern = concatenate_path(mName, pattern);
 
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+        lHandle = _wfindfirst(to_wpath(full_pattern).c_str(), &tagData);
+#else
         lHandle = _findfirst(full_pattern.c_str(), &tagData);
+#endif
         res = 0;
         while (lHandle != -1 && res != -1)
         {
             if ((dirs == ((tagData.attrib & _A_SUBDIR) != 0)) &&
-				( !msIgnoreHidden || (tagData.attrib & _A_HIDDEN) == 0 ) &&
+                ( !msIgnoreHidden || (tagData.attrib & _A_HIDDEN) == 0 ) &&
                 (!dirs || !is_reserved_dir (tagData.name)))
             {
                 if (simpleList)
                 {
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+                    simpleList->push_back(directory + from_wpath(tagData.name));
+#else
                     simpleList->push_back(directory + tagData.name);
+#endif
                 }
                 else if (detailList)
                 {
                     FileInfo fi;
                     fi.archive = this;
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+                    fi.filename = directory + from_wpath(tagData.name);
+                    fi.basename = from_wpath(tagData.name);
+#else
                     fi.filename = directory + tagData.name;
                     fi.basename = tagData.name;
+#endif
                     fi.path = directory;
                     fi.compressedSize = tagData.size;
                     fi.uncompressedSize = tagData.size;
                     detailList->push_back(fi);
                 }
             }
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+            res = _wfindnext( lHandle, &tagData );
+#else
             res = _findnext( lHandle, &tagData );
+#endif
         }
         // Close if we found any files
         if(lHandle != -1)
@@ -167,20 +216,32 @@ namespace Ogre {
             else
                 mask.append (pattern);
 
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+            lHandle = _wfindfirst(to_wpath(base_dir).c_str(), &tagData);
+#else
             lHandle = _findfirst(base_dir.c_str (), &tagData);
+#endif
             res = 0;
             while (lHandle != -1 && res != -1)
             {
                 if ((tagData.attrib & _A_SUBDIR) &&
-					( !msIgnoreHidden || (tagData.attrib & _A_HIDDEN) == 0 ) &&
+                    ( !msIgnoreHidden || (tagData.attrib & _A_HIDDEN) == 0 ) &&
                     !is_reserved_dir (tagData.name))
                 {
                     // recurse
                     base_dir = directory;
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+                    base_dir.append (from_wpath(tagData.name)).append (mask);
+#else
                     base_dir.append (tagData.name).append (mask);
+#endif
                     findFiles(base_dir, recursive, dirs, simpleList, detailList);
                 }
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+                res = _wfindnext( lHandle, &tagData );
+#else
                 res = _findnext( lHandle, &tagData );
+#endif
             }
             // Close if we found any files
             if(lHandle != -1)
@@ -195,7 +256,7 @@ namespace Ogre {
     //-----------------------------------------------------------------------
     void FileSystemArchive::load()
     {
-		// nothing to do here
+        // nothing to do here
     }
     //-----------------------------------------------------------------------
     void FileSystemArchive::unload()
@@ -205,21 +266,26 @@ namespace Ogre {
     //-----------------------------------------------------------------------
     DataStreamPtr FileSystemArchive::open(const String& filename, bool readOnly) const
     {
-		String full_path = concatenate_path(mName, filename);
+        String full_path = concatenate_path(mName, filename);
 
-		// Use filesystem to determine size 
-		// (quicker than streaming to the end and back)
-		struct stat tagStat;
-		int ret = stat(full_path.c_str(), &tagStat);
-		assert(ret == 0 && "Problem getting file size" );
+        // Use filesystem to determine size 
+        // (quicker than streaming to the end and back)
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+		struct _stat64i32 tagStat;
+		int ret = _wstat(to_wpath(full_path).c_str(), &tagStat);
+#else
+        struct stat tagStat;
+        int ret = stat(full_path.c_str(), &tagStat);
+#endif
+        assert(ret == 0 && "Problem getting file size" );
         (void)ret;  // Silence warning
 
-		// Always open in binary mode
-		// Also, always include reading
-		std::ios::openmode mode = std::ios::in | std::ios::binary;
-		std::istream* baseStream = 0;
-		std::ifstream* roStream = 0;
-		std::fstream* rwStream = 0;
+        // Always open in binary mode
+        // Also, always include reading
+        std::ios::openmode mode = std::ios::in | std::ios::binary;
+        std::istream* baseStream = 0;
+        std::ifstream* roStream = 0;
+        std::fstream* rwStream = 0;
 
         if (!readOnly && isReadOnly())
         {
@@ -228,122 +294,137 @@ namespace Ogre {
                         "FileSystemArchive::open");
         }
 
-		if (!readOnly)
-		{
-			mode |= std::ios::out;
-			rwStream = OGRE_NEW_T(std::fstream, MEMCATEGORY_GENERAL)();
-			rwStream->open(full_path.c_str(), mode);
-			baseStream = rwStream;
-		}
-		else
-		{
-			roStream = OGRE_NEW_T(std::ifstream, MEMCATEGORY_GENERAL)();
-			roStream->open(full_path.c_str(), mode);
-			baseStream = roStream;
-		}
+        if (!readOnly)
+        {
+            mode |= std::ios::out;
+            rwStream = OGRE_NEW_T(std::fstream, MEMCATEGORY_GENERAL)();
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+			rwStream->open(to_wpath(full_path).c_str(), mode);
+#else
+            rwStream->open(full_path.c_str(), mode);
+#endif
+            baseStream = rwStream;
+        }
+        else
+        {
+            roStream = OGRE_NEW_T(std::ifstream, MEMCATEGORY_GENERAL)();
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+			roStream->open(to_wpath(full_path).c_str(), mode);
+#else
+            roStream->open(full_path.c_str(), mode);
+#endif
+            baseStream = roStream;
+        }
 
 
-		// Should check ensure open succeeded, in case fail for some reason.
-		if (baseStream->fail())
-		{
-			OGRE_DELETE_T(roStream, basic_ifstream, MEMCATEGORY_GENERAL);
-			OGRE_DELETE_T(rwStream, basic_fstream, MEMCATEGORY_GENERAL);
-			OGRE_EXCEPT(Exception::ERR_FILE_NOT_FOUND,
-				"Cannot open file: " + filename,
-				"FileSystemArchive::open");
-		}
+        // Should check ensure open succeeded, in case fail for some reason.
+        if (baseStream->fail())
+        {
+            OGRE_DELETE_T(roStream, basic_ifstream, MEMCATEGORY_GENERAL);
+            OGRE_DELETE_T(rwStream, basic_fstream, MEMCATEGORY_GENERAL);
+            OGRE_EXCEPT(Exception::ERR_FILE_NOT_FOUND,
+                "Cannot open file: " + filename,
+                "FileSystemArchive::open");
+        }
 
-		/// Construct return stream, tell it to delete on destroy
-		FileStreamDataStream* stream = 0;
-		if (rwStream)
-		{
-			// use the writeable stream 
-			stream = OGRE_NEW FileStreamDataStream(filename,
-				rwStream, (size_t)tagStat.st_size, true);
-		}
-		else
-		{
-			// read-only stream
-			stream = OGRE_NEW FileStreamDataStream(filename,
-				roStream, (size_t)tagStat.st_size, true);
-		}
-		return DataStreamPtr(stream);
+        /// Construct return stream, tell it to delete on destroy
+        FileStreamDataStream* stream = 0;
+        if (rwStream)
+        {
+            // use the writeable stream 
+            stream = OGRE_NEW FileStreamDataStream(filename,
+                rwStream, (size_t)tagStat.st_size, true);
+        }
+        else
+        {
+            // read-only stream
+            stream = OGRE_NEW FileStreamDataStream(filename,
+                roStream, (size_t)tagStat.st_size, true);
+        }
+        return DataStreamPtr(stream);
     }
-	//---------------------------------------------------------------------
-	DataStreamPtr FileSystemArchive::create(const String& filename) const
-	{
-		if (isReadOnly())
-		{
-			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, 
-				"Cannot create a file in a read-only archive", 
-				"FileSystemArchive::remove");
-		}
-
-		String full_path = concatenate_path(mName, filename);
-
-		// Always open in binary mode
-		// Also, always include reading
-		std::ios::openmode mode = std::ios::out | std::ios::binary;
-		std::fstream* rwStream = OGRE_NEW_T(std::fstream, MEMCATEGORY_GENERAL)();
-		rwStream->open(full_path.c_str(), mode);
-
-		// Should check ensure open succeeded, in case fail for some reason.
-		if (rwStream->fail())
-		{
-			OGRE_DELETE_T(rwStream, basic_fstream, MEMCATEGORY_GENERAL);
-			OGRE_EXCEPT(Exception::ERR_FILE_NOT_FOUND,
-				"Cannot open file: " + filename,
-				"FileSystemArchive::create");
-		}
-
-		/// Construct return stream, tell it to delete on destroy
-		FileStreamDataStream* stream = OGRE_NEW FileStreamDataStream(filename,
-				rwStream, 0, true);
-
-		return DataStreamPtr(stream);
-	}
-	//---------------------------------------------------------------------
-	void FileSystemArchive::remove(const String& filename) const
-	{
-		if (isReadOnly())
-		{
-			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, 
-				"Cannot remove a file from a read-only archive", 
-				"FileSystemArchive::remove");
-		}
-		String full_path = concatenate_path(mName, filename);
-		::remove(full_path.c_str());
-
-	}
-    //-----------------------------------------------------------------------
-    StringVectorPtr FileSystemArchive::list(bool recursive, bool dirs)
+    //---------------------------------------------------------------------
+    DataStreamPtr FileSystemArchive::create(const String& filename)
     {
-		// directory change requires locking due to saved returns
-		// Note that we have to tell the SharedPtr to use OGRE_DELETE_T not OGRE_DELETE by passing category
-		StringVectorPtr ret(OGRE_NEW_T(StringVector, MEMCATEGORY_GENERAL)(), SPFM_DELETE_T);
+        if (isReadOnly())
+        {
+            OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, 
+                "Cannot create a file in a read-only archive", 
+                "FileSystemArchive::remove");
+        }
 
-        findFiles("*", recursive, dirs, ret.getPointer(), 0);
+        String full_path = concatenate_path(mName, filename);
+
+        // Always open in binary mode
+        // Also, always include reading
+        std::ios::openmode mode = std::ios::out | std::ios::binary;
+        std::fstream* rwStream = OGRE_NEW_T(std::fstream, MEMCATEGORY_GENERAL)();
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+		rwStream->open(to_wpath(full_path).c_str(), mode);
+#else
+        rwStream->open(full_path.c_str(), mode);
+#endif
+
+        // Should check ensure open succeeded, in case fail for some reason.
+        if (rwStream->fail())
+        {
+            OGRE_DELETE_T(rwStream, basic_fstream, MEMCATEGORY_GENERAL);
+            OGRE_EXCEPT(Exception::ERR_FILE_NOT_FOUND,
+                "Cannot open file: " + filename,
+                "FileSystemArchive::create");
+        }
+
+        /// Construct return stream, tell it to delete on destroy
+        FileStreamDataStream* stream = OGRE_NEW FileStreamDataStream(filename,
+                rwStream, 0, true);
+
+        return DataStreamPtr(stream);
+    }
+    //---------------------------------------------------------------------
+    void FileSystemArchive::remove(const String& filename)
+    {
+        if (isReadOnly())
+        {
+            OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, 
+                "Cannot remove a file from a read-only archive", 
+                "FileSystemArchive::remove");
+        }
+        String full_path = concatenate_path(mName, filename);
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+		::_wremove(to_wpath(full_path).c_str());
+#else
+        ::remove(full_path.c_str());
+#endif
+    }
+    //-----------------------------------------------------------------------
+    StringVectorPtr FileSystemArchive::list(bool recursive, bool dirs) const
+    {
+        // directory change requires locking due to saved returns
+        // Note that we have to tell the SharedPtr to use OGRE_DELETE_T not OGRE_DELETE by passing category
+        StringVectorPtr ret(OGRE_NEW_T(StringVector, MEMCATEGORY_GENERAL)(), SPFM_DELETE_T);
+
+        findFiles("*", recursive, dirs, ret.get(), 0);
 
         return ret;
     }
     //-----------------------------------------------------------------------
-    FileInfoListPtr FileSystemArchive::listFileInfo(bool recursive, bool dirs)
+    FileInfoListPtr FileSystemArchive::listFileInfo(bool recursive, bool dirs) const
     {
-		// Note that we have to tell the SharedPtr to use OGRE_DELETE_T not OGRE_DELETE by passing category
+        // Note that we have to tell the SharedPtr to use OGRE_DELETE_T not OGRE_DELETE by passing category
         FileInfoListPtr ret(OGRE_NEW_T(FileInfoList, MEMCATEGORY_GENERAL)(), SPFM_DELETE_T);
 
-        findFiles("*", recursive, dirs, 0, ret.getPointer());
+        findFiles("*", recursive, dirs, 0, ret.get());
 
         return ret;
     }
     //-----------------------------------------------------------------------
     StringVectorPtr FileSystemArchive::find(const String& pattern,
-                                            bool recursive, bool dirs)
+                                            bool recursive, bool dirs) const
     {
-		// Note that we have to tell the SharedPtr to use OGRE_DELETE_T not OGRE_DELETE by passing category
-		StringVectorPtr ret(OGRE_NEW_T(StringVector, MEMCATEGORY_GENERAL)(), SPFM_DELETE_T);
+        // Note that we have to tell the SharedPtr to use OGRE_DELETE_T not OGRE_DELETE by passing category
+        StringVectorPtr ret(OGRE_NEW_T(StringVector, MEMCATEGORY_GENERAL)(), SPFM_DELETE_T);
 
-        findFiles(pattern, recursive, dirs, ret.getPointer(), 0);
+        findFiles(pattern, recursive, dirs, ret.get(), 0);
 
         return ret;
 
@@ -352,57 +433,67 @@ namespace Ogre {
     FileInfoListPtr FileSystemArchive::findFileInfo(const String& pattern, 
         bool recursive, bool dirs) const
     {
-		// Note that we have to tell the SharedPtr to use OGRE_DELETE_T not OGRE_DELETE by passing category
-		FileInfoListPtr ret(OGRE_NEW_T(FileInfoList, MEMCATEGORY_GENERAL)(), SPFM_DELETE_T);
+        // Note that we have to tell the SharedPtr to use OGRE_DELETE_T not OGRE_DELETE by passing category
+        FileInfoListPtr ret(OGRE_NEW_T(FileInfoList, MEMCATEGORY_GENERAL)(), SPFM_DELETE_T);
 
-        findFiles(pattern, recursive, dirs, 0, ret.getPointer());
+        findFiles(pattern, recursive, dirs, 0, ret.get());
 
         return ret;
     }
     //-----------------------------------------------------------------------
-	bool FileSystemArchive::exists(const String& filename)
-	{
+    bool FileSystemArchive::exists(const String& filename) const
+    {
         String full_path = concatenate_path(mName, filename);
 
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+        struct _stat64i32 tagStat;
+        bool ret = (_wstat(to_wpath(full_path).c_str(), &tagStat) == 0);
+#else
         struct stat tagStat;
         bool ret = (stat(full_path.c_str(), &tagStat) == 0);
-
-		// stat will return true if the filename is absolute, but we need to check
-		// the file is actually in this archive
-        if (ret && is_absolute_path(filename.c_str()))
-		{
-			// only valid if full path starts with our base
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_WINRT
-			// case insensitive on windows
-			String lowerCaseName = mName;
-			StringUtil::toLowerCase(lowerCaseName);
-			ret = Ogre::StringUtil::startsWith(full_path, lowerCaseName, true);
-#else
-			// case sensitive
-			ret = Ogre::StringUtil::startsWith(full_path, mName, false);
 #endif
-		}
 
-		return ret;
-	}
-	//---------------------------------------------------------------------
-	time_t FileSystemArchive::getModifiedTime(const String& filename)
-	{
-		String full_path = concatenate_path(mName, filename);
+        // stat will return true if the filename is absolute, but we need to check
+        // the file is actually in this archive
+        if (ret && is_absolute_path(filename.c_str()))
+        {
+            // only valid if full path starts with our base
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_WINRT
+            // case insensitive on windows
+            String lowerCaseName = mName;
+            StringUtil::toLowerCase(lowerCaseName);
+            ret = Ogre::StringUtil::startsWith(full_path, lowerCaseName, true);
+#else
+            // case sensitive
+            ret = Ogre::StringUtil::startsWith(full_path, mName, false);
+#endif
+        }
 
-		struct stat tagStat;
-		bool ret = (stat(full_path.c_str(), &tagStat) == 0);
+        return ret;
+    }
+    //---------------------------------------------------------------------
+    time_t FileSystemArchive::getModifiedTime(const String& filename) const
+    {
+        String full_path = concatenate_path(mName, filename);
 
-		if (ret)
-		{
-			return tagStat.st_mtime;
-		}
-		else
-		{
-			return 0;
-		}
+#ifdef _OGRE_FILESYSTEM_ARCHIVE_UNICODE
+		struct _stat64i32 tagStat;
+		bool ret = (_wstat(to_wpath(full_path).c_str(), &tagStat) == 0);
+#else
+        struct stat tagStat;
+        bool ret = (stat(full_path.c_str(), &tagStat) == 0);
+#endif
 
-	}
+        if (ret)
+        {
+            return tagStat.st_mtime;
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
     //-----------------------------------------------------------------------
     const String& FileSystemArchiveFactory::getType(void) const
     {

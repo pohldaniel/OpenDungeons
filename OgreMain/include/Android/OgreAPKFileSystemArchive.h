@@ -33,15 +33,15 @@ THE SOFTWARE.
 #include <OgreArchiveFactory.h>
 #include <android/asset_manager.h>
 
-namespace Ogre{	
-	class APKFileSystemArchive : public Archive
-	{
-	private:
-		AAssetManager* mAssetMgr;
-		String mPathPreFix;
+namespace Ogre{ 
+    class APKFileSystemArchive : public Archive
+    {
+    private:
+        AAssetManager* mAssetMgr;
+        String mPathPreFix;
 
-	public:
-		APKFileSystemArchive(const String& name, const String& archType, AAssetManager* assetMgr);
+    public:
+        APKFileSystemArchive(const String& name, const String& archType, AAssetManager* assetMgr);
         ~APKFileSystemArchive();
 
         /// @copydoc Archive::isCaseSensitive
@@ -55,45 +55,45 @@ namespace Ogre{
         /// @copydoc Archive::open
         DataStreamPtr open(const String& filename, bool readOnly = true) const;
 
-		/// @copydoc Archive::create
-		DataStreamPtr create(const String& filename) const;
+        /// @copydoc Archive::create
+        DataStreamPtr create(const String& filename);
 
-		/// @copydoc Archive::delete
-		void remove(const String& filename) const;
+        /// @copydoc Archive::remove
+        void remove(const String& filename);
 
-		/// @copydoc Archive::list
-        StringVectorPtr list(bool recursive = true, bool dirs = false);
+        /// @copydoc Archive::list
+        StringVectorPtr list(bool recursive = true, bool dirs = false) const;
 
         /// @copydoc Archive::listFileInfo
-        FileInfoListPtr listFileInfo(bool recursive = true, bool dirs = false);
+        FileInfoListPtr listFileInfo(bool recursive = true, bool dirs = false) const;
 
         /// @copydoc Archive::find
-        StringVectorPtr find(const String& pattern, bool recursive = true, bool dirs = false);
+        StringVectorPtr find(const String& pattern, bool recursive = true, bool dirs = false) const;
 
         /// @copydoc Archive::findFileInfo
         FileInfoListPtr findFileInfo(const String& pattern, bool recursive = true, bool dirs = false) const;
 
         /// @copydoc Archive::exists
-        bool exists(const String& filename);
+        bool exists(const String& filename) const;
 
-		/// @copydoc Archive::getModifiedTime
-		time_t getModifiedTime(const String& filename);
-	};
-	
-	class APKFileSystemArchiveFactory : public ArchiveFactory
+        /// @copydoc Archive::getModifiedTime
+        time_t getModifiedTime(const String& filename) const;
+    };
+    
+    class APKFileSystemArchiveFactory : public ArchiveFactory
     {
     public:
-		APKFileSystemArchiveFactory(AAssetManager* assetMgr) : mAssetMgr(assetMgr) {}
+        APKFileSystemArchiveFactory(AAssetManager* assetMgr) : mAssetMgr(assetMgr) {}
         virtual ~APKFileSystemArchiveFactory() {}
         /// @copydoc FactoryObj::getType
         const String& getType(void) const;
-        /// @copydoc FactoryObj::createInstance
+        /// @copydoc ArchiveFactory::createInstance
         Archive *createInstance( const String& name, bool readOnly ) 
         {
             return OGRE_NEW APKFileSystemArchive(name, getType(), mAssetMgr);
         }
         /// @copydoc FactoryObj::destroyInstance
-        void destroyInstance( Archive* arch) { OGRE_DELETE arch; }
+        void destroyInstance( Archive* ptr) { OGRE_DELETE ptr; }
     private:
         AAssetManager* mAssetMgr;
     };

@@ -37,14 +37,20 @@ email                : janders@users.sf.net
 #ifndef OCTREENODE_H
 #define OCTREENODE_H
 
-#include <OgreSceneNode.h>
+#include "OgreSceneNode.h"
 
-#include "OgreOctreeSceneManager.h"
 #include "OgreOctreePrerequisites.h"
+#include "OgreOctree.h"
 
 namespace Ogre
 {
-
+/** \addtogroup Plugins Plugins
+*  @{
+*/
+/** \addtogroup Octree OctreeSceneManager
+* Octree datastructure for managing scene nodes.
+*  @{
+*/
 /** Specialized SceneNode that is customized for working within an Octree. Each node
 * maintains its own bounding box, rather than merging it with all the children.
 *
@@ -69,8 +75,8 @@ public:
     /** Overridden from Node to remove any reference to octants */
     Node * removeChild( Node* child);
 
-	/** Overridden from Node to remove any reference to octants */
-	void removeAllChildren(void);
+    /** Overridden from Node to remove any reference to octants */
+    void removeAllChildren(void);
 
     /** Returns the Octree in which this OctreeNode resides
     */
@@ -93,7 +99,7 @@ public:
     /** Adds all the attached scenenodes to the render queue
     */
     virtual void _addToRenderQueue( Camera* cam, RenderQueue * q, bool onlyShadowCasters, 
-		VisibleObjectsBoundsInfo* visibleBounds);
+        VisibleObjectsBoundsInfo* visibleBounds);
 
     /** Sets up the LegacyRenderOperation for rendering this scene node as geometry.
     @remarks
@@ -125,22 +131,23 @@ protected:
 
     void _removeNodeAndChildren( );
 
-    ///local bounding box
+    /// Local bounding box
     AxisAlignedBox mLocalAABB;
 
     ///Octree this node is attached to.
     Octree *mOctant;
 
-    ///preallocated corners for rendering
+    /// Preallocated corners for rendering
     Real mCorners[ 24 ];
-    ///shared colors for rendering
+    /// Shared colors for rendering
     static unsigned long mColors[ 8 ];
-    ///shared indexes for rendering
+    /// Shared indexes for rendering
     static unsigned short mIndexes[ 24 ];
 
 
 };
-
+/** @} */
+/** @} */
 }
 
 

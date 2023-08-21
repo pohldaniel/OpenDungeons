@@ -30,15 +30,18 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "OgreSceneManager.h"
-
 #include "OgreVolumeOctreeNode.h"
 #include "OgreVolumePrerequisites.h"
 #include "OgreVolumeIsoSurface.h"
 
 namespace Ogre {
 namespace Volume {
-
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \addtogroup Volume
+    *  @{
+    */
     /** To store the generated dual cells in a vector.
     */
     typedef struct _OgreVolumeExport DualCell
@@ -347,6 +350,8 @@ namespace Volume {
             return mDualCells[i];
         }
     };
+    /** @} */
+    /** @} */
 }
 }
 

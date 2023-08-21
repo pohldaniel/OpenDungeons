@@ -44,32 +44,32 @@ namespace Ogre
     //---------------------------------------------------------------------------
     void HighLevelGpuProgram::loadImpl()
     {
-		if (isSupported())
-		{
-			// load self 
-			loadHighLevel();
+        if (isSupported())
+        {
+            // load self 
+            loadHighLevel();
 
-			// create low-level implementation
-			createLowLevelImpl();
-			// load constructed assembler program (if it exists)
-			if (!mAssemblerProgram.isNull() && mAssemblerProgram.getPointer() != this)
-			{
-				mAssemblerProgram->load();
-			}
+            // create low-level implementation
+            createLowLevelImpl();
+            // load constructed assembler program (if it exists)
+            if (mAssemblerProgram && mAssemblerProgram.get() != this)
+            {
+                mAssemblerProgram->load();
+            }
 
-		}
+        }
     }
     //---------------------------------------------------------------------------
     void HighLevelGpuProgram::unloadImpl()
     {   
-        if (!mAssemblerProgram.isNull() && mAssemblerProgram.getPointer() != this)
+        if (mAssemblerProgram && mAssemblerProgram.get() != this)
         {
-            mAssemblerProgram->getCreator()->remove(mAssemblerProgram->getHandle());
-            mAssemblerProgram.setNull();
+            mAssemblerProgram->getCreator()->remove(mAssemblerProgram);
+            mAssemblerProgram.reset();
         }
 
         unloadHighLevel();
-		resetCompileError();
+        resetCompileError();
     }
     //---------------------------------------------------------------------------
     HighLevelGpuProgram::~HighLevelGpuProgram()
@@ -79,32 +79,32 @@ namespace Ogre
     //---------------------------------------------------------------------------
     GpuProgramParametersSharedPtr HighLevelGpuProgram::createParameters(void)
     {
-		// Lock mutex before allowing this since this is a top-level method
-		// called outside of the load()
+        // Lock mutex before allowing this since this is a top-level method
+        // called outside of the load()
         OGRE_LOCK_AUTO_MUTEX;
 
         // Make sure param defs are loaded
         GpuProgramParametersSharedPtr params = GpuProgramManager::getSingleton().createParameters();
-		// Only populate named parameters if we can support this program
-		if (this->isSupported())
-		{
-			loadHighLevel();
-			// Errors during load may have prevented compile
-			if (this->isSupported())
-			{
-				populateParameterNames(params);
-			}
-		}
-		// Copy in default parameters if present
-		if (!mDefaultParams.isNull())
-			params->copyConstantsFrom(*(mDefaultParams.get()));
+        // Only populate named parameters if we can support this program
+        if (this->isSupported())
+        {
+            loadHighLevel();
+            // Errors during load may have prevented compile
+            if (this->isSupported())
+            {
+                populateParameterNames(params);
+            }
+        }
+        // Copy in default parameters if present
+        if (mDefaultParams)
+            params->copyConstantsFrom(*(mDefaultParams.get()));
         return params;
     }
     size_t HighLevelGpuProgram::calculateSize(void) const
     {
         size_t memSize = 0;
         memSize += sizeof(bool);
-        if(!mAssemblerProgram.isNull() && (mAssemblerProgram.getPointer() != this) )
+        if(mAssemblerProgram && (mAssemblerProgram.get() != this) )
             memSize += mAssemblerProgram->calculateSize();
 
         memSize += GpuProgram::calculateSize();
@@ -117,37 +117,40 @@ namespace Ogre
     {
         if (!mHighLevelLoaded)
         {
-			try 
-			{
-				loadHighLevelImpl();
-				mHighLevelLoaded = true;
-				if (!mDefaultParams.isNull())
-				{
-					// Keep a reference to old ones to copy
-					GpuProgramParametersSharedPtr savedParams = mDefaultParams;
-					// reset params to stop them being referenced in the next create
-					mDefaultParams.setNull();
+            try 
+            {
+                loadHighLevelImpl();
+                mHighLevelLoaded = true;
+                if (mDefaultParams)
+                {
+                    // Keep a reference to old ones to copy
+                    GpuProgramParametersSharedPtr savedParams = mDefaultParams;
+                    // reset params to stop them being referenced in the next create
+                    mDefaultParams.reset();
 
-					// Create new params
-					mDefaultParams = createParameters();
+                    // Create new params
+                    mDefaultParams = createParameters();
 
-					// Copy old (matching) values across
-					// Don't use copyConstantsFrom since program may be different
-					mDefaultParams->copyMatchingNamedConstantsFrom(*savedParams.get());
+                    // Copy old (matching) values across
+                    // Don't use copyConstantsFrom since program may be different
+                    mDefaultParams->copyMatchingNamedConstantsFrom(*savedParams.get());
 
-				}
+                }
 
-			}
-			catch (const Exception& e)
-			{
-				// will already have been logged
-				LogManager::getSingleton().stream()
-					<< "High-level program " << mName << " encountered an error "
-					<< "during loading and is thus not supported.\n"
-					<< e.getFullDescription();
+            }
+            catch (const RuntimeAssertionException&)
+            {
+                throw;
+            }
+            catch (const Exception& e)
+            {
+                // will already have been logged
+                LogManager::getSingleton().stream(LML_CRITICAL)
+                    << "High-level program '" << mName << "' is not supported: "
+                    << e.getDescription();
 
-				mCompileError = true;
-			}
+                mCompileError = true;
+            }
         }
     }
     //---------------------------------------------------------------------------
@@ -156,9 +159,9 @@ namespace Ogre
         if (mHighLevelLoaded)
         {
             unloadHighLevelImpl();
-			// Clear saved constant defs
-			mConstantDefsBuilt = false;
-			createParameterMappingStructures(true);
+            // Clear saved constant defs
+            mConstantDefsBuilt = false;
+            createParameterMappingStructures(true);
 
             mHighLevelLoaded = false;
         }
@@ -171,7 +174,7 @@ namespace Ogre
             // find & load source code
             DataStreamPtr stream = 
                 ResourceGroupManager::getSingleton().openResource(
-                    mFilename, mGroup, true, this);
+                    mFilename, mGroup, this);
 
             mSource = stream->getAsString();
         }
@@ -180,23 +183,25 @@ namespace Ogre
 
 
     }
-	//---------------------------------------------------------------------
-	const GpuNamedConstants& HighLevelGpuProgram::getConstantDefinitions() const
-	{
-		if (!mConstantDefsBuilt)
-		{
-			buildConstantDefinitions();
-			mConstantDefsBuilt = true;
-		}
-		return *mConstantDefs.get();
+    //---------------------------------------------------------------------
+    const GpuNamedConstants& HighLevelGpuProgram::getConstantDefinitions() const
+    {
+        if (!mConstantDefsBuilt)
+        {
+            buildConstantDefinitions();
+            mConstantDefsBuilt = true;
+        }
+        return *mConstantDefs.get();
 
-	}
-	//---------------------------------------------------------------------
-	void HighLevelGpuProgram::populateParameterNames(GpuProgramParametersSharedPtr params)
-	{
-		getConstantDefinitions();
-		params->_setNamedConstants(mConstantDefs);
-		// also set logical / physical maps for programs which use this
-		params->_setLogicalIndexes(mFloatLogicalToPhysical, mDoubleLogicalToPhysical, mIntLogicalToPhysical);
-	}
+    }
+    //---------------------------------------------------------------------
+    void HighLevelGpuProgram::populateParameterNames(GpuProgramParametersSharedPtr params)
+    {
+        getConstantDefinitions();
+        params->_setNamedConstants(mConstantDefs);
+        // also set logical / physical maps for programs which use this
+        params->_setLogicalIndexes(mFloatLogicalToPhysical, mDoubleLogicalToPhysical, 
+                                           mIntLogicalToPhysical, mUIntLogicalToPhysical,
+                                           mBoolLogicalToPhysical);
+    }
 }

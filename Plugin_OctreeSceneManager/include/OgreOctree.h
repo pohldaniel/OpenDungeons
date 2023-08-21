@@ -37,14 +37,19 @@ email                : janders@users.sf.net
 #ifndef OCTREE_H
 #define OCTREE_H
 
-#include <OgreAxisAlignedBox.h>
-#include <OgreWireBoundingBox.h>
+#include "OgreAxisAlignedBox.h"
 
 #include <list>
 
 namespace Ogre
 {
-
+/** \addtogroup Plugins Plugins
+*  @{
+*/
+/** \defgroup Octree OctreeSceneManager
+* Octree datastructure for managing scene nodes.
+*  @{
+*/
 class OctreeNode;
 
 /** Octree datastructure for managing scene nodes.
@@ -123,7 +128,7 @@ public:
     void _getCullBounds( AxisAlignedBox * ) const;
 
 
-	typedef list< OctreeNode * >::type NodeList;
+    typedef vector< OctreeNode * >::type NodeList;
     /** Public list of SceneNodes attached to this particular octree
     */
     NodeList mNodes;
@@ -155,9 +160,9 @@ protected:
     Octree * mParent;
 
 };
-
+/** @} */
+/** @} */
 }
-
 #endif
 
 

@@ -28,12 +28,23 @@ THE SOFTWARE.
 #include "OgreStableHeaders.h"
 
 #include "OgreLog.h"
-#include "OgreLogManager.h"
-#include "OgreString.h"
+#include <iomanip>
+#include <iostream>
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_WINRT
+#   include <windows.h>
+#endif
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_NACL
 #   include "ppapi/cpp/var.h"
 #   include "ppapi/cpp/instance.h"
 #endif
+
+namespace {
+    const char* RED = "\x1b[31;1m";
+    const char* YELLOW = "\x1b[33;1m";
+    const char* RESET = "\x1b[0m";
+}
 
 namespace Ogre
 {
@@ -44,34 +55,43 @@ namespace Ogre
     //-----------------------------------------------------------------------
     Log::Log( const String& name, bool debuggerOuput, bool suppressFile ) : 
         mLogLevel(LL_NORMAL), mDebugOut(debuggerOuput),
-        mSuppressFile(suppressFile), mTimeStamp(true), mLogName(name)
+        mSuppressFile(suppressFile), mTimeStamp(true), mLogName(name), mTermHasColours(false)
     {
-		if (!mSuppressFile)
-		{
-			mLog.open(name.c_str());
-		}
+        if (!mSuppressFile)
+        {
+            mLog.open(name.c_str());
+        }
+
+#if OGRE_PLATFORM != OGRE_PLATFORM_WINRT
+        if(mDebugOut)
+        {
+            char* val = getenv("TERM");
+            mTermHasColours = val && String(val).find("xterm") != String::npos;
+        }
+#endif
     }
     //-----------------------------------------------------------------------
     Log::~Log()
     {
         OGRE_LOCK_AUTO_MUTEX;
-		if (!mSuppressFile)
-		{
-	        mLog.close();
-		}
+        if (!mSuppressFile)
+        {
+            mLog.close();
+        }
     }
+
     //-----------------------------------------------------------------------
     void Log::logMessage( const String& message, LogMessageLevel lml, bool maskDebug )
     {
         OGRE_LOCK_AUTO_MUTEX;
         if ((mLogLevel + lml) >= OGRE_LOG_THRESHOLD)
         {
-			bool skipThisMessage = false;
+            bool skipThisMessage = false;
             for( mtLogListener::iterator i = mListeners.begin(); i != mListeners.end(); ++i )
                 (*i)->messageLogged( message, lml, maskDebug, mLogName, skipThisMessage);
-			
-			if (!skipThisMessage)
-			{
+            
+            if (!skipThisMessage)
+            {
 #if OGRE_PLATFORM == OGRE_PLATFORM_NACL
                 if(mInstance != NULL)
                 {
@@ -80,32 +100,50 @@ namespace Ogre
 #else
                 if (mDebugOut && !maskDebug)
                 {
-					if (lml == LML_CRITICAL)
-						std::cerr << message << std::endl;
-					else
-						std::cout << message << std::endl;
-				}
+#    if (OGRE_PLATFORM == OGRE_PLATFORM_WIN32 || OGRE_PLATFORM == OGRE_PLATFORM_WINRT) && OGRE_DEBUG_MODE
+                    OutputDebugStringA("Ogre: ");
+                    OutputDebugStringA(message.c_str());
+                    OutputDebugStringA("\n");
+#    endif
+
+                    std::ostream& os = int(lml) >= int(LML_WARNING) ? std::cerr : std::cout;
+
+                    if(mTermHasColours) {
+                        if(lml == LML_WARNING)
+                            os << YELLOW;
+                        if(lml == LML_CRITICAL)
+                            os << RED;
+                    }
+
+                    os << message;
+
+                    if(mTermHasColours) {
+                        os << RESET;
+                    }
+
+                    os << std::endl;
+                }
 #endif
 
-				// Write time into log
-				if (!mSuppressFile)
-				{
-					if (mTimeStamp)
-					{
-						struct tm *pTime;
-						time_t ctTime; time(&ctTime);
-						pTime = localtime( &ctTime );
-						mLog << std::setw(2) << std::setfill('0') << pTime->tm_hour
-							<< ":" << std::setw(2) << std::setfill('0') << pTime->tm_min
-							<< ":" << std::setw(2) << std::setfill('0') << pTime->tm_sec
-							<< ": ";
-					}
-					mLog << message << std::endl;
+                // Write time into log
+                if (!mSuppressFile)
+                {
+                    if (mTimeStamp)
+                    {
+                        struct tm *pTime;
+                        time_t ctTime; time(&ctTime);
+                        pTime = localtime( &ctTime );
+                        mLog << std::setw(2) << std::setfill('0') << pTime->tm_hour
+                            << ":" << std::setw(2) << std::setfill('0') << pTime->tm_min
+                            << ":" << std::setw(2) << std::setfill('0') << pTime->tm_sec
+                            << ": ";
+                    }
+                    mLog << message << std::endl;
 
-					// Flush stcmdream to ensure it is written (incase of a crash, we need log to be up to date)
-					mLog.flush();
-				}
-			}
+                    // Flush stcmdream to ensure it is written (incase of a crash, we need log to be up to date)
+                    mLog.flush();
+                }
+            }
         }
     }
     
@@ -123,7 +161,7 @@ namespace Ogre
         mDebugOut = debugOutput;
     }
 
-	//-----------------------------------------------------------------------
+    //-----------------------------------------------------------------------
     void Log::setLogDetail(LoggingLevel ll)
     {
         OGRE_LOCK_AUTO_MUTEX;
@@ -134,19 +172,22 @@ namespace Ogre
     void Log::addListener(LogListener* listener)
     {
         OGRE_LOCK_AUTO_MUTEX;
-        mListeners.push_back(listener);
+        if (std::find(mListeners.begin(), mListeners.end(), listener) == mListeners.end())
+            mListeners.push_back(listener);
     }
 
     //-----------------------------------------------------------------------
     void Log::removeListener(LogListener* listener)
     {
         OGRE_LOCK_AUTO_MUTEX;
-        mListeners.erase(std::find(mListeners.begin(), mListeners.end(), listener));
+        mtLogListener::iterator i = std::find(mListeners.begin(), mListeners.end(), listener);
+        if (i != mListeners.end())
+            mListeners.erase(i);
     }
-	//---------------------------------------------------------------------
-	Log::Stream Log::stream(LogMessageLevel lml, bool maskDebug) 
-	{
-		return Stream(this, lml, maskDebug);
+    //---------------------------------------------------------------------
+    Log::Stream Log::stream(LogMessageLevel lml, bool maskDebug) 
+    {
+        return Stream(this, lml, maskDebug);
 
-	}
+    }
 }

@@ -77,9 +77,6 @@
     <ClCompile Include="src\OgreTerrainMaterialShaderHelperGLSL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OgreTerrainMaterialShaderHelperGLSLES.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\OgreTerrainMaterialShaderHelperHLSL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

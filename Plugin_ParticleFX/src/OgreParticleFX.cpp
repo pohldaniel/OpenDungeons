@@ -33,19 +33,22 @@ THE SOFTWARE.
 
 namespace Ogre {
 
-	ParticleFXPlugin* plugin;
+    static ParticleFXPlugin* plugin;
+    extern "C" void _OgreParticleFXExport dllStartPlugin(void);
+    extern "C" void _OgreParticleFXExport dllStopPlugin(void);
+
     //-----------------------------------------------------------------------
-    extern "C" void _OgreParticleFXExport dllStartPlugin(void) throw()
+    extern "C" void _OgreParticleFXExport dllStartPlugin(void)
     {
-		plugin = OGRE_NEW ParticleFXPlugin();
-		Root::getSingleton().installPlugin(plugin);
+        plugin = OGRE_NEW ParticleFXPlugin();
+        Root::getSingleton().installPlugin(plugin);
     }
 
     //-----------------------------------------------------------------------
     extern "C" void _OgreParticleFXExport dllStopPlugin(void)
     {
-		Root::getSingleton().uninstallPlugin(plugin);
-		OGRE_DELETE plugin;
+        Root::getSingleton().uninstallPlugin(plugin);
+        OGRE_DELETE plugin;
 
     }
 

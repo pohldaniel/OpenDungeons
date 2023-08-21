@@ -33,7 +33,14 @@ THE SOFTWARE.
 #include "OgreSingleton.h"
 
 namespace Ogre {
+    class Quake3ShaderManager;
 
+    /** \addtogroup Plugins
+    *  @{
+    */
+    /** \addtogroup BSPSceneManager
+    *  @{
+    */
     /** Manages the locating and loading of BSP-based indoor levels.
     Like other ResourceManager specialisations it manages the location and loading
     of a specific type of resource, in this case files containing Binary
@@ -53,44 +60,17 @@ namespace Ogre {
         */
         ResourcePtr load(const String& name, 
             const String& group, bool isManual = false, 
-            ManualResourceLoader* loader = 0, const NameValuePairList* loadParams = 0);
+            ManualResourceLoader* loader = 0, const NameValuePairList* loadParams = 0,
+            bool backgroundThread = false);
 
         /** Loads a BSP-based level from a stream.
             Currently only supports loading of Quake3 .bsp files.
         */
         ResourcePtr load(DataStreamPtr& stream, const String& group);
 
-        /** Override standard Singleton retrieval.
-        @remarks
-        Why do we do this? Well, it's because the Singleton
-        implementation is in a .h file, which means it gets compiled
-        into anybody who includes it. This is needed for the
-        Singleton template to work, but we actually only want it
-        compiled into the implementation of the class based on the
-        Singleton, not all of them. If we don't change this, we get
-        link errors when trying to use the Singleton-based class from
-        an outside dll.
-        @par
-        This method just delegates to the template version anyway,
-        but the implementation stays in this single compilation unit,
-        preventing link errors.
-        */
+        /// @copydoc Singleton::getSingleton()
         static BspResourceManager& getSingleton(void);
-        /** Override standard Singleton retrieval.
-        @remarks
-        Why do we do this? Well, it's because the Singleton
-        implementation is in a .h file, which means it gets compiled
-        into anybody who includes it. This is needed for the
-        Singleton template to work, but we actually only want it
-        compiled into the implementation of the class based on the
-        Singleton, not all of them. If we don't change this, we get
-        link errors when trying to use the Singleton-based class from
-        an outside dll.
-        @par
-        This method just delegates to the template version anyway,
-        but the implementation stays in this single compilation unit,
-        preventing link errors.
-        */
+        /// @copydoc Singleton::getSingleton()
         static BspResourceManager* getSingletonPtr(void);
 
 
@@ -104,7 +84,8 @@ namespace Ogre {
         Quake3ShaderManager *mShaderMgr;
 
     };
-
+    /** @} */
+    /** @} */
 }
 
 #endif

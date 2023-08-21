@@ -42,9 +42,6 @@
     <ClInclude Include="include\OgreOverlayManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreOverlayPrerequisites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgreOverlayProfileSessionListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>

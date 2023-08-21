@@ -32,22 +32,12 @@ THE SOFTWARE.
 #include "OgreStringConverter.h"
 #include "OgreRoot.h"
 #include "OgreGLHardwarePixelBuffer.h"
+#include "OgreGLSupport.h"
 
 namespace Ogre {
 //-----------------------------------------------------------------------------  
-    GLPBuffer::GLPBuffer(PixelComponentType format, uint32 width, uint32 height):
-        mFormat(format),
-        mWidth(width),
-        mHeight(height)
-    {
-    }
-    GLPBuffer::~GLPBuffer()
-    {
-    }
-
-//-----------------------------------------------------------------------------  
     GLPBRenderTexture::GLPBRenderTexture(GLPBRTTManager *manager, const String &name, 
-		const GLSurfaceDesc &target, bool writeGamma, uint fsaa):
+        const GLSurfaceDesc &target, bool writeGamma, uint fsaa):
         GLRenderTexture(name, target, writeGamma, fsaa),
         mManager(manager)
     {
@@ -64,9 +54,9 @@ namespace Ogre {
     {
         if( name == GLRenderTexture::CustomAttributeString_TARGET )
         {
-			GLSurfaceDesc &target = *static_cast<GLSurfaceDesc*>(pData);
-			target.buffer = static_cast<GLHardwarePixelBuffer*>(mBuffer);
-			target.zoffset = mZOffset;
+            GLSurfaceDesc &target = *static_cast<GLSurfaceDesc*>(pData);
+            target.buffer = static_cast<GLHardwarePixelBuffer*>(mBuffer);
+            target.zoffset = mZOffset;
         }
         else if (name == GLRenderTexture::CustomAttributeString_GLCONTEXT )
         {
@@ -77,10 +67,10 @@ namespace Ogre {
 //-----------------------------------------------------------------------------  
     GLPBRTTManager::GLPBRTTManager(GLSupport *support, RenderTarget *mainwindow):
         mSupport(support),
-		mMainWindow(mainwindow),
-		mMainContext(0)
+        mMainWindow(mainwindow),
+        mMainContext(0)
     {
-		mMainWindow->getCustomAttribute(GLRenderTexture::CustomAttributeString_GLCONTEXT, &mMainContext);
+        mMainWindow->getCustomAttribute(GLRenderTexture::CustomAttributeString_GLCONTEXT, &mMainContext);
     }  
     GLPBRTTManager::~GLPBRTTManager()
     {
@@ -92,7 +82,7 @@ namespace Ogre {
     }
 
     RenderTexture *GLPBRTTManager::createRenderTexture(const String &name, 
-		const GLSurfaceDesc &target, bool writeGamma, uint fsaa)
+        const GLSurfaceDesc &target, bool writeGamma, uint fsaa)
     {
         return new GLPBRenderTexture(this, name, target, writeGamma, fsaa);
     }
@@ -110,9 +100,9 @@ namespace Ogre {
 
     void GLPBRTTManager::unbind(RenderTarget *target)
     { 
-		// Copy on unbind
+        // Copy on unbind
         GLSurfaceDesc surface;
-		surface.buffer = 0;
+        surface.buffer = 0;
         target->getCustomAttribute(GLRenderTexture::CustomAttributeString_TARGET, &surface);
         if(surface.buffer)
             static_cast<GLTextureBuffer*>(surface.buffer)->copyFromFramebuffer(surface.zoffset);
@@ -153,11 +143,11 @@ namespace Ogre {
     {
         // Faster to return main context if the RTT is smaller than the window size
         // and ctype is PCT_BYTE. This must be checked every time because the window might have been resized
-		if(ctype == PCT_BYTE)
-		{
-			if(width <= mMainWindow->getWidth() && height <= mMainWindow->getHeight())
-				return mMainContext;
-		}
+        if(ctype == PCT_BYTE)
+        {
+            if(width <= mMainWindow->getWidth() && height <= mMainWindow->getHeight())
+                return mMainContext;
+        }
         assert(mPBuffers[ctype].pb);
         return mPBuffers[ctype].pb->getContext();
     }

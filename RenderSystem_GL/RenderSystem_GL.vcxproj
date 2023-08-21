@@ -22,12 +22,11 @@
     <ClCompile Include="src\atifs\src\ATI_FS_GLGpuProgram.cpp" />
     <ClCompile Include="src\atifs\src\Compiler2Pass.cpp" />
     <ClCompile Include="src\atifs\src\ps_1_4.cpp" />
-    <ClCompile Include="src\glew.cpp" />
+    <ClCompile Include="src\glew.c" />
     <ClCompile Include="src\GLSL\src\OgreGLSLExtSupport.cpp" />
     <ClCompile Include="src\GLSL\src\OgreGLSLGpuProgram.cpp" />
     <ClCompile Include="src\GLSL\src\OgreGLSLLinkProgram.cpp" />
     <ClCompile Include="src\GLSL\src\OgreGLSLLinkProgramManager.cpp" />
-    <ClCompile Include="src\GLSL\src\OgreGLSLPreprocessor.cpp" />
     <ClCompile Include="src\GLSL\src\OgreGLSLProgram.cpp" />
     <ClCompile Include="src\GLSL\src\OgreGLSLProgramFactory.cpp" />
     <ClCompile Include="src\nvparse\avp1.0_impl.cpp" />
@@ -52,9 +51,7 @@
     <ClCompile Include="src\nvparse\_ts1.0_parser.cpp" />
     <ClCompile Include="src\nvparse\_vs1.0_lexer.cpp" />
     <ClCompile Include="src\nvparse\_vs1.0_parser.cpp" />
-    <ClCompile Include="src\OgreGLATIFSInit.cpp" />
-    <ClCompile Include="src\OgreGLContext.cpp" />
-    <ClCompile Include="src\OgreGLDefaultHardwareBufferManager.cpp" />
+    <ClCompile Include="src\OgreGLCopyingRenderTexture.cpp" />
     <ClCompile Include="src\OgreGLDepthBuffer.cpp" />
     <ClCompile Include="src\OgreGLEngineDll.cpp" />
     <ClCompile Include="src\OgreGLFBOMultiRenderTarget.cpp" />
@@ -72,24 +69,14 @@
     <ClCompile Include="src\OgreGLPixelFormat.cpp" />
     <ClCompile Include="src\OgreGLPlugin.cpp" />
     <ClCompile Include="src\OgreGLRenderSystem.cpp" />
-    <ClCompile Include="src\OgreGLRenderTexture.cpp" />
     <ClCompile Include="src\OgreGLRenderToVertexBuffer.cpp" />
     <ClCompile Include="src\OgreGLStateCacheManager.cpp" />
     <ClCompile Include="src\OgreGLSupport.cpp" />
     <ClCompile Include="src\OgreGLTexture.cpp" />
     <ClCompile Include="src\OgreGLTextureManager.cpp" />
-    <ClCompile Include="src\OgreGLUniformCache.cpp" />
-    <ClCompile Include="src\StateCacheManager\OgreGLNullStateCacheManagerImp.cpp" />
-    <ClCompile Include="src\StateCacheManager\OgreGLNullUniformCacheImp.cpp" />
-    <ClCompile Include="src\Win32\OgreWin32Context.cpp" />
-    <ClCompile Include="src\Win32\OgreWin32GLSupport.cpp" />
-    <ClCompile Include="src\Win32\OgreWin32RenderTexture.cpp" />
-    <ClCompile Include="src\Win32\OgreWin32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\OgreGLATIFSInit.h" />
-    <ClInclude Include="include\OgreGLContext.h" />
-    <ClInclude Include="include\OgreGLDefaultHardwareBufferManager.h" />
+    <ClInclude Include="include\OgreGLCopyingRenderTexture.h" />
     <ClInclude Include="include\OgreGLDepthBuffer.h" />
     <ClInclude Include="include\OgreGLFBOMultiRenderTarget.h" />
     <ClInclude Include="include\OgreGLFBORenderTexture.h" />
@@ -103,34 +90,19 @@
     <ClInclude Include="include\OgreGLHardwarePixelBuffer.h" />
     <ClInclude Include="include\OgreGLHardwareVertexBuffer.h" />
     <ClInclude Include="include\OgreGLPBRenderTexture.h" />
-    <ClInclude Include="include\OgreGLPBuffer.h" />
     <ClInclude Include="include\OgreGLPixelFormat.h" />
     <ClInclude Include="include\OgreGLPlugin.h" />
     <ClInclude Include="include\OgreGLPrerequisites.h" />
     <ClInclude Include="include\OgreGLRenderSystem.h" />
-    <ClInclude Include="include\OgreGLRenderTexture.h" />
     <ClInclude Include="include\OgreGLRenderToVertexBuffer.h" />
     <ClInclude Include="include\OgreGLStateCacheManager.h" />
     <ClInclude Include="include\OgreGLSupport.h" />
     <ClInclude Include="include\OgreGLTexture.h" />
     <ClInclude Include="include\OgreGLTextureManager.h" />
-    <ClInclude Include="include\OgreGLUniformCache.h" />
-    <ClInclude Include="include\OgreSDLGLSupport.h" />
-    <ClInclude Include="include\OgreSDLPrerequisites.h" />
-    <ClInclude Include="include\OgreSDLWindow.h" />
-    <ClInclude Include="include\Win32\OgreWin32Context.h" />
-    <ClInclude Include="include\Win32\OgreWin32GLSupport.h" />
-    <ClInclude Include="include\Win32\OgreWin32Prerequisites.h" />
-    <ClInclude Include="include\Win32\OgreWin32RenderTexture.h" />
-    <ClInclude Include="include\Win32\OgreWin32Window.h" />
-    <ClInclude Include="src\atifs\include\ATI_FS_GLGpuProgram.h" />
-    <ClInclude Include="src\atifs\include\Compiler2Pass.h" />
-    <ClInclude Include="src\atifs\include\ps_1_4.h" />
     <ClInclude Include="src\GLSL\include\OgreGLSLExtSupport.h" />
     <ClInclude Include="src\GLSL\include\OgreGLSLGpuProgram.h" />
     <ClInclude Include="src\GLSL\include\OgreGLSLLinkProgram.h" />
     <ClInclude Include="src\GLSL\include\OgreGLSLLinkProgramManager.h" />
-    <ClInclude Include="src\GLSL\include\OgreGLSLPreprocessor.h" />
     <ClInclude Include="src\GLSL\include\OgreGLSLProgram.h" />
     <ClInclude Include="src\GLSL\include\OgreGLSLProgramFactory.h" />
     <ClInclude Include="src\nvparse\macro.h" />
@@ -150,9 +122,6 @@
     <ClInclude Include="src\nvparse\_rc1.0_parser.h" />
     <ClInclude Include="src\nvparse\_ts1.0_parser.h" />
     <ClInclude Include="src\nvparse\_vs1.0_parser.h" />
-    <ClInclude Include="src\StateCacheManager\OgreGLNullStateCacheManagerImp.h" />
-    <ClInclude Include="src\StateCacheManager\OgreGLNullUniformCacheImp.h" />
-    <ClInclude Include="src\StateCacheManager\OgreGLUniformCacheImp.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{f80ee5ed-76af-4f69-a4de-30a098a2fea3}</ProjectGuid>
@@ -227,15 +196,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;_MT;GLEW_STATIC;YY_NEVER_INTERACTIVE;RenderSystem_GL_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;..\OgreGLSupport\include;..\OgreGLSupport\include\win32;..\OgreGLSupport\include\GLSL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\libd\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreGLSupport.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -244,15 +214,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;_MT;GLEW_STATIC;YY_NEVER_INTERACTIVE;RenderSystem_GL_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;..\OgreGLSupport\include;..\OgreGLSupport\include\win32;..\OgreGLSupport\include\GLSL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\libd\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreGLSupport.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -263,9 +234,10 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;_MT;GLEW_STATIC;YY_NEVER_INTERACTIVE;RenderSystem_GL_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;..\OgreGLSupport\include;..\OgreGLSupport\include\win32;..\OgreGLSupport\include\GLSL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -273,7 +245,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreGLSupport.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -284,9 +256,10 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;_MT;GLEW_STATIC;YY_NEVER_INTERACTIVE;RenderSystem_GL_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;..\OgreGLSupport\include;..\OgreGLSupport\include\win32;..\OgreGLSupport\include\GLSL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -294,7 +267,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreGLSupport.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

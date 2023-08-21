@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 #include "OgreRenderable.h"
+#include "OgreRenderOperation.h"
 #include "OgreHeaderPrefix.h"
 
 
@@ -72,7 +73,7 @@ namespace Ogre {
         void getWorldTransforms(Matrix4* xform) const = 0;
         /// @copydoc Renderable::getSquaredViewDepth
         Real getSquaredViewDepth(const Camera*) const{ return 0; /* not used */}
-        /// @copydoc Renderable::getLights.
+        /// @copydoc Renderable::getLights
         const LightList& getLights(void) const;
         /** Does this renderable require a separate light cap?
         @remarks
@@ -161,6 +162,9 @@ namespace Ogre {
             ShadowTechnique shadowTechnique, const Light* light, 
             HardwareIndexBufferSharedPtr* indexBuffer, size_t* indexBufferUsedSize,
             bool extrudeVertices, Real extrusionDistance, unsigned long flags = 0 ) = 0;
+
+        /** Common implementation of releasing shadow renderables.*/
+        static void clearShadowRenderableList(ShadowRenderableList& shadowRenderables);
 
         /** Utility method for extruding vertices based on a light. 
         @remarks

@@ -33,17 +33,15 @@ THE SOFTWARE.
 #include "OgrePageStrategy.h"
 #include "OgreVector2.h"
 #include "OgreVector3.h"
-#include "OgreQuaternion.h"
 
 namespace Ogre
 {
-    /** \addtogroup Optional Components
+    /** \addtogroup Optional
     *  @{
     */
     /** \addtogroup Paging
     *  Some details on paging component
-    */
-    /** @{ */
+    * @{ */
 
 
     /// The 2D grid mode

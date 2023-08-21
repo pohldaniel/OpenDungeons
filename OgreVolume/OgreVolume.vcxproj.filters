@@ -54,9 +54,6 @@
     <ClInclude Include="include\OgreVolumeOctreeNodeSplitPolicy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreVolumePrerequisites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgreVolumeSimplexNoise.h">
       <Filter>Header Files</Filter>
     </ClInclude>

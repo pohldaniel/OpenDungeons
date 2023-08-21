@@ -129,7 +129,7 @@ setting CMake options and regenerating, rather than editing directly.
 // compiled in (default).  If you want to build CEGUI /without/ freetype
 // support, comment the following line.
 //////////////////////////////////////////////////////////////////////////
-/* #undef CEGUI_HAS_FREETYPE */
+#define CEGUI_HAS_FREETYPE
 
 //////////////////////////////////////////////////////////////////////////
 // PCRE library

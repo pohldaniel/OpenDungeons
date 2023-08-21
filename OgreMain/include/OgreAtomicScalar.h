@@ -28,12 +28,17 @@ THE SOFTWARE.
 #ifndef __AtomicScalar_H__
 #define __AtomicScalar_H__
 
-#include <signal.h>
 #include "OgrePrerequisites.h"
 #include "OgreException.h"
 #include "OgrePlatformInformation.h"
 
-#if (((OGRE_COMPILER == OGRE_COMPILER_GNUC) && (OGRE_COMP_VER >= 412)) || (OGRE_COMPILER == OGRE_COMPILER_CLANG)) && OGRE_THREAD_SUPPORT
+#if OGRE_USE_STD11
+#include <atomic>
+
+namespace Ogre {
+    template<class T> using AtomicScalar = std::atomic<T>;
+}
+#elif (((OGRE_COMPILER == OGRE_COMPILER_GNUC) && (OGRE_COMP_VER >= 412)) || (OGRE_COMPILER == OGRE_COMPILER_CLANG)) && OGRE_THREAD_SUPPORT
 
 // Atomics are not yet supported for the unsigned long long int(ResourceHandle) type as of Clang 5.0. So only GCC for now.
 #if ((OGRE_COMPILER == OGRE_COMPILER_GNUC) && (OGRE_COMP_VER >= 473))
@@ -48,12 +53,12 @@ THE SOFTWARE.
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup General
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup General
+    *  @{
+    */
     template<class T> class AtomicScalar
     {
 
@@ -75,17 +80,30 @@ namespace Ogre {
             mField = cousin.mField;
         }
 
-        T get (void) const
+        T load() const { return mField; }
+
+        /// @deprecated use load()
+        OGRE_DEPRECATED T get (void) const
         {
             return mField;
         }
 
-        void set (const T &v)
+        void store(const T& v) { mField = v; }
+
+        /// @deprecated use store()
+        OGRE_DEPRECATED void set (const T &v)
         {
             mField = v; 
         }   
 
-        bool cas (const T &old, const T &nu)
+        /// @deprecated use compare_exchange_strong()
+        OGRE_DEPRECATED bool cas (const T &old, const T &nu)
+        {
+            T _old = old;
+            return compare_exchange_strong(_old, nu);
+        }
+
+        bool compare_exchange_strong(T &old, const T &nu)
         {
             return __sync_bool_compare_and_swap (&mField, old, nu);
         }
@@ -110,15 +128,15 @@ namespace Ogre {
             return BUILTIN_FETCH_ADD (&mField, -1);
         }
 
-		T operator+=(const T &add)
-		{
-			return BUILTIN_ADD_FETCH (&mField, add);
-		}
+        T operator+=(const T &add)
+        {
+            return BUILTIN_ADD_FETCH (&mField, add);
+        }
 
-		T operator-=(const T &sub)
-		{
-			return BUILTIN_SUB_FETCH (&mField, sub);
-		}
+        T operator-=(const T &sub)
+        {
+            return BUILTIN_SUB_FETCH (&mField, sub);
+        }
 
         // Need special alignment for atomic functions on ARM CPU's
 #if OGRE_CPU == OGRE_CPU_ARM
@@ -132,8 +150,8 @@ namespace Ogre {
 #endif
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 
@@ -144,7 +162,7 @@ namespace Ogre {
 #  define WIN32_LEAN_AND_MEAN
 #endif
 #if !defined(NOMINMAX) && defined(_MSC_VER)
-#	define NOMINMAX // required to stop windows.h messing up std::min
+#   define NOMINMAX // required to stop windows.h messing up std::min
 #endif
 #include <windows.h>
 #include <intrin.h>
@@ -173,7 +191,7 @@ namespace Ogre {
 
         static func_InterlockedCompareExchange64 Ogre_InterlockedCompareExchange64;
 
-        static FORCEINLINE
+        static OGRE_FORCE_INLINE
             LONGLONG
             Ogre_InterlockedIncrement64 (
             __inout LONGLONG volatile *Addend
@@ -190,7 +208,7 @@ namespace Ogre {
             return Old + 1;
         }
 
-        static FORCEINLINE
+        static OGRE_FORCE_INLINE
             LONGLONG
             Ogre_InterlockedDecrement64 (
             __inout LONGLONG volatile *Addend
@@ -210,11 +228,11 @@ namespace Ogre {
     };
 
     /** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup General
-	*  @{
-	*/
+    *  @{
+    */
+    /** \addtogroup General
+    *  @{
+    */
     template<class T> class AtomicScalar
     {
 
@@ -236,29 +254,41 @@ namespace Ogre {
             mField = cousin.mField;
         }
 
-        T get (void) const
+        T load() const { return mField; }
+
+        /// @deprecated use load()
+        OGRE_DEPRECATED T get (void) const
         {
             return mField;
         }
 
-        void set (const T &v)
+        void store(const T& v) { mField = v; }
+
+        /// @deprecated use store()
+        OGRE_DEPRECATED void set (const T &v)
         {
             mField = v;
         }   
 
+        bool compare_exchange_strong(T &old, const T &nu)
+        {
+            return cas(old, nu);
+        }
+
+        /// @deprecated use compare_exchange_strong()
         bool cas (const T &old, const T &nu)
         {
             if (sizeof(T)==2) {
                 return _InterlockedCompareExchange16((SHORT*)&mField, static_cast<SHORT>(nu), static_cast<SHORT>(old)) == static_cast<SHORT>(old);
             } 
-			else if (sizeof(T)==4) 
-			{
+            else if (sizeof(T)==4) 
+            {
                 return _InterlockedCompareExchange((LONG*)&mField, static_cast<LONG>(nu), static_cast<LONG>(old)) == static_cast<LONG>(old);
-			} 
-			else if (sizeof(T)==8 && InterlockedCompareExchange64Wrapper::Ogre_InterlockedCompareExchange64 != NULL) {
+            } 
+            else if (sizeof(T)==8 && InterlockedCompareExchange64Wrapper::Ogre_InterlockedCompareExchange64 != NULL) {
                 return InterlockedCompareExchange64Wrapper::Ogre_InterlockedCompareExchange64((LONGLONG*)&mField, static_cast<LONGLONG>(nu), static_cast<LONGLONG>(old)) == static_cast<LONGLONG>(old);
             } 
-			else {
+            else {
                 OGRE_LOCK_AUTO_MUTEX;
                 if (mField != old) return false;
                 mField = nu;
@@ -322,8 +352,8 @@ namespace Ogre {
             }
         }
 
-		T operator+=(const T &add)
-		{
+        T operator+=(const T &add)
+        {
             if ((sizeof(T)==2) || (sizeof(T)==4) || (sizeof(T)==8 && InterlockedCompareExchange64Wrapper::Ogre_InterlockedCompareExchange64 != NULL)) {
                 //The function InterlockedExchangeAdd is not available for 64 and 16 bit version
                 //We will use the cas operation instead. 
@@ -343,10 +373,10 @@ namespace Ogre {
                 mField += add;
                 return mField;
             }
-		}
+        }
 
-		T operator-=(const T &sub)
-		{
+        T operator-=(const T &sub)
+        {
             if ((sizeof(T)==2) || (sizeof(T)==4) || (sizeof(T)==8 && InterlockedCompareExchange64Wrapper::Ogre_InterlockedCompareExchange64 != NULL)) {
                 //The function InterlockedExchangeAdd is not available for 64 and 16 bit version
                 //We will use the cas operation instead. 
@@ -366,7 +396,7 @@ namespace Ogre {
                 mField -= sub;
                 return mField;
             }
-		}
+        }
 
         protected:
 
@@ -375,8 +405,8 @@ namespace Ogre {
         volatile T mField;
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 
@@ -388,12 +418,12 @@ namespace Ogre {
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup General
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup General
+    *  @{
+    */
     template <class T> class AtomicScalar {
 
         public:
@@ -414,7 +444,10 @@ namespace Ogre {
             mField = cousin.mField;
         }
 
-        T get (void) const
+        T load() const { return mField; }
+
+        /// @deprecated use load()
+        OGRE_DEPRECATED T get (void) const
         {
             // no lock required here
             // since get will not interfere with set or cas
@@ -422,12 +455,22 @@ namespace Ogre {
             return mField;
         }
 
-        void set (const T &v)
+        void store(const T& v) { mField = v; }
+
+        /// @deprecated use store()
+        OGRE_DEPRECATED void set (const T &v)
         {
             mField = v;
         }
 
-        bool cas (const T &old, const T &nu)
+        /// @deprecated use compare_exchange_strong()
+        OGRE_DEPRECATED bool cas (const T &old, const T &nu)
+        {
+            T _old = old;
+            return compare_exchange_strong(_old, nu);
+        }
+
+        bool compare_exchange_strong(T &old, const T &nu)
         {
             OGRE_LOCK_AUTO_MUTEX;
             if (mField != old) return false;
@@ -459,19 +502,19 @@ namespace Ogre {
             return mField--;
         }
 
-		T operator+=(const T &add)
-		{
+        T operator+=(const T &add)
+        {
             OGRE_LOCK_AUTO_MUTEX;
-			mField += add;
-			return mField;
-		}
+            mField += add;
+            return mField;
+        }
 
-		T operator-=(const T &sub)
-		{
+        T operator-=(const T &sub)
+        {
             OGRE_LOCK_AUTO_MUTEX;
-			mField -= sub;
-			return mField;
-		}
+            mField -= sub;
+            return mField;
+        }
 
         protected:
 
@@ -480,8 +523,8 @@ namespace Ogre {
         volatile T mField;
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 

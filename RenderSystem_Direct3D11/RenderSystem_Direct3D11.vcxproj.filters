@@ -21,13 +21,13 @@
     <ClInclude Include="include\OgreD3D11Device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\OgreD3D11DeviceResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\OgreD3D11Driver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreD3D11DriverList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OgreD3D11GpuProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OgreD3D11GpuProgramManager.h">
@@ -81,6 +81,18 @@
     <ClInclude Include="include\OgreD3D11RenderWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\OgreD3D11StereoDriverAMD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OgreD3D11StereoDriverBridge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OgreD3D11StereoDriverImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OgreD3D11StereoDriverNVIDIA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\OgreD3D11Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -96,12 +108,21 @@
     <ClInclude Include="include\OgreD3D11VideoModeList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\OgreMonitorInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OgreNsightChecker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OgreD3D11DepthBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreD3D11Device.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreD3D11DeviceResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreD3D11Driver.cpp">
@@ -111,9 +132,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreD3D11EngineDll.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreD3D11GpuProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreD3D11GpuProgramManager.cpp">
@@ -164,6 +182,15 @@
     <ClCompile Include="src\OgreD3D11RenderWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OgreD3D11StereoDriverAMD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreD3D11StereoDriverBridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreD3D11StereoDriverNVIDIA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\OgreD3D11Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -177,6 +204,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\OgreD3D11VideoModeList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreMonitorInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreNsightChecker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -29,9 +29,7 @@ THE SOFTWARE.
 #define _Archive_H__
 
 #include "OgrePrerequisites.h"
-#include "OgreString.h"
 #include "OgreDataStream.h"
-#include "OgreSharedPtr.h"
 #include "OgreStringVector.h"
 #include "OgreException.h"
 #include <ctime>
@@ -40,11 +38,11 @@ THE SOFTWARE.
 namespace Ogre {
 
     /** \addtogroup Core
-     *  @{
-     */
+    *  @{
+    */
     /** \addtogroup Resources
-     *  @{
-     */
+    *  @{
+    */
     /** Information about a file/directory within the archive will be
     returned using a FileInfo struct.
     @see
@@ -85,7 +83,7 @@ namespace Ogre {
         to benefit from OGRE's automatic searching of multiple file locations 
         for the resources you are looking for.
     */
-	class _OgreExport Archive : public ArchiveAlloc
+    class _OgreExport Archive : public ArchiveAlloc
     {
     protected:
         /// Archive name
@@ -138,27 +136,27 @@ namespace Ogre {
             There is no equivalent 'close' method; the returned stream
             controls the lifecycle of this file operation.
         @param filename The fully qualified name of the file
-		@param readOnly Whether to open the file in read-only mode or not (note, 
-			if the archive is read-only then this cannot be set to false)
+        @param readOnly Whether to open the file in read-only mode or not (note, 
+            if the archive is read-only then this cannot be set to false)
         @return A shared pointer to a DataStream which can be used to 
             read / write the file. If the file is not present, returns a null
-			shared pointer.
+            shared pointer.
         */
         virtual DataStreamPtr open(const String& filename, bool readOnly = true) const = 0;
 
         /** Create a new file (or overwrite one already there). 
-            @note If the archive is read-only then this method will fail.
-            @param filename The fully qualified name of the file
-            @return A shared pointer to a DataStream which can be used to 
-            read / write the file. 
+        @note If the archive is read-only then this method will fail.
+        @param filename The fully qualified name of the file
+        @return A shared pointer to a DataStream which can be used to 
+        read / write the file. 
         */
-        virtual DataStreamPtr create(const String& filename) const;
+        virtual DataStreamPtr create(const String& filename);
 
         /** Delete a named file.
-            @remarks Not possible on read-only archives
-            @param filename The fully qualified name of the file
+        @remarks Not possible on read-only archives
+        @param filename The fully qualified name of the file
         */
-        virtual void remove(const String& filename) const;
+        virtual void remove(const String& filename);
 
         /** List all file names in the archive.
         @note
@@ -170,7 +168,7 @@ namespace Ogre {
             instead of files
         @return A list of filenames matching the criteria, all are fully qualified
         */
-        virtual StringVectorPtr list(bool recursive = true, bool dirs = false) = 0;
+        virtual StringVectorPtr list(bool recursive = true, bool dirs = false) const = 0;
         
         /** List all files in the archive with accompanying information.
         @param recursive Whether all paths of the archive are searched (if the 
@@ -180,7 +178,7 @@ namespace Ogre {
         @return A list of structures detailing quite a lot of information about
             all the files in the archive.
         */
-        virtual FileInfoListPtr listFileInfo(bool recursive = true, bool dirs = false) = 0;
+        virtual FileInfoListPtr listFileInfo(bool recursive = true, bool dirs = false) const = 0;
 
         /** Find all file or directory names matching a given pattern
             in this archive.
@@ -195,13 +193,13 @@ namespace Ogre {
         @return A list of filenames matching the criteria, all are fully qualified
         */
         virtual StringVectorPtr find(const String& pattern, bool recursive = true,
-            bool dirs = false) = 0;
+            bool dirs = false) const = 0;
 
         /** Find out if the named file exists (note: fully qualified filename required) */
-        virtual bool exists(const String& filename) = 0; 
+        virtual bool exists(const String& filename) const = 0;
 
         /** Retrieve the modification time of a given file */
-        virtual time_t getModifiedTime(const String& filename) = 0; 
+        virtual time_t getModifiedTime(const String& filename) const = 0;
 
 
         /** Find all files or directories matching a given pattern in this

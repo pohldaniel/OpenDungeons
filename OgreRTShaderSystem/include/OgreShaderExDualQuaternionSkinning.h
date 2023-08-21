@@ -31,14 +31,11 @@ THE SOFTWARE.
 
 #ifdef RTSHADER_SYSTEM_BUILD_EXT_SHADERS
 #include "OgreShaderExHardwareSkinningTechnique.h"
-#include "OgreShaderParameter.h"
-#include "OgreRenderSystem.h"
-#include "OgreShaderFunctionAtom.h"
 
 namespace Ogre {
 namespace RTShader {
 
-/** \addtogroup Core
+/** \addtogroup Optional
 *  @{
 */
 /** \addtogroup RTShader
@@ -65,41 +62,40 @@ public:
     /** Class default constructor */
     DualQuaternionSkinning();
 
-	/**
-	@see SubRenderState::resolveParameters.
-	*/
-	virtual bool resolveParameters(ProgramSet* programSet);
+    /**
+    @see SubRenderState::resolveParameters.
+    */
+    virtual bool resolveParameters(ProgramSet* programSet);
 
-	/**
-	@see SubRenderState::resolveDependencies.
-	*/
-	virtual bool resolveDependencies(ProgramSet* programSet);
+    /**
+    @see SubRenderState::resolveDependencies.
+    */
+    virtual bool resolveDependencies(ProgramSet* programSet);
 
-	/**
-	@see SubRenderState::addFunctionInvocations.
-	*/
-	virtual bool addFunctionInvocations(ProgramSet* programSet);
+    /**
+    @see SubRenderState::addFunctionInvocations.
+    */
+    virtual bool addFunctionInvocations(ProgramSet* programSet);
 
 // Protected methods
 protected:
     /** Adds functions to calculate position data in world, object and projective space */
-    void addPositionCalculations(Function* vsMain, int& funcCounter);
+    void addPositionCalculations(Function* vsMain);
 
     /** Adjusts the sign of a dual quaternion depending on its orientation to the root dual quaternion */
-    void adjustForCorrectAntipodality(Function* vsMain, int index, int& funcCounter, const ParameterPtr& pTempWorldMatrix);
+    void adjustForCorrectAntipodality(Function* vsMain, int index, const ParameterPtr& pTempWorldMatrix);
 
     /** Adds the weight of a given position for a given index
     @param pPositionTempParameter
         Requires a temp parameter with a matrix the same size of pPositionRelatedParam
     */
     void addIndexedPositionWeight(Function* vsMain, int index, ParameterPtr& pWorldMatrix,
-                                  ParameterPtr& pPositionTempParameter, ParameterPtr& pPositionRelatedOutputParam, int& funcCounter);
+                                  ParameterPtr& pPositionTempParameter, ParameterPtr& pPositionRelatedOutputParam);
     
     /** Adds the calculations for calculating a normal related element */
     void addNormalRelatedCalculations(Function* vsMain,
                                       ParameterPtr& pNormalRelatedParam,
-                                      ParameterPtr& pNormalWorldRelatedParam,
-                                      int& funcCounter);
+                                      ParameterPtr& pNormalWorldRelatedParam);
 
 protected:
     UniformParameterPtr mParamInScaleShearMatrices;

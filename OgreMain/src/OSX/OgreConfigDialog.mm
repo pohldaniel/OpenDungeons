@@ -28,44 +28,83 @@ THE SOFTWARE.
 
 #import "OgreLogManager.h"
 #import "OgreConfigDialog.h"
+#import "OgreRoot.h"
+#import "OgreRenderSystem.h"
+#import "OgreConfigOptionMap.h"
+
+#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 
 using namespace Ogre;
 
+#if defined(MAC_OS_X_VERSION_10_6) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
+@interface OgreConfigWindowDelegate : NSObject <NSWindowDelegate, NSTableViewDelegate, NSTableViewDataSource>
+#else
+@interface OgreConfigWindowDelegate : NSObject
+#endif
+{
+    NSWindow *mConfigWindow;
+    NSImageView *mOgreLogo;
+    NSPopUpButton *mRenderSystemsPopUp;
+    NSPopUpButton *mOptionsPopUp;
+    NSTableView *mOptionsTable;
+    NSButton *mOkButton;
+    NSButton *mCancelButton;
+    NSTextField *mOptionLabel;
+
+    NSDictionary *mOptions;
+}
+
+- (void)cancelButtonPressed:(id)sender;
+- (void)okButtonPressed:(id)sender;
+- (void)popUpValueChanged:(id)sender;
+
+// Getters and setters
+- (void)setOptions:(NSDictionary *)dict;
+- (NSDictionary *)getOptions;
+- (void)setRenderSystemsPopUp:(NSPopUpButton *)button;
+- (NSPopUpButton *)getRenderSystemsPopUp;
+- (void)setOgreLogo:(NSImageView *)image;
+- (NSImageView *)getOgreLogo;
+- (void)setConfigWindow:(NSWindow *)window;
+- (NSWindow *)getConfigWindow;
+- (void)setOptionsTable:(NSTableView *)table;
+- (NSTableView *)getOptionsTable;
+- (void)setOptionsPopUp:(NSPopUpButton *)button;
+- (NSPopUpButton *)getOptionsPopUp;
+
+@end
+
 namespace Ogre {
 
-	ConfigDialog* dlg = NULL;
+    struct ConfigDialog::PrivateData {
+        OgreConfigWindowDelegate *mWindowDelegate;
+        RenderSystem *mSelectedRenderSystem;
+    };
 
-	ConfigDialog::ConfigDialog()
+	static ConfigDialog* dlg = NULL;
+
+	ConfigDialog::ConfigDialog() : mImpl(new ConfigDialog::PrivateData())
 	{
 		dlg = this;
 	}
 	
 	ConfigDialog::~ConfigDialog()
 	{
-        [mWindowDelegate release]; mWindowDelegate = nil;
+        [mImpl->mWindowDelegate release]; mImpl->mWindowDelegate = nil;
+        delete mImpl;
 	}
 	
-	void ConfigDialog::initialise()
+	static void initialise(OgreConfigWindowDelegate*& mWindowDelegate)
 	{
-        mWindowDelegate = [[OgreConfigWindowDelegate alloc] init];
+	    mWindowDelegate = [[OgreConfigWindowDelegate alloc] init];
 
         if (!mWindowDelegate)
             OGRE_EXCEPT (Exception::ERR_INTERNAL_ERROR, "Could not load config dialog",
                          "ConfigDialog::initialise");
 
-        NSArray *keys = [[NSArray alloc] initWithObjects:@"Full Screen", @"FSAA", @"Colour Depth", @"RTT Preferred Mode", @"Video Mode", @"sRGB Gamma Conversion", @"macAPI", @"Content Scaling Factor", nil];
-        NSArray *fullScreenOptions = [[NSArray alloc] initWithObjects:@"Yes", @"No", nil];
-        NSArray *colourDepthOptions = [[NSArray alloc] initWithObjects:@"32", @"16", nil];
-        NSArray *rttOptions = [[NSArray alloc] initWithObjects:@"FBO", @"PBuffer", @"Copy", nil];
-        NSMutableArray *videoModeOptions = [[NSMutableArray alloc] initWithCapacity:1];
-        NSMutableArray *fsaaOptions = [[NSMutableArray alloc] initWithCapacity:1];
-        NSArray *sRGBOptions = [[NSArray alloc] initWithObjects:@"Yes", @"No", nil];
-        NSArray *contentScaleOptions = [[NSArray alloc] initWithObjects:@"2.0", @"1.5", @"1.33", @"1.0", nil];
-#ifdef __LP64__
-        NSArray *macAPIOptions = [[NSArray alloc] initWithObjects:@"cocoa", nil];
-#else
-        NSArray *macAPIOptions = [[NSArray alloc] initWithObjects:@"cocoa", @"carbon", nil];
-#endif
+        NSMutableArray *videoModeOptions = [NSMutableArray arrayWithCapacity:1];
+        NSMutableArray *fsaaOptions = [NSMutableArray arrayWithCapacity:1];
 		const RenderSystemList& renderers = Root::getSingleton().getAvailableRenderers();
 
         // Add renderers and options that are detected per RenderSystem
@@ -87,6 +126,10 @@ namespace Ogre {
 			rs->setConfigOption("macAPI", "carbon");
 #endif
             
+#if OGRE_NO_QUAD_BUFFER_STEREO == 0
+			rs->setConfigOption("Stereo Mode", "None");
+#endif
+
             // Add to the drop down
             NSString *renderSystemName = [[NSString alloc] initWithCString:rs->getName().c_str() encoding:NSASCIIStringEncoding];
             [[mWindowDelegate getRenderSystemsPopUp] addItemWithTitle:renderSystemName];
@@ -100,46 +143,45 @@ namespace Ogre {
                 {
                     for(uint i = 0; i < pOpt->second.possibleValues.size(); i++)
                     {
-                        NSString *optionString = [[NSString alloc] initWithCString:pOpt->second.possibleValues[i].c_str()
+                        NSString *optionString = [NSString stringWithCString:pOpt->second.possibleValues[i].c_str()
                                                                     encoding:NSASCIIStringEncoding];
 
                         if(![fsaaOptions containsObject:optionString])
                              [fsaaOptions addObject:optionString];
-
-                        [optionString release];
                     }
                 }
                 else if(pOpt->first == "Video Mode")
                 {
                     for(uint i = 0; i < pOpt->second.possibleValues.size(); i++)
                     {
-                        NSString *optionString = [[NSString alloc] initWithCString:pOpt->second.possibleValues[i].c_str()
+                        NSString *optionString = [NSString stringWithCString:pOpt->second.possibleValues[i].c_str()
                                                                     encoding:NSASCIIStringEncoding];
                         
                         if(![videoModeOptions containsObject:optionString])
                             [videoModeOptions addObject:optionString];
-                        
-                        [optionString release];
                     }
                 }
             }
         }
 
-        NSArray *objects = [[NSArray alloc] initWithObjects:fullScreenOptions, fsaaOptions,
-                            colourDepthOptions, rttOptions, videoModeOptions, sRGBOptions, macAPIOptions, contentScaleOptions, nil];
-        [mWindowDelegate setOptions:[NSDictionary dictionaryWithObjects:objects forKeys:keys]];
-
-        // Clean up all those arrays
-        [fullScreenOptions release];
-        [fsaaOptions release];
-        [colourDepthOptions release];
-        [rttOptions release];
-        [videoModeOptions release];
-        [sRGBOptions release];
-        [macAPIOptions release];
-        [contentScaleOptions release];
-        [keys release];
-        [objects release];
+        NSDictionary* options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 videoModeOptions, @"Video Mode",
+                                 fsaaOptions, @"FSAA",
+                                 [NSArray arrayWithObjects:@"Yes", @"No", nil], @"Full Screen",
+                                 [NSArray arrayWithObjects:@"32", @"16", nil], @"Colour Depth",
+                                 [NSArray arrayWithObjects:@"FBO", @"PBuffer", @"Copy", nil], @"RTT Preferred Mode",
+                                 [NSArray arrayWithObjects:@"Yes", @"No", nil], @"sRGB Gamma Conversion",
+                                 [NSArray arrayWithObjects:@"2.0", @"1.5", @"1.33", @"1.0", nil], @"Content Scaling Factor",
+#ifdef __LP64__
+                                 //[NSArray arrayWithObjects:@"cocoa", nil], @"macAPI", // single choice means no choice
+#else
+                                 [NSArray arrayWithObjects:@"cocoa", @"carbon", nil], @"macAPI",
+#endif
+#if OGRE_NO_QUAD_BUFFER_STEREO == 0
+                                 [NSArray arrayWithObjects:@"None", @"Frame Sequential", nil], @"Stereo Mode",
+#endif
+                                 nil];
+		[mWindowDelegate setOptions:options];
 
         // Reload table data
         [[mWindowDelegate getOptionsTable] reloadData];
@@ -148,13 +190,13 @@ namespace Ogre {
 	bool ConfigDialog::display()
 	{
         // Select previously selected rendersystem
-        mSelectedRenderSystem = Root::getSingleton().getRenderSystem();
+        mImpl->mSelectedRenderSystem = Root::getSingleton().getRenderSystem();
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        initialise();
+        initialise(mImpl->mWindowDelegate);
 
         // Run a modal dialog, Abort means cancel, Stop means Ok
         long retVal = 0;
-        NSModalSession modalSession = [NSApp beginModalSessionForWindow:[mWindowDelegate getConfigWindow]];
+        NSModalSession modalSession = [NSApp beginModalSessionForWindow:[mImpl->mWindowDelegate getConfigWindow]];
         for (;;) {
             retVal = [NSApp runModalSession:modalSession];
 
@@ -165,13 +207,13 @@ namespace Ogre {
         [NSApp endModalSession:modalSession];
 
         // Set the rendersystem
-        String selectedRenderSystemName = String([[[[mWindowDelegate getRenderSystemsPopUp] selectedItem] title] UTF8String]);
+        String selectedRenderSystemName = String([[[[mImpl->mWindowDelegate getRenderSystemsPopUp] selectedItem] title] UTF8String]);
         RenderSystem *rs = Root::getSingleton().getRenderSystemByName(selectedRenderSystemName);
         Root::getSingleton().setRenderSystem(rs);
         
         // Relinquish control of the table
-        [[mWindowDelegate getOptionsTable] setDataSource:nil];
-        [[mWindowDelegate getOptionsTable] setDelegate:nil];
+        [[mImpl->mWindowDelegate getOptionsTable] setDataSource:nil];
+        [[mImpl->mWindowDelegate getOptionsTable] setDelegate:nil];
         
         // Drain the auto release pool
         [pool drain];
@@ -299,6 +341,7 @@ namespace Ogre {
 
 - (void)dealloc
 {
+    [mOptions release]; mOptions = nil;
     [mConfigWindow release]; mConfigWindow = nil;
     [mOptionsPopUp release]; mOptionsPopUp = nil;
     [mOptionLabel release]; mOptionLabel = nil;
@@ -439,6 +482,8 @@ namespace Ogre {
 
 - (void)setOptions:(NSDictionary *)dict
 {
+    [dict retain];
+    [mOptions release];
     mOptions = dict;
 }
 

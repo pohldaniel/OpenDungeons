@@ -55,41 +55,41 @@ namespace Ogre {
         {
             *static_cast<GLFrameBufferObject **>(pData) = &mFB;
         }
-		else if (name == "GL_FBOID")
-		{
+        else if (name == "GL_FBOID")
+        {
             *static_cast<GLuint*>(pData) = mFB.getGLFBOID();
-		}
-		else if (name == "GL_MULTISAMPLEFBOID")
-		{
+        }
+        else if (name == "GL_MULTISAMPLEFBOID")
+        {
             *static_cast<GLuint*>(pData) = mFB.getGLMultisampleFBOID();
-		}
+        }
     }
 
-	void GLFBORenderTexture::swapBuffers()
-	{
-		mFB.swapBuffers();
-	}
-	//-----------------------------------------------------------------------------
-	bool GLFBORenderTexture::attachDepthBuffer( DepthBuffer *depthBuffer )
-	{
-		bool result;
-		if( (result = GLRenderTexture::attachDepthBuffer( depthBuffer )) )
-			mFB.attachDepthBuffer( depthBuffer );
+    void GLFBORenderTexture::swapBuffers()
+    {
+        mFB.swapBuffers();
+    }
+    //-----------------------------------------------------------------------------
+    bool GLFBORenderTexture::attachDepthBuffer( DepthBuffer *depthBuffer )
+    {
+        bool result;
+        if( (result = GLRenderTexture::attachDepthBuffer( depthBuffer )) )
+            mFB.attachDepthBuffer( depthBuffer );
 
-		return result;
-	}
-	//-----------------------------------------------------------------------------
-	void GLFBORenderTexture::detachDepthBuffer()
-	{
-		mFB.detachDepthBuffer();
-		GLRenderTexture::detachDepthBuffer();
-	}
-	//-----------------------------------------------------------------------------
-	void GLFBORenderTexture::_detachDepthBuffer()
-	{
-		mFB.detachDepthBuffer();
-		GLRenderTexture::_detachDepthBuffer();
-	}
+        return result;
+    }
+    //-----------------------------------------------------------------------------
+    void GLFBORenderTexture::detachDepthBuffer()
+    {
+        mFB.detachDepthBuffer();
+        GLRenderTexture::detachDepthBuffer();
+    }
+    //-----------------------------------------------------------------------------
+    void GLFBORenderTexture::_detachDepthBuffer()
+    {
+        mFB.detachDepthBuffer();
+        GLRenderTexture::_detachDepthBuffer();
+    }
    
 /// Size of probe texture
 #define PROBE_SIZE 16
@@ -123,23 +123,23 @@ static const size_t depthBits[] =
 };
 #define DEPTHFORMAT_COUNT (sizeof(depthFormats)/sizeof(GLenum))
 
-	GLFBOManager::GLFBOManager(bool atimode):
-		mATIMode(atimode)
+    GLFBOManager::GLFBOManager(bool atimode):
+        mATIMode(atimode)
     {
         detectFBOFormats();
         
         glGenFramebuffersEXT(1, &mTempFBO);
     }
 
-	GLFBOManager::~GLFBOManager()
-	{
-		if(!mRenderBufferMap.empty())
-		{
-			LogManager::getSingleton().logMessage("GL: Warning! GLFBOManager destructor called, but not all renderbuffers were released.", LML_CRITICAL);
-		}
+    GLFBOManager::~GLFBOManager()
+    {
+        if(!mRenderBufferMap.empty())
+        {
+            LogManager::getSingleton().logWarning("GLFBOManager destructor called, but not all renderbuffers were released.");
+        }
         
         glDeleteFramebuffersEXT(1, &mTempFBO);      
-	}
+    }
 
     void GLFBOManager::_createTempFramebuffer(GLuint fmt, GLuint &fb, GLuint &tid)
     {
@@ -293,20 +293,20 @@ static const size_t depthBits[] =
         {
             mProps[x].valid = false;
 
-			// Fetch GL format token
-			GLenum fmt = GLPixelUtil::getGLInternalFormat((PixelFormat)x);
+            // Fetch GL format token
+            GLenum fmt = GLPixelUtil::getGLInternalFormat((PixelFormat)x);
             if(fmt == GL_NONE && x != 0)
                 continue;
 
-			// No test for compressed formats
-			if(PixelUtil::isCompressed((PixelFormat)x))
-				continue;
+            // No test for compressed formats
+            if(PixelUtil::isCompressed((PixelFormat)x))
+                continue;
 
-			// Buggy ATI cards *crash* on non-RGB(A) formats
-			int depths[4];
-			PixelUtil::getBitDepths((PixelFormat)x, depths);
-			if(fmt!=GL_NONE && mATIMode && (!depths[0] || !depths[1] || !depths[2]))
-				continue;
+            // Buggy ATI cards *crash* on non-RGB(A) formats
+            int depths[4];
+            PixelUtil::getBitDepths((PixelFormat)x, depths);
+            if(fmt!=GL_NONE && mATIMode && (!depths[0] || !depths[1] || !depths[2]))
+                continue;
 
             // Create and attach framebuffer
             _createTempFramebuffer(fmt, fb, tid);
@@ -314,15 +314,15 @@ static const size_t depthBits[] =
             // Check status
             GLuint status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
 
-			// Ignore status in case of fmt==GL_NONE, because no implementation will accept
-			// a buffer without *any* attachment. Buffers with only stencil and depth attachment
-			// might still be supported, so we must continue probing.
+            // Ignore status in case of fmt==GL_NONE, because no implementation will accept
+            // a buffer without *any* attachment. Buffers with only stencil and depth attachment
+            // might still be supported, so we must continue probing.
             if(fmt == GL_NONE || status == GL_FRAMEBUFFER_COMPLETE_EXT)
             {
                 mProps[x].valid = true;
-				StringUtil::StrStreamType str;
-				str << "FBO " << PixelUtil::getFormatName((PixelFormat)x) 
-					<< " depth/stencil support: ";
+                StringStream str;
+                str << "FBO " << PixelUtil::getFormatName((PixelFormat)x) 
+                    << " depth/stencil support: ";
 
                 // For each depth/stencil formats
                 for (size_t depth = 0; depth < DEPTHFORMAT_COUNT; ++depth)
@@ -333,10 +333,10 @@ static const size_t depthBits[] =
 
                         for (size_t stencil = 0; stencil < STENCILFORMAT_COUNT; ++stencil)
                         {
-                            //StringUtil::StrStreamType l;
+                            //StringStream l;
                             //l << "Trying " << PixelUtil::getFormatName((PixelFormat)x) 
-                            //	<< " D" << depthBits[depth] 
-                            //	<< "S" << stencilBits[stencil];
+                            //  << " D" << depthBits[depth] 
+                            //  << "S" << stencilBits[stencil];
                             //LogManager::getSingleton().logMessage(l.str());
 
                             if (_tryFormat(depthFormats[depth], stencilFormats[stencil]))
@@ -366,20 +366,6 @@ static const size_t depthBits[] =
                     else
                     {
                         // Packed depth/stencil format
-
-// #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-// It now seems as if this workaround now *breaks* nvidia cards on Linux with the 169.12 drivers on Linux
-#if 0
-                        // Only query packed depth/stencil formats for 32-bit
-                        // non-floating point formats (ie not R32!) 
-                        // Linux nVidia driver segfaults if you query others
-                        if (PixelUtil::getNumElemBits((PixelFormat)x) != 32 ||
-                            PixelUtil::isFloatingPoint((PixelFormat)x))
-                        {
-                            continue;
-                        }
-#endif
-
                         if (_tryPackedFormat(depthFormats[depth]))
                         {
                             /// Add mode to allowed modes
@@ -411,11 +397,11 @@ static const size_t depthBits[] =
             // Delete texture and framebuffer
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
             glDeleteFramebuffersEXT(1, &fb);
-			
-			// Workaround for NVIDIA / Linux 169.21 driver problem
-			// see http://www.ogre3d.org/phpBB2/viewtopic.php?t=38037&start=25
-			glFinish();
-			
+            
+            // Workaround for NVIDIA / Linux 169.21 driver problem
+            // see http://www.ogre3d.org/phpBB2/viewtopic.php?t=38037&start=25
+            glFinish();
+            
             if (fmt != GL_NONE)
             {
                 glDeleteTextures(1, &tid);
@@ -428,7 +414,7 @@ static const size_t depthBits[] =
         glDrawBuffer(old_drawbuffer);
         glReadBuffer(old_readbuffer);
 
-		String fmtstring = "";
+        String fmtstring = "";
         for(size_t x=0; x<PF_COUNT; ++x)
         {
             if(mProps[x].valid)
@@ -436,7 +422,7 @@ static const size_t depthBits[] =
         }
         LogManager::getSingleton().logMessage("[GL] : Valid FBO targets " + fmtstring);
     }
-    void GLFBOManager::getBestDepthStencil(GLenum internalFormat, GLenum *depthFormat, GLenum *stencilFormat)
+    void GLFBOManager::getBestDepthStencil(PixelFormat internalFormat, GLenum *depthFormat, GLenum *stencilFormat)
     {
         const FormatProperties &props = mProps[internalFormat];
         /// Decide what stencil and depth formats to use
@@ -467,8 +453,8 @@ static const size_t depthBits[] =
                 desirability += 2000;
             if(depthBits[props.modes[mode].depth]==24) // Prefer 24 bit for now
                 desirability += 500;
-			if(depthFormats[props.modes[mode].depth]==GL_DEPTH24_STENCIL8_EXT) // Prefer 24/8 packed 
-				desirability += 5000;
+            if(depthFormats[props.modes[mode].depth]==GL_DEPTH24_STENCIL8_EXT) // Prefer 24/8 packed 
+                desirability += 5000;
             desirability += stencilBits[props.modes[mode].stencil] + depthBits[props.modes[mode].depth];
             
             if(desirability>bestscore)
@@ -482,16 +468,16 @@ static const size_t depthBits[] =
     }
 
     GLFBORenderTexture *GLFBOManager::createRenderTexture(const String &name, 
-		const GLSurfaceDesc &target, bool writeGamma, uint fsaa)
+        const GLSurfaceDesc &target, bool writeGamma, uint fsaa)
     {
         GLFBORenderTexture *retval = new GLFBORenderTexture(this, name, target, writeGamma, fsaa);
         return retval;
     }
-	MultiRenderTarget *GLFBOManager::createMultiRenderTarget(const String & name)
-	{
-		return new GLFBOMultiRenderTarget(this, name);
-	}
-	//---------------------------------------------------------------------
+    MultiRenderTarget *GLFBOManager::createMultiRenderTarget(const String & name)
+    {
+        return new GLFBOMultiRenderTarget(this, name);
+    }
+    //---------------------------------------------------------------------
     void GLFBOManager::bind(RenderTarget *target)
     {
         /// Check if the render target is in the rendertarget->FBO map
@@ -512,11 +498,11 @@ static const size_t depthBits[] =
         {
             RBFormat key(format, width, height, fsaa);
             RenderBufferMap::iterator it = mRenderBufferMap.find(key);
-            if(it != mRenderBufferMap.end() && (it->second.refcount == 0))
+            if(it != mRenderBufferMap.end())
             {
                 retval.buffer = it->second.buffer;
                 retval.zoffset = 0;
-				retval.numSamples = fsaa;
+                retval.numSamples = fsaa;
                 // Increase refcount
                 ++it->second.refcount;
             }
@@ -527,46 +513,10 @@ static const size_t depthBits[] =
                 mRenderBufferMap[key] = RBRef(rb);
                 retval.buffer = rb;
                 retval.zoffset = 0;
-				retval.numSamples = fsaa;
+                retval.numSamples = fsaa;
             }
         }
         //std::cerr << "Requested renderbuffer with format " << std::hex << format << std::dec << " of " << width << "x" << height << " :" << retval.buffer << std::endl;
         return retval;
-    }
-    //-----------------------------------------------------------------------
-    void GLFBOManager::requestRenderBuffer(const GLSurfaceDesc &surface)
-    {
-        if(surface.buffer == 0)
-            return;
-        RBFormat key(surface.buffer->getGLFormat(), surface.buffer->getWidth(), surface.buffer->getHeight(), surface.numSamples);
-        RenderBufferMap::iterator it = mRenderBufferMap.find(key);
-        assert(it != mRenderBufferMap.end());
-        if (it != mRenderBufferMap.end())   // Just in case
-        {
-            assert(it->second.buffer == surface.buffer);
-            // Increase refcount
-            ++it->second.refcount;
-        }
-    }
-    //-----------------------------------------------------------------------
-    void GLFBOManager::releaseRenderBuffer(const GLSurfaceDesc &surface)
-    {
-        if(surface.buffer == 0)
-            return;
-        RBFormat key(surface.buffer->getGLFormat(), surface.buffer->getWidth(), surface.buffer->getHeight(), surface.numSamples);
-        RenderBufferMap::iterator it = mRenderBufferMap.find(key);
-        if(it != mRenderBufferMap.end())
-		{
-			// Decrease refcount
-			--it->second.refcount;
-			if(it->second.refcount==0)
-			{
-				// If refcount reaches zero, delete buffer and remove from map
-				delete it->second.buffer;
-				mRenderBufferMap.erase(it);
-				//std::cerr << "Destroyed renderbuffer of format " << std::hex << key.format << std::dec
-				//        << " of " << key.width << "x" << key.height << std::endl;
-			}
-		}
     }
 }

@@ -34,7 +34,12 @@ THE SOFTWARE.
 
 
 namespace Ogre {
-
+    /** \addtogroup Plugins
+    *  @{
+    */
+    /** \addtogroup BSPSceneManager
+    *  @{
+    */
     /** Support for loading and extracting data from a Quake3 level file.
     This class implements the required methods for opening Quake3 level files
     and extracting the pertinent data within. Ogre supports BSP based levels
@@ -59,7 +64,7 @@ namespace Ogre {
     be valid after the original call. This is why it has no accessor methods
     for reading it's internal state.
     */
-	class Quake3Level : public ResourceAlloc
+    class Quake3Level : public ResourceAlloc
     {
     public:
         Quake3Level();
@@ -161,6 +166,8 @@ namespace Ogre {
 
 
     };
+    /** @} */
+    /** @} */
 }
 
 

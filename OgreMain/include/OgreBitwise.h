@@ -36,12 +36,12 @@ THE SOFTWARE.
 #endif
 
 namespace Ogre {
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Math
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Math
+    *  @{
+    */
 
     /** Class for manipulating bit patterns.
     */
@@ -49,7 +49,7 @@ namespace Ogre {
     public:
         /** Returns value with reversed bytes order.
         */
-        static FORCEINLINE uint16 bswap16(uint16 arg)
+        static OGRE_FORCE_INLINE uint16 bswap16(uint16 arg)
         {
 #if OGRE_COMPILER == OGRE_COMPILER_MSVC && OGRE_COMP_VER >= 1310
             return _byteswap_ushort(arg);
@@ -61,7 +61,7 @@ namespace Ogre {
         }
         /** Returns value with reversed bytes order.
         */
-        static FORCEINLINE uint32 bswap32(uint32 arg)
+        static OGRE_FORCE_INLINE uint32 bswap32(uint32 arg)
         {
 #if OGRE_COMPILER == OGRE_COMPILER_MSVC && OGRE_COMP_VER >= 1310
             return _byteswap_ulong(arg);
@@ -73,7 +73,7 @@ namespace Ogre {
         }
         /** Returns value with reversed bytes order.
         */
-        static FORCEINLINE uint64 bswap64(uint64 arg)
+        static OGRE_FORCE_INLINE uint64 bswap64(uint64 arg)
         {
 #if OGRE_COMPILER == OGRE_COMPILER_MSVC && OGRE_COMP_VER >= 1310
             return _byteswap_uint64(arg);
@@ -121,7 +121,7 @@ namespace Ogre {
 
         /** Returns the most significant bit set in a value.
         */
-        static FORCEINLINE unsigned int mostSignificantBitSet(unsigned int value)
+        static OGRE_FORCE_INLINE unsigned int mostSignificantBitSet(unsigned int value)
         {
             unsigned int result = 0;
             while (value != 0) {
@@ -134,7 +134,7 @@ namespace Ogre {
             @note 0 and 1 are powers of two, so 
                 firstPO2From(0)==0 and firstPO2From(1)==1.
         */
-        static FORCEINLINE uint32 firstPO2From(uint32 n)
+        static OGRE_FORCE_INLINE uint32 firstPO2From(uint32 n)
         {
             --n;            
             n |= n >> 16;
@@ -149,53 +149,53 @@ namespace Ogre {
             @note 0 and 1 are tread as power of two.
         */
         template<typename T>
-        static FORCEINLINE bool isPO2(T n)
+        static OGRE_FORCE_INLINE bool isPO2(T n)
         {
             return (n & (n-1)) == 0;
         }
         /** Returns the number of bits a pattern must be shifted right by to
             remove right-hand zeros.
         */
-		template<typename T>
-        static FORCEINLINE unsigned int getBitShift(T mask)
-		{
-			if (mask == 0)
-				return 0;
+        template<typename T>
+        static OGRE_FORCE_INLINE unsigned int getBitShift(T mask)
+        {
+            if (mask == 0)
+                return 0;
 
-			unsigned int result = 0;
-			while ((mask & 1) == 0) {
-				++result;
-				mask >>= 1;
-			}
-			return result;
-		}
+            unsigned int result = 0;
+            while ((mask & 1) == 0) {
+                ++result;
+                mask >>= 1;
+            }
+            return result;
+        }
 
         /** Takes a value with a given src bit mask, and produces another
             value with a desired bit mask.
             @remarks
                 This routine is useful for colour conversion.
         */
-		template<typename SrcT, typename DestT>
+        template<typename SrcT, typename DestT>
         static inline DestT convertBitPattern(SrcT srcValue, SrcT srcBitMask, DestT destBitMask)
-		{
-			// Mask off irrelevant source value bits (if any)
-			srcValue = srcValue & srcBitMask;
+        {
+            // Mask off irrelevant source value bits (if any)
+            srcValue = srcValue & srcBitMask;
 
-			// Shift source down to bottom of DWORD
-			const unsigned int srcBitShift = getBitShift(srcBitMask);
-			srcValue >>= srcBitShift;
+            // Shift source down to bottom of DWORD
+            const unsigned int srcBitShift = getBitShift(srcBitMask);
+            srcValue >>= srcBitShift;
 
-			// Get max value possible in source from srcMask
-			const SrcT srcMax = srcBitMask >> srcBitShift;
+            // Get max value possible in source from srcMask
+            const SrcT srcMax = srcBitMask >> srcBitShift;
 
-			// Get max available in dest
-			const unsigned int destBitShift = getBitShift(destBitMask);
-			const DestT destMax = destBitMask >> destBitShift;
+            // Get max available in dest
+            const unsigned int destBitShift = getBitShift(destBitMask);
+            const DestT destMax = destBitMask >> destBitShift;
 
-			// Scale source value into destination, and shift back
-			DestT destValue = (srcValue * destMax) / srcMax;
-			return (destValue << destBitShift);
-		}
+            // Scale source value into destination, and shift back
+            DestT destValue = (srcValue * destMax) / srcMax;
+            return (destValue << destBitShift);
+        }
 
         /**
          * Convert N bit colour channel value to P bits. It fills P bits with the
@@ -294,7 +294,7 @@ namespace Ogre {
         }
 
         /** Convert a float32 to a float16 (NV_half_float)
-         	Courtesy of OpenEXR
+            Courtesy of OpenEXR
         */
         static inline uint16 floatToHalf(float i)
         {
@@ -302,8 +302,8 @@ namespace Ogre {
             v.f = i;
             return floatToHalfI(v.i);
         }
-		/** Converts float in uint32 format to a a half in uint16 format
-		*/
+        /** Converts float in uint32 format to a a half in uint16 format
+        */
         static inline uint16 floatToHalfI(uint32 i)
         {
             register int s =  (i >> 16) & 0x00008000;
@@ -353,9 +353,9 @@ namespace Ogre {
             v.i = halfToFloatI(y);
             return v.f;
         }
-		/** Converts a half in uint16 format to a float
-		 	in uint32 format
-		 */
+        /** Converts a half in uint16 format to a float
+            in uint32 format
+         */
         static inline uint32 halfToFloatI(uint16 y)
         {
             register int s = (y >> 15) & 0x00000001;
@@ -400,8 +400,8 @@ namespace Ogre {
          
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 

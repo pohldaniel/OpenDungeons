@@ -32,6 +32,7 @@
     <ClInclude Include="include\OgreShaderExPerPixelLighting.h" />
     <ClInclude Include="include\OgreShaderExTextureAtlasSampler.h" />
     <ClInclude Include="include\OgreShaderExTriplanarTexturing.h" />
+    <ClInclude Include="include\OgreShaderFFPAlphaTest.h" />
     <ClInclude Include="include\OgreShaderFFPColour.h" />
     <ClInclude Include="include\OgreShaderFFPFog.h" />
     <ClInclude Include="include\OgreShaderFFPLighting.h" />
@@ -74,6 +75,7 @@
     <ClCompile Include="src\OgreShaderExPerPixelLighting.cpp" />
     <ClCompile Include="src\OgreShaderExTextureAtlasSampler.cpp" />
     <ClCompile Include="src\OgreShaderExTriplanarTexturing.cpp" />
+    <ClCompile Include="src\OgreShaderFFPAlphaTest.cpp" />
     <ClCompile Include="src\OgreShaderFFPColour.cpp" />
     <ClCompile Include="src\OgreShaderFFPFog.cpp" />
     <ClCompile Include="src\OgreShaderFFPLighting.cpp" />
@@ -177,6 +179,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OgreRTShaderSystem_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -194,6 +197,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OgreRTShaderSystem_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -213,6 +217,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OgreRTShaderSystem_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -234,6 +239,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OgreRTShaderSystem_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

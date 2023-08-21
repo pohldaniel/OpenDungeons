@@ -30,35 +30,31 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 #include "OgreRenderSystemCapabilities.h"
-#include "OgreStringVector.h"
-#include "OgreDataStream.h"
 #include "OgreHeaderPrefix.h"
 
 
 namespace Ogre {
 
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup RenderSystem
-	*  @{
-	*/
-	/** Class for serializing RenderSystemCapabilities to / from a .rendercaps script.*/
-	class _OgreExport RenderSystemCapabilitiesSerializer : public RenderSysAlloc
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup RenderSystem
+    *  @{
+    */
+    /** Class for serializing RenderSystemCapabilities to / from a .rendercaps script.*/
+    class _OgreExport RenderSystemCapabilitiesSerializer : public RenderSysAlloc
     {
 
     public:
         /** default constructor*/
         RenderSystemCapabilitiesSerializer();
-        /** default destructor*/
-        virtual ~RenderSystemCapabilitiesSerializer() {}
 
         /** Writes a RenderSystemCapabilities object to a data stream */
-        void writeScript(const RenderSystemCapabilities* caps, String name, String filename);
-		
-		/** Writes a RenderSystemCapabilities object to a string */
-		String writeString(const RenderSystemCapabilities* caps, String name);
+        void writeScript(const RenderSystemCapabilities* caps, const String &name, String filename);
+        
+        /** Writes a RenderSystemCapabilities object to a string */
+        String writeString(const RenderSystemCapabilities* caps, const String &name);
 
         /** Parses a RenderSystemCapabilities script file passed as a stream.
             Adds it to RenderSystemCapabilitiesManager::_addRenderSystemCapabilities
@@ -66,7 +62,7 @@ namespace Ogre {
         void parseScript(DataStreamPtr& stream);
 
     protected:
-
+        void write(const RenderSystemCapabilities* caps, const String &name, std::ostream &file);
 
         enum CapabilityKeywordType {UNDEFINED_CAPABILITY_TYPE = 0, SET_STRING_METHOD, SET_INT_METHOD, SET_BOOL_METHOD, SET_REAL_METHOD,
                                 SET_CAPABILITY_ENUM_BOOL, ADD_SHADER_PROFILE_STRING};
@@ -122,16 +118,14 @@ namespace Ogre {
             mKeywordTypeMap.insert(KeywordTypeMap::value_type(keyword, type));
         }
 
-        inline CapabilityKeywordType getKeywordType(const String& keyword) const
+        CapabilityKeywordType getKeywordType(const String& keyword) const
         {
-						KeywordTypeMap::const_iterator it = mKeywordTypeMap.find(keyword);
-            if(it != mKeywordTypeMap.end())
-							 return (*it).second;
-						else
-						{
-							 logParseError("Can't find the type for keyword: " + keyword);
-							 return UNDEFINED_CAPABILITY_TYPE;
-						}
+            KeywordTypeMap::const_iterator it = mKeywordTypeMap.find(keyword);
+            if (it != mKeywordTypeMap.end())
+                return (*it).second;
+
+            // default
+            return SET_CAPABILITY_ENUM_BOOL;
         }
 
         inline void addSetStringMethod(String keyword, SetStringMethod method)
@@ -144,7 +138,7 @@ namespace Ogre {
             SetStringMethodDispatchTable::iterator methodIter = mSetStringMethodDispatchTable.find(keyword);
             if (methodIter != mSetStringMethodDispatchTable.end())
             {
-						    SetStringMethod m = (*methodIter).second;
+                            SetStringMethod m = (*methodIter).second;
                 (mCurrentCapabilities->*m)(val);
             }
             else
@@ -164,7 +158,7 @@ namespace Ogre {
             SetIntMethodDispatchTable::iterator methodIter = mSetIntMethodDispatchTable.find(keyword);
             if (methodIter != mSetIntMethodDispatchTable.end())
             {
-						    SetIntMethod m = (*methodIter).second;
+                            SetIntMethod m = (*methodIter).second;
                 (mCurrentCapabilities->*m)(val);
             }
             else
@@ -184,13 +178,13 @@ namespace Ogre {
             SetBoolMethodDispatchTable::iterator methodIter = mSetBoolMethodDispatchTable.find(keyword);
             if (methodIter != mSetBoolMethodDispatchTable.end())
             {
-						    SetBoolMethod m = (*methodIter).second;
+                            SetBoolMethod m = (*methodIter).second;
                 (mCurrentCapabilities->*m)(val);
             }
             else
             {
                 logParseError("undefined keyword: " + keyword);
-						}
+                        }
         }
 
 
@@ -204,13 +198,13 @@ namespace Ogre {
             SetRealMethodDispatchTable::iterator methodIter = mSetRealMethodDispatchTable.find(keyword);
             if (methodIter != mSetRealMethodDispatchTable.end())
             {
-						    SetRealMethod m = (*methodIter).second;
+                            SetRealMethod m = (*methodIter).second;
                 (mCurrentCapabilities->*m)(val);
             }
             else
             {
                 logParseError("undefined keyword: " + keyword);
-						}
+                        }
         }
 
         inline void addShaderProfile(String& val)
@@ -241,8 +235,8 @@ namespace Ogre {
         void logParseError(const String& error) const;
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 

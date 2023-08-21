@@ -29,35 +29,35 @@ THE SOFTWARE.
 #define __GLPlugin_H__
 
 #include "OgrePlugin.h"
-#include "OgreGLRenderSystem.h"
 
 namespace Ogre
 {
+    class GLRenderSystem;
 
-	/** Plugin instance for GL Manager */
-	class GLPlugin : public Plugin
-	{
-	public:
-		GLPlugin();
+    /** Plugin instance for GL Manager */
+    class GLPlugin : public Plugin
+    {
+    public:
+        GLPlugin();
 
 
-		/// @copydoc Plugin::getName
-		const String& getName() const;
+        /// @copydoc Plugin::getName
+        const String& getName() const;
 
-		/// @copydoc Plugin::install
-		void install();
+        /// @copydoc Plugin::install
+        void install();
 
-		/// @copydoc Plugin::initialise
-		void initialise();
+        /// @copydoc Plugin::initialise
+        void initialise();
 
-		/// @copydoc Plugin::shutdown
-		void shutdown();
+        /// @copydoc Plugin::shutdown
+        void shutdown();
 
-		/// @copydoc Plugin::uninstall
-		void uninstall();
-	protected:
-		GLRenderSystem* mRenderSystem;
-	};
+        /// @copydoc Plugin::uninstall
+        void uninstall();
+    protected:
+        GLRenderSystem* mRenderSystem;
+    };
 }
 
 #endif

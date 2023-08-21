@@ -36,28 +36,25 @@ THE SOFTWARE.
 
 namespace Ogre {
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup General
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup General
+    *  @{
+    */
 
-	class _OgreExport ScriptParser : public ScriptCompilerAlloc
-	{
-	public:
-		ScriptParser();
-		virtual ~ScriptParser() {}
-
-		ConcreteNodeListPtr parse(const ScriptTokenListPtr &tokens);
-		ConcreteNodeListPtr parseChunk(const ScriptTokenListPtr &tokens);
-	private:
-		ScriptToken *getToken(ScriptTokenList::iterator i, ScriptTokenList::iterator end, int offset);
-		ScriptTokenList::iterator skipNewlines(ScriptTokenList::iterator i, ScriptTokenList::iterator end);
-	};
-	
-	/** @} */
-	/** @} */
+    class _OgreExport ScriptParser : public ScriptCompilerAlloc
+    {
+    public:
+        static ConcreteNodeListPtr parse(const ScriptTokenListPtr &tokens);
+        static ConcreteNodeListPtr parseChunk(const ScriptTokenListPtr &tokens);
+    private:
+        static ScriptToken *getToken(ScriptTokenList::iterator i, ScriptTokenList::iterator end, int offset);
+        static ScriptTokenList::iterator skipNewlines(ScriptTokenList::iterator i, ScriptTokenList::iterator end);
+    };
+    
+    /** @} */
+    /** @} */
 }
 
 #include "OgreHeaderSuffix.h"

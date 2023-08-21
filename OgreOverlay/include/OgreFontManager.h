@@ -34,30 +34,34 @@ THE SOFTWARE
 
 namespace Ogre
 {
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Resources
-	*  @{
-	*/
-	/** Manages Font resources, parsing .fontdef files and generally organising them.*/
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \addtogroup Overlays
+    *  @{
+    */
+    /** Manages Font resources, parsing .fontdef files and generally organising them.*/
     class _OgreOverlayExport FontManager : public ResourceManager, public Singleton< FontManager >
     {
     public:
 
-		FontManager();
-		~FontManager();
+        FontManager();
+        ~FontManager();
 
-		/// Create a new font
-		/// @see ResourceManager::createResource
-		FontPtr create (const String& name, const String& group,
-							bool isManual = false, ManualResourceLoader* loader = 0,
-							const NameValuePairList* createParams = 0);
+        /// Create a new font
+        /// @see ResourceManager::createResource
+        FontPtr create (const String& name, const String& group,
+                            bool isManual = false, ManualResourceLoader* loader = 0,
+                            const NameValuePairList* createParams = 0);
 
-		/// Get a resource by name
-		/// @see ResourceManager::getResourceByName
-		FontPtr getByName(const String& name, const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
-
+        /// Get a resource by name
+        /// @see ResourceManager::getResourceByName
+        FontPtr
+#if OGRE_RESOURCEMANAGER_STRICT
+        getByName(const String& name, const String& groupName);
+#else
+        getByName(const String& name, const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
+#endif
 
         /** @copydoc ScriptLoader::parseScript */
         void parseScript(DataStreamPtr& stream, const String& groupName);
@@ -77,37 +81,23 @@ namespace Ogre
         preventing link errors.
         */
         static FontManager& getSingleton(void);
-        /** Override standard Singleton retrieval.
-        @remarks
-        Why do we do this? Well, it's because the Singleton
-        implementation is in a .h file, which means it gets compiled
-        into anybody who includes it. This is needed for the
-        Singleton template to work, but we actually only want it
-        compiled into the implementation of the class based on the
-        Singleton, not all of them. If we don't change this, we get
-        link errors when trying to use the Singleton-based class from
-        an outside dll.
-        @par
-        This method just delegates to the template version anyway,
-        but the implementation stays in this single compilation unit,
-        preventing link errors.
-        */
+        /// @copydoc Singleton::getSingleton()
         static FontManager* getSingletonPtr(void);
 
     protected:
 
         /// Internal methods
-		Resource* createImpl(const String& name, ResourceHandle handle, 
-			const String& group, bool isManual, ManualResourceLoader* loader, 
+        Resource* createImpl(const String& name, ResourceHandle handle, 
+            const String& group, bool isManual, ManualResourceLoader* loader, 
             const NameValuePairList* params);
-		void parseAttribute(const String& line, FontPtr& pFont);
+        void parseAttribute(const String& line, FontPtr& pFont);
 
         void logBadAttrib(const String& line, FontPtr& pFont);
 
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 }
 
 #endif

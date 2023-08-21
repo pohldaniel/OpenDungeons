@@ -29,17 +29,19 @@ THE SOFTWARE.
 #define __Ogre_Volume_MeshBuilder_H__
 
 #include <vector>
-#include "OgreSimpleRenderable.h"
 #include "OgreManualObject.h"
-#include "OgreRenderOperation.h"
 #include "OgreVector3.h"
 #include "OgreAxisAlignedBox.h"
-#include "OgreSceneManager.h"
 #include "OgreVolumePrerequisites.h"
 
 namespace Ogre {
 namespace Volume {
-
+    /** \addtogroup Optional
+    *  @{
+    */
+    /** \addtogroup Volume
+    *  @{
+    */
     /** Lightweight struct to represent a mesh vertex.
     */
     typedef struct _OgreVolumeExport Vertex
@@ -339,6 +341,8 @@ namespace Volume {
         void executeCallback(MeshBuilderCallback *callback, const SimpleRenderable *simpleRenderable, size_t level, int inProcess) const;
 
     };
+    /** @} */
+    /** @} */
 }
 }
 

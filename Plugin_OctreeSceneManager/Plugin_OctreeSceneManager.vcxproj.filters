@@ -27,9 +27,6 @@
     <ClInclude Include="include\OgreOctreePlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreOctreePrerequisites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgreOctreeSceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

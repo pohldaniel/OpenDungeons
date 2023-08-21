@@ -21,9 +21,6 @@
     <ClInclude Include="include\OgreBspNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreBspPrerequisites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgreBspResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

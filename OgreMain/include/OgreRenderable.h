@@ -31,11 +31,11 @@ THE SOFTWARE.
 #include "OgrePrerequisites.h"
 #include "OgreCommon.h"
 
-#include "OgreRenderOperation.h"
+#include "OgreGpuProgram.h"
+#include "OgreGpuProgramParams.h"
 #include "OgreMatrix4.h"
 #include "OgreMaterial.h"
 #include "OgrePlane.h"
-#include "OgreGpuProgram.h"
 #include "OgreVector4.h"
 #include "OgreException.h"
 #include "OgreUserObjectBindings.h"
@@ -69,17 +69,12 @@ namespace Ogre {
             The need for this class started when the DX10 render system needed to save state objects.
         */
         class RenderSystemData {}; 
+        typedef SharedPtr<RenderSystemData> RenderSystemDataPtr;
+        
     public:
-        Renderable() : mPolygonModeOverrideable(true), mUseIdentityProjection(false), mUseIdentityView(false), mRenderSystemData(NULL) {}
+        Renderable() : mPolygonModeOverrideable(true), mUseIdentityProjection(false), mUseIdentityView(false){}
         /** Virtual destructor needed as class has virtual methods. */
-        virtual ~Renderable() 
-        {
-            if (mRenderSystemData)
-            {
-                delete mRenderSystemData;
-                mRenderSystemData = NULL;
-            }
-        }
+        virtual ~Renderable() {}
         /** Retrieves a weak reference to the material this renderable object uses.
         @remarks
             Note that the Renderable also has the option to override the getTechnique method
@@ -321,7 +316,7 @@ namespace Ogre {
         @param override true means that a lower camera detail will override this
             renderables detail level, false means it won't.
         */
-        virtual void setPolygonModeOverrideable(bool override)
+        void setPolygonModeOverrideable(bool override)
         {
             mPolygonModeOverrideable = override;
         }
@@ -329,7 +324,7 @@ namespace Ogre {
         /** Gets whether this renderable's chosen detail level can be
             overridden (downgraded) by the camera setting. 
         */
-        virtual bool getPolygonModeOverrideable(void) const
+        bool getPolygonModeOverrideable(void) const
         {
             return mPolygonModeOverrideable;
         }
@@ -341,18 +336,18 @@ namespace Ogre {
             this Renderable. This can be a pointer back to one of your own
             classes for instance.
         */
-        OGRE_DEPRECATED virtual void setUserAny(const Any& anything) { getUserObjectBindings().setUserAny(anything); }
+        OGRE_DEPRECATED void setUserAny(const Any& anything) { getUserObjectBindings().setUserAny(anything); }
 
         /** @deprecated use UserObjectBindings::getUserAny via getUserObjectBindings() instead.
             Retrieves the custom user value associated with this object.
         */
-        OGRE_DEPRECATED virtual const Any& getUserAny(void) const { return getUserObjectBindings().getUserAny(); }
+        OGRE_DEPRECATED const Any& getUserAny(void) const { return getUserObjectBindings().getUserAny(); }
 
         /** Return an instance of user objects binding associated with this class.
             You can use it to associate one or more custom objects with this class instance.
         @see UserObjectBindings::setUserAny.
         */
-        UserObjectBindings&	getUserObjectBindings() { return mUserObjectBindings; }
+        UserObjectBindings& getUserObjectBindings() { return mUserObjectBindings; }
 
         /** Return an instance of user objects binding associated with this class.
             You can use it to associate one or more custom objects with this class instance.
@@ -396,7 +391,7 @@ namespace Ogre {
         @remarks
             This should only be used by a RenderSystem
         */
-        virtual RenderSystemData * getRenderSystemData() const 
+        const RenderSystemDataPtr& getRenderSystemData() const
         { 
             return mRenderSystemData; 
         }
@@ -404,7 +399,7 @@ namespace Ogre {
         @remarks
             This should only be used by a RenderSystem
         */
-        virtual void setRenderSystemData(RenderSystemData * val) const
+        void setRenderSystemData(RenderSystemDataPtr val) const
         { 
             mRenderSystemData = val; 
         }
@@ -417,7 +412,7 @@ namespace Ogre {
         bool mUseIdentityProjection;
         bool mUseIdentityView;
         UserObjectBindings mUserObjectBindings;      /// User objects binding.
-        mutable RenderSystemData * mRenderSystemData;/// This should be used only by a render system for internal use
+        mutable RenderSystemDataPtr mRenderSystemData;/// This should be used only by a render system for internal use
     };
 
     /** @} */
@@ -426,5 +421,4 @@ namespace Ogre {
 } // namespace Ogre
 
 #include "OgreHeaderSuffix.h"
-
 #endif //__Renderable_H__

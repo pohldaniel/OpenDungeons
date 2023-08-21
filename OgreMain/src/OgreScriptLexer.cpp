@@ -30,11 +30,6 @@ THE SOFTWARE.
 #include "OgreScriptLexer.h"
 
 namespace Ogre{
-
-    ScriptLexer::ScriptLexer()
-    {
-    }
-
     ScriptTokenListPtr ScriptLexer::tokenize(const String &str, const String &source)
     {
         // State enums
@@ -115,7 +110,7 @@ namespace Ogre{
                 {
                     lexeme = "";
                     state = COMMENT;
-                    break;	
+                    break;  
                 }
                 else if(c == star && lastc == slash)
                 {
@@ -273,12 +268,12 @@ namespace Ogre{
             tokens->push_back(token);
     }
 
-    bool ScriptLexer::isWhitespace(Ogre::String::value_type c) const
+    bool ScriptLexer::isWhitespace(Ogre::String::value_type c)
     {
         return c == ' ' || c == '\r' || c == '\t';
     }
 
-    bool ScriptLexer::isNewline(Ogre::String::value_type c) const
+    bool ScriptLexer::isNewline(Ogre::String::value_type c)
     {
         return c == '\n' || c == '\r';
     }

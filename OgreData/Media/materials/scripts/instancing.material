@@ -1,7 +1,7 @@
 vertex_program InstancingCg cg
 {
 	source instancing.cg
-	profiles vs_4_0 vs_2_0
+	profiles vs_4_0 vs_4_0_level_9_1 vs_4_0_level_9_3 vs_2_0
 	entry_point instancing_vp
 
 	default_params
@@ -16,7 +16,7 @@ vertex_program InstancingCg cg
 vertex_program InstancingShadowCasterCg cg
 {
    	source instancing.cg
-	profiles vs_4_0 vs_2_0
+	profiles vs_4_0 vs_4_0_level_9_1 vs_4_0_level_9_3 vs_2_0
 	entry_point instancingCaster_vp
 	default_params
 	{
@@ -29,7 +29,7 @@ vertex_program InstancingShadowCasterCg cg
 vertex_program Instancinghlsl hlsl
 {
 	source Instancing.hlsl
-	target vs_4_0
+	target vs_4_0 vs_4_0_level_9_1 vs_4_0_level_9_3
 	entry_point instancing_vp
 	preprocessor_defines SHADOW_CASTER=0
 	default_params
@@ -44,7 +44,7 @@ vertex_program Instancinghlsl hlsl
 vertex_program InstancingShadowCasterhlsl hlsl
 {
    	source Instancing.hlsl
-	target vs_4_0
+	target vs_4_0 vs_4_0_level_9_1 vs_4_0_level_9_3
 	entry_point instancingCaster_vp
 	preprocessor_defines SHADOW_CASTER=1
 	default_params
@@ -54,7 +54,6 @@ vertex_program InstancingShadowCasterhlsl hlsl
 		param_named_auto worldMatrix3x4Array world_matrix_array_3x4
 	}
 }
-
 vertex_program InstancingGLSL glsl
 {
 	source instancingVp.glsl
@@ -79,7 +78,6 @@ vertex_program InstancingShadowCasterGLSL glsl
 		param_named_auto worldMatrix3x4Array world_matrix_array_3x4
 	}
 }
-
 // GLSL 150 shaders
 vertex_program InstancingGLSL150 glsl
 {
@@ -107,7 +105,6 @@ vertex_program InstancingShadowCasterGLSL150 glsl
 		param_named_auto worldMatrix3x4Array world_matrix_array_3x4
 	}
 }
-
 vertex_program InstancingGLSLES glsles
 {
 	source instancingVp.glsles
@@ -132,13 +129,12 @@ vertex_program InstancingShadowCasterGLSLES glsles
 		param_named_auto worldMatrixArray world_matrix_array
 	}
 }
-
 vertex_program Instancing unified
 {
 	delegate InstancingGLSL150
 	delegate InstancingGLSL
 	delegate InstancingGLSLES
-	//delegate Instancinghlsl
+	delegate Instancinghlsl
 	delegate InstancingCg
 }
 vertex_program InstancingShadowCaster unified
@@ -146,6 +142,6 @@ vertex_program InstancingShadowCaster unified
 	delegate InstancingShadowCasterGLSL150
 	delegate InstancingShadowCasterGLSL
 	delegate InstancingShadowCasterGLSLES
-	//delegate InstancingShadowCasterhlsl
+	delegate InstancingShadowCasterhlsl
 	delegate InstancingShadowCasterCg
 }

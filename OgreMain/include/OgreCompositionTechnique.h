@@ -34,15 +34,15 @@ THE SOFTWARE.
 #include "OgreHeaderPrefix.h"
 
 namespace Ogre {
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup Effects
-	*  @{
-	*/
-	/** Base composition technique, can be subclassed in plugins.
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup Effects
+    *  @{
+    */
+    /** Base composition technique, can be subclassed in plugins.
      */
-	class _OgreExport CompositionTechnique : public CompositorInstAlloc
+    class _OgreExport CompositionTechnique : public CompositorInstAlloc
     {
     public:
         CompositionTechnique(Compositor *parent);
@@ -63,22 +63,22 @@ namespace Ogre {
         {
         public:
             String name;
-			//Texture definition being a reference is determined by these two fields not being empty.
-			String refCompName; //If a reference, the name of the compositor being referenced
-			String refTexName;	//If a reference, the name of the texture in the compositor being referenced
+            //Texture definition being a reference is determined by these two fields not being empty.
+            String refCompName; //If a reference, the name of the compositor being referenced
+            String refTexName;  //If a reference, the name of the texture in the compositor being referenced
             size_t width;       // 0 means adapt to target width
             size_t height;      // 0 means adapt to target height
-			float widthFactor;  // multiple of target width to use (if width = 0)
-			float heightFactor; // multiple of target height to use (if height = 0)
+            float widthFactor;  // multiple of target width to use (if width = 0)
+            float heightFactor; // multiple of target height to use (if height = 0)
             PixelFormatList formatList; // more than one means MRT
-			bool fsaa;			// FSAA enabled; true = determine from main target (if render_scene), false = disable
-			bool hwGammaWrite;	// Do sRGB gamma correction on write (only 8-bit per channel formats) 
-			uint16 depthBufferId;//Depth Buffer's pool ID. (unrelated to "pool" variable below)
-			bool pooled;		// whether to use pooled textures for this one
+            bool fsaa;          // FSAA enabled; true = determine from main target (if render_scene), false = disable
+            bool hwGammaWrite;  // Do sRGB gamma correction on write (only 8-bit per channel formats) 
+            uint16 depthBufferId;//Depth Buffer's pool ID. (unrelated to "pool" variable below)
+            bool pooled;        // whether to use pooled textures for this one
             TextureScope scope; // Which scope has access to this texture
 
-			TextureDefinition() :width(0), height(0), widthFactor(1.0f), heightFactor(1.0f), 
-				fsaa(true), hwGammaWrite(false), depthBufferId(1), pooled(false), scope(TS_LOCAL) {}
+            TextureDefinition() :width(0), height(0), widthFactor(1.0f), heightFactor(1.0f), 
+                fsaa(true), hwGammaWrite(false), depthBufferId(1), pooled(false), scope(TS_LOCAL) {}
         };
         /// Typedefs for several iterators
         typedef vector<CompositionTargetPass *>::type TargetPasses;
@@ -96,23 +96,28 @@ namespace Ogre {
         void removeTextureDefinition(size_t idx);
         
         /** Get a local texture definition.
+        @deprecated use getTextureDefinitions()
         */
         TextureDefinition *getTextureDefinition(size_t idx);
         
-		/** Get a local texture definition with a specific name.
-		*/
-		TextureDefinition *getTextureDefinition(const String& name);
-
-		/** Get the number of local texture definitions.
+        /** Get a local texture definition with a specific name.
         */
-        size_t getNumTextureDefinitions();
+        TextureDefinition *getTextureDefinition(const String& name);
+
+        /** Get the number of local texture definitions.
+        @deprecated use getTextureDefinitions()
+        */
+        OGRE_DEPRECATED size_t getNumTextureDefinitions();
         
         /** Remove all Texture Definitions
         */
         void removeAllTextureDefinitions();
         
-        /** Get an iterator over the TextureDefinitions in this Technique. */
-        TextureDefinitionIterator getTextureDefinitionIterator(void);
+        /** Get the TextureDefinitions in this Technique. */
+        const TextureDefinitions& getTextureDefinitions() const { return mTextureDefinitions; }
+
+        /// @deprecated use getTextureDefinitions()
+        OGRE_DEPRECATED TextureDefinitionIterator getTextureDefinitionIterator(void);
         
         /** Create a new target pass, and return a pointer to it.
         */
@@ -123,43 +128,48 @@ namespace Ogre {
         void removeTargetPass(size_t idx);
         
         /** Get a target pass.
+        @deprecated use getTargetPasses()
         */
-        CompositionTargetPass *getTargetPass(size_t idx);
+        OGRE_DEPRECATED CompositionTargetPass *getTargetPass(size_t idx);
         
         /** Get the number of target passes.
+        @deprecated use getTargetPasses()
         */
-        size_t getNumTargetPasses();
+        OGRE_DEPRECATED size_t getNumTargetPasses();
         
         /** Remove all target passes.
         */
         void removeAllTargetPasses();
         
-        /** Get an iterator over the TargetPasses in this Technique. */
-        TargetPassIterator getTargetPassIterator(void);
+        /** Get the TargetPasses in this Technique. */
+        const TargetPasses& getTargetPasses() const { return mTargetPasses; }
+
+        /// @deprecated use getTargetPasses()
+        OGRE_DEPRECATED TargetPassIterator getTargetPassIterator(void);
         
         /** Get output (final) target pass
          */
         CompositionTargetPass *getOutputTargetPass();
         
         /** Determine if this technique is supported on the current rendering device. 
-		@param allowTextureDegradation True to accept a reduction in texture depth
+        @param allowTextureDegradation True to accept a reduction in texture depth
          */
         virtual bool isSupported(bool allowTextureDegradation);
         
-		/** Assign a scheme name to this technique, used to switch between 
-			multiple techniques by choice rather than for hardware compatibility.
-		*/
-		virtual void setSchemeName(const String& schemeName);
-		/** Get the scheme name assigned to this technique. */
-		const String& getSchemeName() const { return mSchemeName; }
+        /** Assign a scheme name to this technique, used to switch between 
+            multiple techniques by choice rather than for hardware compatibility.
+        */
+        virtual void setSchemeName(const String& schemeName);
+        /** Get the scheme name assigned to this technique. */
+        const String& getSchemeName() const { return mSchemeName; }
         
-		/** Set the name of the compositor logic assigned to this technique.
-			Instances of this technique will be auto-coupled with the matching logic.
-		*/
-		void setCompositorLogicName(const String& compositorLogicName) 
-			{ mCompositorLogicName = compositorLogicName; }
-		/** Get the compositor logic name assigned to this technique */
-		const String& getCompositorLogicName() const { return mCompositorLogicName; }
+        /** Set the name of the compositor logic assigned to this technique.
+            Instances of this technique will be auto-coupled with the matching logic.
+        */
+        void setCompositorLogicName(const String& compositorLogicName) 
+            { mCompositorLogicName = compositorLogicName; }
+        /** Get the compositor logic name assigned to this technique */
+        const String& getCompositorLogicName() const { return mCompositorLogicName; }
 
         /** Get parent object */
         Compositor *getParent();
@@ -174,15 +184,15 @@ namespace Ogre {
         /// Output target pass (can be only one)
         CompositionTargetPass *mOutputTarget;  
 
-		/// Optional scheme name
-		String mSchemeName;
-		
-		/// Optional compositor logic name
-		String mCompositorLogicName;
+        /// Optional scheme name
+        String mSchemeName;
+        
+        /// Optional compositor logic name
+        String mCompositorLogicName;
 
     };
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 
 }
 

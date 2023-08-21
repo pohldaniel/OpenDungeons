@@ -87,9 +87,6 @@
     <ClInclude Include="include\OgreParticleFXPlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OgreParticleFXPrerequisites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OgrePointEmitter.h">
       <Filter>Header Files</Filter>
     </ClInclude>

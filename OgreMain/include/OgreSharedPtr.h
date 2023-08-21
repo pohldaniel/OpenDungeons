@@ -32,25 +32,41 @@ THE SOFTWARE.
 #include "OgreAtomicScalar.h"
 
 namespace Ogre {
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup General
-	*  @{
-	*/
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup General
+    *  @{
+    */
+#if OGRE_USE_STD11
+    struct SPFMDeleteT {
+        template<class T>
+        void operator()(T* p) {
+            OGRE_DELETE_T(p, T, MEMCATEGORY_GENERAL);
+        }
+    };
+    const SPFMDeleteT SPFM_DELETE_T;
 
-	/// The method to use to free memory on destruction
-	enum SharedPtrFreeMethod
-	{
-		/// Use OGRE_DELETE to free the memory
-		SPFM_DELETE,
-		/// Use OGRE_DELETE_T to free (only MEMCATEGORY_GENERAL supported)
-		SPFM_DELETE_T,
-		/// Use OGRE_FREE to free (only MEMCATEGORY_GENERAL supported)
-		SPFM_FREE,
-		/// Don`t free resource at all, lifetime controlled externally.
-		SPFM_NONE
-	};
+    struct SPFMNone {
+        void operator()(void*) {}
+    };
+    const SPFMNone SPFM_NONE;
+
+    using std::static_pointer_cast;
+    using std::dynamic_pointer_cast;
+#else
+    /// The method to use to free memory on destruction
+    enum SharedPtrFreeMethod
+    {
+        /// Use OGRE_DELETE to free the memory
+        SPFM_DELETE,
+        /// Use OGRE_DELETE_T to free (only MEMCATEGORY_GENERAL supported)
+        SPFM_DELETE_T,
+        /// Use OGRE_FREE to free (only MEMCATEGORY_GENERAL supported)
+        SPFM_FREE,
+        /// Don`t free resource at all, lifetime controlled externally.
+        SPFM_NONE
+    };
 
     struct SharedPtrInfo {
         inline SharedPtrInfo() 
@@ -62,62 +78,84 @@ namespace Ogre {
         AtomicScalar<unsigned>  useCount;
     };
 
-	struct SharedPtrInfoNone : public SharedPtrInfo
-	{
-	};
+    struct SharedPtrInfoNone : public SharedPtrInfo
+    {
+    };
 
-	template <class T>
-	class SharedPtrInfoDelete : public SharedPtrInfo
-	{
+    template <class T>
+    class SharedPtrInfoDelete : public SharedPtrInfo
+    {
         T* mObject;
     public:
         inline SharedPtrInfoDelete(T* o) : mObject(o) {}
 
-		virtual ~SharedPtrInfoDelete()
-		{
-			OGRE_DELETE mObject;
-		}
-	};
+        virtual ~SharedPtrInfoDelete()
+        {
+            OGRE_DELETE mObject;
+        }
+    };
 
-	template <class T>
-	class SharedPtrInfoDeleteT : public SharedPtrInfo
-	{
+    template <class T>
+    class SharedPtrInfoDeleteT : public SharedPtrInfo
+    {
         T* mObject;
     public:
         inline SharedPtrInfoDeleteT(T* o) : mObject(o) {}
 
-		virtual ~SharedPtrInfoDeleteT()
-		{
-			OGRE_DELETE_T(mObject, T, MEMCATEGORY_GENERAL);
-		}
-	};
+        virtual ~SharedPtrInfoDeleteT()
+        {
+            OGRE_DELETE_T(mObject, T, MEMCATEGORY_GENERAL);
+        }
+    };
 
-	template <class T>
-	class SharedPtrInfoFree : public SharedPtrInfo
-	{
+    template <class T>
+    class SharedPtrInfoFree : public SharedPtrInfo
+    {
         T* mObject;
     public:
         inline SharedPtrInfoFree(T* o) : mObject(o) {}        
 
-		virtual ~SharedPtrInfoFree()
-		{
-			OGRE_FREE(mObject, MEMCATEGORY_GENERAL);
-		}
-	};
+        virtual ~SharedPtrInfoFree()
+        {
+            OGRE_FREE(mObject, MEMCATEGORY_GENERAL);
+        }
+    };
 
+    template<class T, class U>
+    inline SharedPtr<T> static_pointer_cast(const SharedPtr<U>& r)
+    {
+        if(r.pRep) {
+            ++r.pInfo->useCount;
+            return SharedPtr<T>(static_cast<T*>(r.pRep), r.pInfo);
+        }
+        return SharedPtr<T>();
+    }
 
-	/** Reference-counted shared pointer, used for objects where implicit destruction is 
+    template<class T, class U>
+    inline SharedPtr<T> dynamic_pointer_cast(const SharedPtr<U>& r)
+    {
+        T* rep = dynamic_cast<T*>(r.pRep);
+        if(rep) {
+            ++r.pInfo->useCount;
+            return SharedPtr<T>(rep, r.pInfo);
+        }
+        return SharedPtr<T>();
+    }
+
+    /** Reference-counted shared pointer, used for objects where implicit destruction is 
         required. 
     @remarks
         This is a standard shared pointer implementation which uses a reference 
         count to work out when to delete the object. 
-	@par
-		If OGRE_THREAD_SUPPORT is defined to be 1, use of this class is thread-safe.
+    @par
+        If OGRE_THREAD_SUPPORT is defined to be 1, use of this class is thread-safe.
     */
-	template<class T> class SharedPtr
-	{
+    template<class T> class SharedPtr
+    {
         template<typename Y> friend class SharedPtr;
-	protected:
+        template<typename Y, typename X> friend SharedPtr<Y> static_pointer_cast(const SharedPtr<X>& r);
+        template<typename Y, typename X> friend SharedPtr<Y> dynamic_pointer_cast(const SharedPtr<X>& r);
+    protected:
         /* DO NOT ADD MEMBERS TO THIS CLASS!
          *
          * The average Ogre application has *thousands* of them. Every extra
@@ -130,19 +168,19 @@ namespace Ogre {
          * There is no reason for this object to ever have more than two members.
          */
 
-		T*             pRep;
+        T*             pRep;
         SharedPtrInfo* pInfo;
 
         SharedPtr(T* rep, SharedPtrInfo* info) : pRep(rep), pInfo(info)
-		{
-		}
+        {
+        }
 
-	public:
-		/** Constructor, does not initialise the SharedPtr.
-			@remarks
-				<b>Dangerous!</b> You have to call bind() before using the SharedPtr.
-		*/
-		SharedPtr() : pRep(0), pInfo(0)
+    public:
+        /** Constructor, does not initialise the SharedPtr.
+            @remarks
+                <b>Dangerous!</b> You have to call bind() before using the SharedPtr.
+        */
+        SharedPtr() : pRep(0), pInfo(0)
         {}
 
     private:
@@ -159,63 +197,64 @@ namespace Ogre {
         }
     public:
 
-		/** Constructor.
-		@param rep The pointer to take ownership of
-		@param inFreeMethod The mechanism to use to free the pointer
-		*/
+        /** Constructor.
+        @param rep The pointer to take ownership of
+        @param inFreeMethod The mechanism to use to free the pointer
+        */
         template< class Y>
-		explicit SharedPtr(Y* rep, SharedPtrFreeMethod inFreeMethod = SPFM_DELETE) 
+        explicit SharedPtr(Y* rep, SharedPtrFreeMethod inFreeMethod = SPFM_DELETE) 
             : pRep(rep)
             , pInfo(rep ? createInfoForMethod(rep, inFreeMethod) : 0)
-		{
-		}
+        {
+        }
 
-		SharedPtr(const SharedPtr& r)
+        SharedPtr(const SharedPtr& r)
             : pRep(r.pRep)
             , pInfo(r.pInfo)
-		{
-            if (pRep) 
-            {
-                ++pInfo->useCount;
-            }
-		}
-
-		SharedPtr& operator=(const SharedPtr& r) {
-			// One resource could have several non-controlling control blocks but only one controlling.
-			assert(pRep != r.pRep || pInfo == r.pInfo || dynamic_cast<SharedPtrInfoNone*>(pInfo) || dynamic_cast<SharedPtrInfoNone*>(r.pInfo));
-			if(pInfo == r.pInfo)
-				return *this;
-
-			// Swap current data into a local copy
-			// this ensures we deal with rhs and this being dependent
-			SharedPtr<T> tmp(r);
-			swap(tmp);
-			return *this;
-		}
-		
-		/* For C++11 compilers, use enable_if to only expose functions when viable
-         *
-         * MSVC 2012 and earlier only claim conformance to C++98. This is fortunate,
-         * because they don't support default template parameters
-         */
-#if __cplusplus >= 201103L
-        template<class Y,
-            class = typename std::enable_if<std::is_convertible<Y*, T*>::value>::type>
-#else
-        template<class Y>
-#endif
-        SharedPtr(const SharedPtr<Y>& r)
-            : pRep(r.getPointer())
-            , pInfo(r.pInfo)
-		{
+        {
             if (pRep) 
             {
                 ++pInfo->useCount;
             }
         }
 
-		
-#if __cplusplus >= 201103L
+        SharedPtr& operator=(const SharedPtr& r)
+        {
+            // One resource could have several non-controlling control blocks but only one controlling.
+            assert(pRep != r.pRep || pInfo == r.pInfo || dynamic_cast<SharedPtrInfoNone*>(pInfo) || dynamic_cast<SharedPtrInfoNone*>(r.pInfo));
+            if(pInfo == r.pInfo)
+                return *this;
+
+            // Swap current data into a local copy
+            // this ensures we deal with rhs and this being dependent
+            SharedPtr<T> tmp(r);
+            swap(tmp);
+            return *this;
+        }
+        
+        /* For C++11 compilers, use enable_if to only expose functions when viable
+         *
+         * MSVC 2012 and earlier only claim conformance to C++98. This is fortunate,
+         * because they don't support default template parameters
+         */
+#if __cplusplus >= 201103L && !defined( __APPLE__ )
+        template<class Y,
+            class = typename std::enable_if<std::is_convertible<Y*, T*>::value>::type>
+#else
+        template<class Y>
+#endif
+        SharedPtr(const SharedPtr<Y>& r)
+            : pRep(r.pRep)
+            , pInfo(r.pInfo)
+        {
+            if (pRep) 
+            {
+                ++pInfo->useCount;
+            }
+        }
+
+        
+#if __cplusplus >= 201103L && !defined( __APPLE__ )
         template<class Y,
                  class = typename std::enable_if<std::is_assignable<T*, Y*>::value>::type>
 #else
@@ -223,72 +262,98 @@ namespace Ogre {
 #endif
         SharedPtr& operator=(const SharedPtr<Y>& r)
         {
-			// One resource could have several non-controlling control blocks but only one controlling.
-			assert(pRep != r.pRep || pInfo == r.pInfo|| dynamic_cast<SharedPtrInfoNone*>(pInfo) || dynamic_cast<SharedPtrInfoNone*>(r.pInfo));
-			if(pInfo == r.pInfo)
-				return *this;
+            // One resource could have several non-controlling control blocks but only one controlling.
+            assert(pRep != r.pRep || pInfo == r.pInfo || dynamic_cast<SharedPtrInfoNone*>(pInfo) || dynamic_cast<SharedPtrInfoNone*>(r.pInfo));
+            if(pInfo == r.pInfo)
+                return *this;
+            
+            // Swap current data into a local copy
+            // this ensures we deal with rhs and this being dependent
+            SharedPtr<T> tmp(r);
+            swap(tmp);
+            return *this;
+        }
 
-			// Swap current data into a local copy
-			// this ensures we deal with rhs and this being dependent
-			SharedPtr<T> tmp(r);
-			swap(tmp);
-			return *this;
-		}
-
-		~SharedPtr() {
+        ~SharedPtr() {
             release();
-		}
-
-
-        template<typename Y>
-        inline SharedPtr<Y> staticCast() const
-        {
-            if(pRep) {
-                ++pInfo->useCount;
-				return SharedPtr<Y>(static_cast<Y*>(pRep), pInfo);
-            } else return SharedPtr<Y>();
         }
 
+        /// @deprecated use Ogre::static_pointer_cast instead
         template<typename Y>
-        inline SharedPtr<Y> dynamicCast() const
+        OGRE_DEPRECATED SharedPtr<Y> staticCast() const
         {
-            Y* rep = dynamic_cast<Y*>(pRep);
-            if(rep) {
-                ++pInfo->useCount;
-				return SharedPtr<Y>(rep, pInfo);
-            } else return SharedPtr<Y>();
+            return static_pointer_cast<Y>(*this);
         }
 
-		inline T& operator*() const { assert(pRep); return *pRep; }
-		inline T* operator->() const { assert(pRep); return pRep; }
-		inline T* get() const { return pRep; }
+        /// @deprecated use Ogre::dynamic_pointer_cast instead
+        template<typename Y>
+        OGRE_DEPRECATED SharedPtr<Y> dynamicCast() const
+        {
+            return dynamic_pointer_cast<Y>(*this);
+        }
 
-		/** Binds rep to the SharedPtr.
-			@remarks
-				Assumes that the SharedPtr is uninitialised!
+        inline T& operator*() const { assert(pRep); return *pRep; }
+        inline T* operator->() const { assert(pRep); return pRep; }
+        inline T* get() const { return pRep; }
+
+        /** Binds rep to the SharedPtr.
+            @remarks
+                Assumes that the SharedPtr is uninitialised!
 
             @warning
                 The object must not be bound into a SharedPtr elsewhere
-		*/
-		void bind(T* rep, SharedPtrFreeMethod inFreeMethod = SPFM_DELETE) {
-			assert(!pRep && !pInfo);
-			pInfo = createInfoForMethod(rep, inFreeMethod);
-			pRep = rep;
-		}
 
-		inline bool unique() const { assert(pInfo && pInfo->useCount.get()); return pInfo->useCount.get() == 1; }
-		inline unsigned int useCount() const { assert(pInfo && pInfo->useCount.get()); return pInfo->useCount.get(); }
-        inline void setUseCount(unsigned value) { assert(pInfo); pInfo->useCount = value; }
+            @deprecated this api will be dropped. use reset(T*) instead
+        */
+        OGRE_DEPRECATED void bind(T* rep, SharedPtrFreeMethod inFreeMethod = SPFM_DELETE) {
+            assert(!pRep && !pInfo);
+            pInfo = createInfoForMethod(rep, inFreeMethod);
+            pRep = rep;
+        }
 
-		inline T* getPointer() const { return pRep; }
+        inline bool unique() const { assert(pInfo && pInfo->useCount.load()); return pInfo->useCount.load() == 1; }
 
-		inline bool isNull(void) const { return pRep == 0; }
+        /// @deprecated use use_count() instead
+        OGRE_DEPRECATED unsigned int useCount() const { return use_count(); }
 
-        inline void setNull(void) { 
-			if (pRep)
-			{
-				release();
-			}
+        long use_count() const { assert(pInfo && pInfo->useCount.load()); return pInfo->useCount.load(); }
+
+        /// @deprecated this API will be dropped
+        OGRE_DEPRECATED void setUseCount(unsigned value) { assert(pInfo); pInfo->useCount = value; }
+
+        /// @deprecated use get() instead
+        OGRE_DEPRECATED T* getPointer() const { return pRep; }
+
+#if __cplusplus >= 201103L || OGRE_COMPILER == OGRE_COMPILER_MSVC && OGRE_COMP_VER >= 1800
+        explicit operator bool() const
+        {
+            return pRep != 0;
+        }
+#else
+        static void unspecified_bool( SharedPtr*** )
+        {
+        }
+
+        typedef void (*unspecified_bool_type)( SharedPtr*** );
+
+        operator unspecified_bool_type() const
+        {
+            return pRep == 0 ? 0 : unspecified_bool;
+        }
+#endif
+
+        /// @deprecated use SharedPtr::operator unspecified_bool_type() instead
+        OGRE_DEPRECATED bool isNull(void) const { return pRep == 0; }
+
+        /// @deprecated use reset() instead
+        OGRE_DEPRECATED void setNull() { reset(); }
+
+        void reset(void) {
+            release();
+        }
+
+        void reset(T* rep) {
+            SharedPtr(rep).swap(*this);
         }
 
     protected:
@@ -308,7 +373,7 @@ namespace Ogre {
 
         /** IF YOU GET A CRASH HERE, YOU FORGOT TO FREE UP POINTERS
          BEFORE SHUTTING OGRE DOWN
-         Use setNull() before shutdown or make sure your pointer goes
+         Use reset() before shutdown or make sure your pointer goes
          out of scope before OGRE shuts down to avoid this. */
         inline void destroy(void)
         {
@@ -316,29 +381,30 @@ namespace Ogre {
             OGRE_DELETE_T(pInfo, SharedPtrInfo, MEMCATEGORY_GENERAL);
         }
 
-		inline void swap(SharedPtr<T> &other) 
-		{
-			std::swap(pRep, other.pRep);
-			std::swap(pInfo, other.pInfo);
-		}
-	};
+        inline void swap(SharedPtr<T> &other) 
+        {
+            std::swap(pRep, other.pRep);
+            std::swap(pInfo, other.pInfo);
+        }
+    };
 
-	template<class T, class U> inline bool operator==(SharedPtr<T> const& a, SharedPtr<U> const& b)
-	{
-		return a.get() == b.get();
-	}
+    template<class T, class U> inline bool operator==(SharedPtr<T> const& a, SharedPtr<U> const& b)
+    {
+        return a.get() == b.get();
+    }
 
-	template<class T, class U> inline bool operator!=(SharedPtr<T> const& a, SharedPtr<U> const& b)
-	{
-		return a.get() != b.get();
-	}
+    template<class T, class U> inline bool operator!=(SharedPtr<T> const& a, SharedPtr<U> const& b)
+    {
+        return a.get() != b.get();
+    }
 
-	template<class T, class U> inline bool operator<(SharedPtr<T> const& a, SharedPtr<U> const& b)
-	{
-		return std::less<const void*>()(a.get(), b.get());
-	}
-	/** @} */
-	/** @} */
+    template<class T, class U> inline bool operator<(SharedPtr<T> const& a, SharedPtr<U> const& b)
+    {
+        return std::less<const void*>()(a.get(), b.get());
+    }
+    /** @} */
+    /** @} */
+#endif
 }
 
 

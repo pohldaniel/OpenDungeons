@@ -18,6 +18,36 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\OgreBorderPanelOverlayElement.h" />
+    <ClInclude Include="include\OgreFont.h" />
+    <ClInclude Include="include\OgreFontManager.h" />
+    <ClInclude Include="include\OgreOverlay.h" />
+    <ClInclude Include="include\OgreOverlayContainer.h" />
+    <ClInclude Include="include\OgreOverlayElement.h" />
+    <ClInclude Include="include\OgreOverlayElementCommands.h" />
+    <ClInclude Include="include\OgreOverlayElementFactory.h" />
+    <ClInclude Include="include\OgreOverlayManager.h" />
+    <ClInclude Include="include\OgreOverlayProfileSessionListener.h" />
+    <ClInclude Include="include\OgreOverlaySystem.h" />
+    <ClInclude Include="include\OgrePanelOverlayElement.h" />
+    <ClInclude Include="include\OgreTextAreaOverlayElement.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\OgreBorderPanelOverlayElement.cpp" />
+    <ClCompile Include="src\OgreFont.cpp" />
+    <ClCompile Include="src\OgreFontManager.cpp" />
+    <ClCompile Include="src\OgreOverlay.cpp" />
+    <ClCompile Include="src\OgreOverlayContainer.cpp" />
+    <ClCompile Include="src\OgreOverlayElement.cpp" />
+    <ClCompile Include="src\OgreOverlayElementCommands.cpp" />
+    <ClCompile Include="src\OgreOverlayElementFactory.cpp" />
+    <ClCompile Include="src\OgreOverlayManager.cpp" />
+    <ClCompile Include="src\OgreOverlayProfileSessionListener.cpp" />
+    <ClCompile Include="src\OgreOverlaySystem.cpp" />
+    <ClCompile Include="src\OgrePanelOverlayElement.cpp" />
+    <ClCompile Include="src\OgreTextAreaOverlayElement.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DA7B5B0B-3E99-4D78-8C10-A64218FC1C10}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -94,6 +124,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OgreOverlay_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;..\libfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -111,6 +142,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OgreOverlay_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;..\libfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,9 +159,10 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OGRE_OVERLAY_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OgreOverlay_EXPORTS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;..\libfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,6 +184,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OgreOverlay_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;..\libfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -161,37 +195,6 @@
       <AdditionalDependencies>OgreMain.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="include\OgreBorderPanelOverlayElement.h" />
-    <ClInclude Include="include\OgreFont.h" />
-    <ClInclude Include="include\OgreFontManager.h" />
-    <ClInclude Include="include\OgreOverlay.h" />
-    <ClInclude Include="include\OgreOverlayContainer.h" />
-    <ClInclude Include="include\OgreOverlayElement.h" />
-    <ClInclude Include="include\OgreOverlayElementCommands.h" />
-    <ClInclude Include="include\OgreOverlayElementFactory.h" />
-    <ClInclude Include="include\OgreOverlayManager.h" />
-    <ClInclude Include="include\OgreOverlayPrerequisites.h" />
-    <ClInclude Include="include\OgreOverlayProfileSessionListener.h" />
-    <ClInclude Include="include\OgreOverlaySystem.h" />
-    <ClInclude Include="include\OgrePanelOverlayElement.h" />
-    <ClInclude Include="include\OgreTextAreaOverlayElement.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\OgreBorderPanelOverlayElement.cpp" />
-    <ClCompile Include="src\OgreFont.cpp" />
-    <ClCompile Include="src\OgreFontManager.cpp" />
-    <ClCompile Include="src\OgreOverlay.cpp" />
-    <ClCompile Include="src\OgreOverlayContainer.cpp" />
-    <ClCompile Include="src\OgreOverlayElement.cpp" />
-    <ClCompile Include="src\OgreOverlayElementCommands.cpp" />
-    <ClCompile Include="src\OgreOverlayElementFactory.cpp" />
-    <ClCompile Include="src\OgreOverlayManager.cpp" />
-    <ClCompile Include="src\OgreOverlayProfileSessionListener.cpp" />
-    <ClCompile Include="src\OgreOverlaySystem.cpp" />
-    <ClCompile Include="src\OgrePanelOverlayElement.cpp" />
-    <ClCompile Include="src\OgreTextAreaOverlayElement.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -30,24 +30,21 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 #include "OgreSingleton.h"
-#include "OgreStringVector.h"
-
-#include "OgreRenderSystemCapabilities.h"
 #include "OgreHeaderPrefix.h"
 
 
 namespace Ogre {
 
 
-	/** \addtogroup Core
-	*  @{
-	*/
-	/** \addtogroup RenderSystem
-	*  @{
-	*/
-	/** Class for managing RenderSystemCapabilities database for Ogre.
+    /** \addtogroup Core
+    *  @{
+    */
+    /** \addtogroup RenderSystem
+    *  @{
+    */
+    /** Class for managing RenderSystemCapabilities database for Ogre.
         @remarks This class behaves similarly to other ResourceManager, although .rendercaps are not resources.
-						It contains and abstract a .rendercaps Serializer
+                        It contains and abstract a .rendercaps Serializer
     */
     class _OgreExport RenderSystemCapabilitiesManager :  public Singleton<RenderSystemCapabilitiesManager>, public RenderSysAlloc
     {
@@ -60,55 +57,27 @@ namespace Ogre {
 
         /** Default destructor.
         */
-        virtual ~RenderSystemCapabilitiesManager();
+        ~RenderSystemCapabilitiesManager();
 
 
         /** @see ScriptLoader::parseScript
         */
         void parseCapabilitiesFromArchive(const String& filename, const String& archiveType, bool recursive = true);
-		
-		/** Returns a capability loaded with RenderSystemCapabilitiesManager::parseCapabilitiesFromArchive method
-		* @return NULL if the name is invalid, a parsed RenderSystemCapabilities otherwise.
-		*/
+        
+        /** Returns a capability loaded with RenderSystemCapabilitiesManager::parseCapabilitiesFromArchive method
+        * @return NULL if the name is invalid, a parsed RenderSystemCapabilities otherwise.
+        */
         RenderSystemCapabilities* loadParsedCapabilities(const String& name);
 
-		/** Access to the internal map of loaded capabilities */
-		const map<String, RenderSystemCapabilities*>::type &getCapabilities() const;
+        /** Access to the internal map of loaded capabilities */
+        const map<String, RenderSystemCapabilities*>::type &getCapabilities() const;
 
         /** Method used by RenderSystemCapabilitiesSerializer::parseScript */
         void _addRenderSystemCapabilities(const String& name, RenderSystemCapabilities* caps);
 
-        /** Override standard Singleton retrieval.
-        @remarks
-        Why do we do this? Well, it's because the Singleton
-        implementation is in a .h file, which means it gets compiled
-        into anybody who includes it. This is needed for the
-        Singleton template to work, but we actually only want it
-        compiled into the implementation of the class based on the
-        Singleton, not all of them. If we don't change this, we get
-        link errors when trying to use the Singleton-based class from
-        an outside dll.
-        @par
-        This method just delegates to the template version anyway,
-        but the implementation stays in this single compilation unit,
-        preventing link errors.
-        */
+        /// @copydoc Singleton::getSingleton()
         static RenderSystemCapabilitiesManager& getSingleton(void);
-        /** Override standard Singleton retrieval.
-        @remarks
-        Why do we do this? Well, it's because the Singleton
-        implementation is in a .h file, which means it gets compiled
-        into anybody who includes it. This is needed for the
-        Singleton template to work, but we actually only want it
-        compiled into the implementation of the class based on the
-        Singleton, not all of them. If we don't change this, we get
-        link errors when trying to use the Singleton-based class from
-        an outside dll.
-        @par
-        This method just delegates to the template version anyway,
-        but the implementation stays in this single compilation unit,
-        preventing link errors.
-        */
+        /// @copydoc Singleton::getSingleton()
         static RenderSystemCapabilitiesManager* getSingletonPtr(void);
 
     protected:
@@ -122,8 +91,8 @@ namespace Ogre {
 
     };
 
-	/** @} */
-	/** @} */
+    /** @} */
+    /** @} */
 }
 
 #include "OgreHeaderSuffix.h"

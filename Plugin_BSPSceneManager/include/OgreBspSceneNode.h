@@ -32,7 +32,12 @@ THE SOFTWARE.
 #include "OgreSceneNode.h"
 
 namespace Ogre {
-
+    /** \addtogroup Plugins
+    *  @{
+    */
+    /** \addtogroup BSPSceneManager
+    *  @{
+    */
     /** Specialisation of SceneNode for the BspSceneManager.
     @remarks
         This specialisation of SceneNode is to enable information about the
@@ -48,9 +53,9 @@ namespace Ogre {
     */
     class BspSceneNode : public SceneNode
     {
-	protected:
-		/// Overridden from SceneNode
-		void setInSceneGraph(bool inGraph);		
+    protected:
+        /// Overridden from SceneNode
+        void setInSceneGraph(bool inGraph);     
     public:
         BspSceneNode(SceneManager* creator) : SceneNode(creator) {}
         BspSceneNode(SceneManager* creator, const String& name) 
@@ -73,7 +78,8 @@ namespace Ogre {
 
 
     };
-
+    /** @} */
+    /** @} */
 }
 
 #endif
