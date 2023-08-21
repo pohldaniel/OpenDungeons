@@ -26,12 +26,12 @@ and depending on the choosen "VS Native Command Prompt" the build will be x64 or
 
 Maybe reanaming of the .lib is also necessary, it depends on the used Visual Studio Version. With Visual Studio 2015 the needed libs looks like this.
 
-&emsp;libboost_date_time-vc140-mt-x32-1_66
-&emsp;libboost_filesystem-vc140-mt-x32-1_66
-&emsp;libboost_locale-vc140-mt-x32-1_66
-&emsp;libboost_program_options-vc140-mt-x32-1_66
-&emsp;libboost_system-vc140-mt-x32-1_66.lib
-&emsp;libboost_thread-vc140-mt-x32-1_66.lib
+&emsp;libboost_date_time-vc140-mt-x32-1_66<br/>
+&emsp;libboost_filesystem-vc140-mt-x32-1_66<br/>
+&emsp;libboost_locale-vc140-mt-x32-1_66<br/>
+&emsp;libboost_program_options-vc140-mt-x32-1_66<br/>
+&emsp;libboost_system-vc140-mt-x32-1_66.lib<br/>
+&emsp;libboost_thread-vc140-mt-x32-1_66.lib<br/>
 
 **Attention:** The DirectX Include path form the Project "RenderSystem_DirectD3D11" depends on the choosen Windows Kit. In my case I used Version 8.1 but I recommand to go with a newer one.<br/>
 
