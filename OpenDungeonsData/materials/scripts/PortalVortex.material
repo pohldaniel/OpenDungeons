@@ -1,0 +1,27 @@
+// Keeper portal
+material PortalVortex
+{
+    receive_shadows on
+    technique
+    {
+        pass
+        {
+            ambient 1 0 0 1.0
+            diffuse 0 0.0 0.0 0.5
+            specular 0 0.0 0.0 0.5 1.0
+            emissive 1 0.0 0.0 1.0
+            scene_blend alpha_blend
+            depth_write off
+            cull_hardware none
+            cull_software none
+            texture_unit
+            {
+                texture PortalVortex.png
+                tex_address_mode clamp
+                filtering trilinear
+                colour_op alpha_blend
+                rotate_anim 0.1
+            }
+        }
+    }
+}

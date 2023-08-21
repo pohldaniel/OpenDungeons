@@ -1,0 +1,28 @@
+// Keeperhand
+import RTSS/NormalMapping_MultiPass from "RTShaderSystem.material"
+material Keeperhand
+{
+    receive_shadows on
+    technique
+    {
+        pass
+        {
+            ambient 0.0 0.0 0.0 0.5
+            diffuse 0.0 0.0 0.0 0.5
+            specular 0.0 0.0 0.0 0.0 2.0
+            emissive 0.0 0.0 0.0 0.0
+            scene_blend alpha_blend
+            depth_check off
+            depth_write off
+            cull_hardware none
+            cull_software none
+            texture_unit
+            {
+                texture Keeperhand.png
+                tex_address_mode wrap
+                filtering trilinear
+                colour_op alpha_blend
+            }
+        }
+    }
+}

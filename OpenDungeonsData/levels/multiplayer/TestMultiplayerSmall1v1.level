@@ -1,0 +1,641 @@
+OpenDungeons_Version:0.7.1  # The version of OpenDungeons which created this file (for compatibility reasons).
+
+[Info]
+Name	\[Test\] Small (1 vs 1)
+Description	A small test map for the multiplayer mode in 1v1
+Music	Searching_yd.ogg
+FightMusic	TheDarkAmulet_MP.ogg
+[/Info]
+
+[Seats]
+[Seat]
+seatId	1
+teamId	1
+player	Human
+faction	Choice
+startingX	10
+startingY	10
+colorId	1
+gold	1000
+goldMined	100
+mana	500
+[SkillDone]
+roomTreasury
+roomDormitory
+roomHatchery
+roomLibrary
+trapCannon
+spellSummonWorker
+[/SkillDone]
+[SkillNotAllowed]
+[/SkillNotAllowed]
+[SkillPending]
+roomTrainingHall
+spellCallToWar
+trapDoorWooden
+trapSpike
+roomWorkshop
+roomCrypt
+trapBoulder
+spellCreatureHeal
+spellCreatureExplosion
+[/SkillPending]
+[/Seat]
+[Seat]
+seatId	2
+teamId	2
+player	Choice
+faction	Choice
+startingX	10
+startingY	40
+colorId	2
+gold	1000
+goldMined	100
+mana	500
+[SkillDone]
+roomTreasury
+roomDormitory
+roomHatchery
+roomLibrary
+trapCannon
+spellSummonWorker
+[/SkillDone]
+[SkillNotAllowed]
+[/SkillNotAllowed]
+[SkillPending]
+roomTrainingHall
+spellCallToWar
+trapDoorWooden
+trapSpike
+roomWorkshop
+roomCrypt
+trapBoulder
+[/SkillPending]
+[/Seat]
+[/Seats]
+
+[Goals]
+# goalName	arguments
+KillAllEnemies	NULL
+ClaimNTiles	40
++ 1
+ClaimNTiles	60
+MineNGold	20
++ 1
+MineNGold	50
++ 1
+MineNGold	100
+ProtectDungeonTemple	NULL
+[/Goals]
+
+[Tiles]
+# Map Size
+50 # MapSizeX
+50 # MapSizeY
+# posX	posY	type	fullness	seatId(optional)
+1	24	2	100
+1	25	2	100
+2	24	2	100
+2	25	2	100
+3	24	2	100
+3	25	2	100
+4	24	2	100
+4	25	2	100
+5	24	2	100
+5	25	2	100
+6	24	2	100
+6	25	2	100
+7	7	1	0	1
+7	8	1	0	1
+7	9	1	0	1
+7	10	1	0	1
+7	11	1	0	1
+7	12	1	0	1
+7	13	1	0	0
+7	14	1	0	0
+7	15	1	0	0
+7	24	2	100
+7	25	2	100
+7	37	1	0	2
+7	38	1	0	2
+7	39	1	0	2
+7	40	1	0	2
+7	41	1	0	2
+7	42	1	0	2
+7	43	1	0	0
+7	44	1	0	0
+7	45	1	0	0
+8	7	1	0	1
+8	8	1	0	1
+8	9	1	0	1
+8	10	1	0	1
+8	11	1	0	1
+8	12	1	0	1
+8	13	1	0	0
+8	14	1	0	0
+8	15	1	0	0
+8	24	2	100
+8	25	2	100
+8	37	1	0	2
+8	38	1	0	2
+8	39	1	0	2
+8	40	1	0	2
+8	41	1	0	2
+8	42	1	0	2
+8	43	1	0	0
+8	44	1	0	0
+8	45	1	0	0
+9	7	1	0	1
+9	8	1	0	1
+9	9	1	0	1
+9	10	1	0	1
+9	11	1	0	1
+9	12	1	0	1
+9	13	1	0	0
+9	14	1	0	0
+9	15	1	0	0
+9	24	2	100
+9	25	2	100
+9	37	1	0	2
+9	38	1	0	2
+9	39	1	0	2
+9	40	1	0	2
+9	41	1	0	2
+9	42	1	0	2
+9	43	1	0	0
+9	44	1	0	0
+9	45	1	0	0
+10	7	1	0	1
+10	8	1	0	1
+10	9	1	0	1
+10	10	1	0	1
+10	11	1	0	1
+10	12	1	0	1
+10	13	1	0	1
+10	14	1	0	1
+10	15	1	0	1
+10	24	2	100
+10	25	2	100
+10	37	1	0	2
+10	38	1	0	2
+10	39	1	0	2
+10	40	1	0	2
+10	41	1	0	2
+10	42	1	0	2
+10	43	1	0	2
+10	44	1	0	2
+10	45	1	0	2
+11	7	1	0	1
+11	8	1	0	1
+11	9	1	0	1
+11	10	1	0	1
+11	11	1	0	1
+11	12	1	0	1
+11	13	1	0	1
+11	14	1	0	1
+11	15	1	0	1
+11	24	2	100
+11	25	2	100
+11	37	1	0	2
+11	38	1	0	2
+11	39	1	0	2
+11	40	1	0	2
+11	41	1	0	2
+11	42	1	0	2
+11	43	1	0	2
+11	44	1	0	2
+11	45	1	0	2
+12	7	1	0	1
+12	8	1	0	1
+12	9	1	0	1
+12	10	1	0	1
+12	11	1	0	1
+12	12	1	0	1
+12	13	1	0	1
+12	14	1	0	1
+12	15	1	0	1
+12	19	4	0
+12	20	4	0
+12	21	4	0
+12	22	4	0
+12	23	4	0
+12	24	4	0
+12	25	4	0
+12	26	4	0
+12	27	4	0
+12	28	4	0
+12	29	4	0
+12	37	1	0	2
+12	38	1	0	2
+12	39	1	0	2
+12	40	1	0	2
+12	41	1	0	2
+12	42	1	0	2
+12	43	1	0	2
+12	44	1	0	2
+12	45	1	0	2
+13	7	1	0	1
+13	8	1	0	1
+13	9	1	0	1
+13	10	1	0	1
+13	11	1	0	1
+13	12	2	100
+13	13	2	100
+13	14	1	0	1
+13	15	1	0	1
+13	19	4	0
+13	20	4	0
+13	21	4	0
+13	22	4	0
+13	23	4	0
+13	24	4	0
+13	25	4	0
+13	26	4	0
+13	27	4	0
+13	28	4	0
+13	29	4	0
+13	37	1	0	2
+13	38	1	0	2
+13	39	1	0	2
+13	40	1	0	2
+13	41	1	0	2
+13	42	2	100
+13	43	2	100
+13	44	2	100
+13	45	1	0	2
+14	7	1	0	1
+14	8	1	0	1
+14	9	1	0	1
+14	10	1	0	1
+14	11	1	0	1
+14	12	2	100
+14	13	2	100
+14	14	1	0	1
+14	15	1	0	1
+14	19	4	0
+14	20	4	0
+14	21	4	0
+14	22	4	0
+14	23	4	0
+14	24	4	0
+14	25	4	0
+14	26	4	0
+14	27	4	0
+14	28	4	0
+14	29	4	0
+14	37	1	0	2
+14	38	1	0	2
+14	39	1	0	2
+14	40	1	0	2
+14	41	1	0	2
+14	42	2	100
+14	43	2	100
+14	44	2	100
+14	45	1	0	2
+15	6	1	0	1
+15	7	1	0	1
+15	8	1	0	1
+15	9	1	0	1
+15	10	1	0	1
+15	11	1	0	1
+15	12	1	0	1
+15	13	1	0	1
+15	14	1	0	1
+15	15	1	0	1
+15	19	4	0
+15	20	4	0
+15	21	4	0
+15	22	4	0
+15	23	4	0
+15	24	4	0
+15	25	4	0
+15	26	4	0
+15	27	4	0
+15	28	4	0
+15	29	4	0
+15	37	1	0	2
+15	38	1	0	2
+15	39	1	0	2
+15	40	1	0	2
+15	41	1	0	2
+15	42	1	0	2
+15	43	1	0	2
+15	44	1	0	2
+15	45	1	0	2
+16	19	4	0
+16	20	4	0
+16	21	4	0
+16	22	4	0
+16	23	4	0
+16	24	4	0
+16	25	4	0
+16	26	4	0
+16	27	4	0
+16	28	4	0
+16	29	4	0
+17	24	2	100
+17	25	2	100
+18	24	2	100
+18	25	2	100
+19	24	2	100
+19	25	2	100
+20	24	2	100
+20	25	2	100
+21	24	2	100
+21	25	2	100
+22	24	2	100
+22	25	2	100
+23	24	2	100
+23	25	2	100
+24	1	2	100
+24	2	2	100
+24	3	2	100
+24	4	2	100
+24	5	2	100
+24	6	2	100
+24	7	2	100
+24	8	2	100
+24	9	2	100
+24	10	2	100
+24	11	2	100
+24	12	2	100
+24	13	2	100
+24	14	2	100
+24	15	2	100
+24	16	2	100
+24	17	2	100
+24	18	2	100
+24	19	2	100
+24	20	2	100
+24	21	2	100
+24	22	2	100
+24	23	2	100
+24	24	2	100
+24	25	2	100
+24	26	2	100
+24	27	2	100
+24	28	2	100
+24	29	2	100
+24	30	2	100
+24	31	2	100
+24	32	2	100
+24	33	2	100
+24	34	2	100
+24	35	2	100
+24	36	2	100
+24	37	2	100
+24	38	2	100
+24	39	2	100
+24	40	2	100
+24	41	2	100
+24	42	2	100
+24	43	2	100
+24	44	2	100
+24	45	2	100
+24	46	2	100
+24	47	2	100
+24	48	2	100
+24	49	2	100
+25	1	2	100
+25	2	2	100
+25	3	2	100
+25	4	2	100
+25	5	2	100
+25	6	2	100
+25	7	2	100
+25	8	2	100
+25	9	2	100
+25	10	2	100
+25	11	2	100
+25	12	2	100
+25	13	2	100
+25	14	2	100
+25	15	2	100
+25	16	2	100
+25	17	2	100
+25	18	2	100
+25	19	2	100
+25	20	2	100
+25	21	2	100
+25	22	2	100
+25	23	2	100
+25	24	2	100
+25	25	2	100
+25	26	2	100
+25	27	2	100
+25	28	2	100
+25	29	2	100
+25	30	2	100
+25	31	2	100
+25	32	2	100
+25	33	2	100
+25	34	2	100
+25	35	2	100
+25	36	2	100
+25	37	2	100
+25	38	2	100
+25	39	2	100
+25	40	2	100
+25	41	2	100
+25	42	2	100
+25	43	2	100
+25	44	2	100
+25	45	2	100
+25	46	2	100
+25	47	2	100
+25	48	2	100
+25	49	2	100
+26	24	2	100
+26	25	2	100
+27	24	2	100
+27	25	2	100
+28	24	2	100
+28	25	2	100
+29	24	2	100
+29	25	2	100
+30	24	2	100
+30	25	2	100
+31	24	2	100
+31	25	2	100
+32	24	2	100
+32	25	2	100
+33	24	2	100
+33	25	2	100
+34	24	2	100
+34	25	2	100
+35	24	2	100
+35	25	2	100
+36	24	2	100
+36	25	2	100
+37	24	2	100
+37	25	2	100
+38	24	2	100
+38	25	2	100
+39	24	2	100
+39	25	2	100
+40	24	2	100
+40	25	2	100
+41	24	2	100
+41	25	2	100
+42	24	2	100
+42	25	2	100
+43	24	2	100
+43	25	2	100
+44	24	2	100
+44	25	2	100
+45	24	2	100
+45	25	2	100
+46	24	2	100
+46	25	2	100
+47	24	2	100
+47	25	2	100
+48	24	2	100
+48	25	2	100
+49	24	2	100
+49	25	2	100
+[/Tiles]
+
+[Rooms]
+# typeRoom	name	seatId	numTiles		Subsequent Lines: tileX	tileY
+[Room]
+4	Portal_1	0	9
+7	13
+7	14
+7	15
+8	13
+8	14
+8	15
+9	13
+9	14
+9	15
+9	5
+[/Room]
+[Room]
+4	Portal_2	0	9
+7	43
+7	44
+7	45
+8	43
+8	44
+8	45
+9	43
+9	44
+9	45
+9	5
+[/Room]
+[Room]
+1	DungeonTemple1	1	25
+7	7
+7	8
+7	9
+7	10
+7	11
+8	7
+8	8
+8	9
+8	10
+8	11
+9	7
+9	8
+9	9
+9	10
+9	11
+10	7
+10	8
+10	9
+10	10
+10	11
+11	7
+11	8
+11	9
+11	10
+11	11
+[/Room]
+[Room]
+3	Treasury3	1	3
+12	7
+12	8
+12	9
+[/Room]
+[Room]
+1	DungeonTemple4	2	25
+7	37
+7	38
+7	39
+7	40
+7	41
+8	37
+8	38
+8	39
+8	40
+8	41
+9	37
+9	38
+9	39
+9	40
+9	41
+10	37
+10	38
+10	39
+10	40
+10	41
+11	37
+11	38
+11	39
+11	40
+11	41
+[/Room]
+[Room]
+3	Treasury6	2	3
+12	37
+12	38
+12	39
+[/Room]
+[/Rooms]
+
+[Traps]
+# typeTrap	name	seatId	numTiles		Subsequent Lines: tileX	tileY	isActivated(0/1)		Subsequent Lines: optional specific data
+[/Traps]
+
+[Lights]
+# posX	posY	posZ	diffuseR	diffuseG	diffuseB	specularR	specularG	specularB	attenRange	attenConst	attenLin	attenQuad
+12	7	3.75	0.9	0.8	0.6	0.2	0.2	0.2	50	0.012	0.32	0.0018
+[/Lights]
+
+[CreatureDefinitions]
+[/CreatureDefinitions]
+
+[EquipmentDefinitions]
+[/EquipmentDefinitions]
+
+[Creatures]
+# SeatId	Name	MeshName	PosX	PosY	PosZ	ClassName	Level	CurrentXP	CurrentHP	CurrentWakefulness	CurrentHunger	GoldToDeposit	LeftWeapon	RightWeapon	CarriedSkill	CarriedWeapon	NbCreatureEffects	N*CreatureEffects
+[/Creatures]
+
+[Spells]
+# typeSpell	SeatId	Name	MeshName	PosX	PosY	PosZ	opacity	rotationAngle	optionalData
+[/Spells]
+
+[CraftedTraps]
+# SeatId	Name	MeshName	PosX	PosY	PosZ	opacity	rotationAngle	trapType	PosX	PosY	PosZ
+[/CraftedTraps]
+
+[SkillEntity]
+# SeatId	Name	MeshName	PosX	PosY	PosZ	opacity	rotationAngle	skillPoints	PosX	PosY	PosZ
+[/SkillEntity]
+
+[GiftBoxEntity]
+# GiftBoxType	SeatId	Name	MeshName	PosX	PosY	PosZ	opacity	rotationAngle	optionalData
+[/GiftBoxEntity]
+
+[Missiles]
+# missileType	SeatId	Name	MeshName	PosX	PosY	PosZ	opacity	rotationAngle	directionX	directionY	directionZ	missileAlive	damageAllies	speed	optionalData
+[/Missiles]
+
+[TreasuryObject]
+# SeatId	Name	MeshName	PosX	PosY	PosZ	opacity	rotationAngle	value
+[/TreasuryObject]
+
+[Chickens]
+# SeatId	Name	MeshName	PosX	PosY	PosZ	opacity	rotationAngle	PosX	PosY	PosZ
+[/Chickens]

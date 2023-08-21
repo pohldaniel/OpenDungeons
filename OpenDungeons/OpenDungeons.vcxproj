@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{94EF7A84-4C93-4346-BFD1-12E2F39B8648}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>OpenDungeons</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;CEGUI_STATIC;XML_STATIC;SILLY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>source;..\OgreMain\include;..\OgreMain;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;..\libCEGUIBase\include;..\libboost\include;..\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;CEGUIOgreRenderer.lib;CEGUIBase-0.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libexpat.lib;libsilly.lib;libpng.lib;libjpeg.lib;libzlib.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libd\x86;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;CEGUI_STATIC;XML_STATIC;SILLY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>source;..\OgreMain\include;..\OgreMain;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;..\libCEGUIBase\include;..\libboost\include;..\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;CEGUIOgreRenderer.lib;CEGUIBase-0.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libexpat.lib;libsilly.lib;libpng.lib;libjpeg.lib;libzlib.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libd\x64;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>source;..\OgreMain\include;..\OgreMain;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;..\libCEGUIBase\include;..\libboost\include;..\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\lib\x86;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;CEGUIOgreRenderer.lib;CEGUIBase-0.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libexpat.lib;libsilly.lib;libpng.lib;libjpeg.lib;libzlib.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;CEGUI_STATIC;XML_STATIC;SILLY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>source;..\OgreMain\include;..\OgreMain;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;..\libCEGUIBase\include;..\libboost\include;..\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\lib\x64;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;CEGUIOgreRenderer.lib;CEGUIBase-0.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libexpat.lib;libsilly.lib;libpng.lib;libjpeg.lib;libzlib.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="source\ai\AIFactory.cpp" />
+    <ClCompile Include="source\ai\AIManager.cpp" />
+    <ClCompile Include="source\ai\BaseAI.cpp" />
+    <ClCompile Include="source\ai\KeeperAI.cpp" />
+    <ClCompile Include="source\ai\KeeperAIType.cpp" />
+    <ClCompile Include="source\camera\CameraManager.cpp" />
+    <ClCompile Include="source\camera\CullingManager.cpp" />
+    <ClCompile Include="source\camera\CullingVectorManager.cpp" />
+    <ClCompile Include="source\camera\HermiteCatmullSpline.cpp" />
+    <ClCompile Include="source\camera\SlopeWalk.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureAction.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionCarryEntity.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionClaimGroundTile.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionClaimWallTile.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionDigTile.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionEatChicken.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionFight.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionFightFriendly.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionFindHome.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionFlee.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionGetFee.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionGoCallToWar.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionGrabEntity.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionLeaveDungeon.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionSearchEntityToCarry.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionSearchFood.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionSearchGroundTileToClaim.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionSearchJob.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionSearchTileToDig.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionSearchWallTileToClaim.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionSleep.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionStealFreeGold.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionUseRoom.cpp" />
+    <ClCompile Include="source\creatureaction\CreatureActionWalkToTile.cpp" />
+    <ClCompile Include="source\creaturebehaviour\CreatureBehaviour.cpp" />
+    <ClCompile Include="source\creaturebehaviour\CreatureBehaviourAttackEnemy.cpp" />
+    <ClCompile Include="source\creaturebehaviour\CreatureBehaviourEngageNaturalEnemy.cpp" />
+    <ClCompile Include="source\creaturebehaviour\CreatureBehaviourFleeWhenWeak.cpp" />
+    <ClCompile Include="source\creaturebehaviour\CreatureBehaviourLeaveDungeonWhenFurious.cpp" />
+    <ClCompile Include="source\creaturebehaviour\CreatureBehaviourManager.cpp" />
+    <ClCompile Include="source\creatureeffect\CreatureEffect.cpp" />
+    <ClCompile Include="source\creatureeffect\CreatureEffectDefense.cpp" />
+    <ClCompile Include="source\creatureeffect\CreatureEffectExplosion.cpp" />
+    <ClCompile Include="source\creatureeffect\CreatureEffectHeal.cpp" />
+    <ClCompile Include="source\creatureeffect\CreatureEffectManager.cpp" />
+    <ClCompile Include="source\creatureeffect\CreatureEffectSlap.cpp" />
+    <ClCompile Include="source\creatureeffect\CreatureEffectSpeedChange.cpp" />
+    <ClCompile Include="source\creatureeffect\CreatureEffectStrengthChange.cpp" />
+    <ClCompile Include="source\creaturemood\CreatureMood.cpp" />
+    <ClCompile Include="source\creaturemood\CreatureMoodCreature.cpp" />
+    <ClCompile Include="source\creaturemood\CreatureMoodFee.cpp" />
+    <ClCompile Include="source\creaturemood\CreatureMoodHpLoss.cpp" />
+    <ClCompile Include="source\creaturemood\CreatureMoodHunger.cpp" />
+    <ClCompile Include="source\creaturemood\CreatureMoodManager.cpp" />
+    <ClCompile Include="source\creaturemood\CreatureMoodTurnsWithoutFight.cpp" />
+    <ClCompile Include="source\creaturemood\CreatureMoodWakefulness.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkill.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillDefenseSelf.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillExplosion.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillHasteSelf.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillHealSelf.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillManager.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillMeleeFight.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillMissileLaunch.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillSlow.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillStrengthSelf.cpp" />
+    <ClCompile Include="source\creatureskill\CreatureSkillWeak.cpp" />
+    <ClCompile Include="source\entities\Building.cpp" />
+    <ClCompile Include="source\entities\BuildingObject.cpp" />
+    <ClCompile Include="source\entities\ChickenEntity.cpp" />
+    <ClCompile Include="source\entities\CraftedTrap.cpp" />
+    <ClCompile Include="source\entities\Creature.cpp" />
+    <ClCompile Include="source\entities\CreatureDefinition.cpp" />
+    <ClCompile Include="source\entities\DoorEntity.cpp" />
+    <ClCompile Include="source\entities\EntityLoading.cpp" />
+    <ClCompile Include="source\entities\GameEntity.cpp" />
+    <ClCompile Include="source\entities\GameEntityType.cpp" />
+    <ClCompile Include="source\entities\GiftBoxEntity.cpp" />
+    <ClCompile Include="source\entities\MapLight.cpp" />
+    <ClCompile Include="source\entities\MissileBoulder.cpp" />
+    <ClCompile Include="source\entities\MissileObject.cpp" />
+    <ClCompile Include="source\entities\MissileOneHit.cpp" />
+    <ClCompile Include="source\entities\MovableGameEntity.cpp" />
+    <ClCompile Include="source\entities\PersistentObject.cpp" />
+    <ClCompile Include="source\entities\RenderedMovableEntity.cpp" />
+    <ClCompile Include="source\entities\SkillEntity.cpp" />
+    <ClCompile Include="source\entities\SmallSpiderEntity.cpp" />
+    <ClCompile Include="source\entities\Tile.cpp" />
+    <ClCompile Include="source\entities\TrapEntity.cpp" />
+    <ClCompile Include="source\entities\TreasuryObject.cpp" />
+    <ClCompile Include="source\entities\Weapon.cpp" />
+    <ClCompile Include="source\gamemap\GameMap.cpp" />
+    <ClCompile Include="source\gamemap\MapHandler.cpp" />
+    <ClCompile Include="source\gamemap\MiniMap.cpp" />
+    <ClCompile Include="source\gamemap\MiniMapCamera.cpp" />
+    <ClCompile Include="source\gamemap\MiniMapDrawn.cpp" />
+    <ClCompile Include="source\gamemap\MiniMapDrawnFull.cpp" />
+    <ClCompile Include="source\gamemap\TileContainer.cpp" />
+    <ClCompile Include="source\gamemap\TileSet.cpp" />
+    <ClCompile Include="source\game\Player.cpp" />
+    <ClCompile Include="source\game\PlayerSelection.cpp" />
+    <ClCompile Include="source\game\Seat.cpp" />
+    <ClCompile Include="source\game\SeatData.cpp" />
+    <ClCompile Include="source\game\Skill.cpp" />
+    <ClCompile Include="source\game\SkillManager.cpp" />
+    <ClCompile Include="source\game\SkillType.cpp" />
+    <ClCompile Include="source\giftboxes\GiftBoxSkill.cpp" />
+    <ClCompile Include="source\goals\Goal.cpp" />
+    <ClCompile Include="source\goals\GoalClaimNTiles.cpp" />
+    <ClCompile Include="source\goals\GoalKillAllEnemies.cpp" />
+    <ClCompile Include="source\goals\GoalLoading.cpp" />
+    <ClCompile Include="source\goals\GoalMineNGold.cpp" />
+    <ClCompile Include="source\goals\GoalProtectCreature.cpp" />
+    <ClCompile Include="source\goals\GoalProtectDungeonTemple.cpp" />
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\modes\AbstractApplicationMode.cpp" />
+    <ClCompile Include="source\modes\Command.cpp" />
+    <ClCompile Include="source\modes\ConsoleCommands.cpp" />
+    <ClCompile Include="source\modes\ConsoleInterface.cpp" />
+    <ClCompile Include="source\modes\EditorMode.cpp" />
+    <ClCompile Include="source\modes\GameEditorModeBase.cpp" />
+    <ClCompile Include="source\modes\GameEditorModeConsole.cpp" />
+    <ClCompile Include="source\modes\GameMode.cpp" />
+    <ClCompile Include="source\modes\InputBridge.cpp" />
+    <ClCompile Include="source\modes\InputManager.cpp" />
+    <ClCompile Include="source\modes\Keyboard.cpp" />
+    <ClCompile Include="source\modes\MenuModeConfigureSeats.cpp" />
+    <ClCompile Include="source\modes\MenuModeEditorLoad.cpp" />
+    <ClCompile Include="source\modes\MenuModeEditorNew.cpp" />
+    <ClCompile Include="source\modes\MenuModeLoad.cpp" />
+    <ClCompile Include="source\modes\MenuModeMain.cpp" />
+    <ClCompile Include="source\modes\MenuModeMasterServerJoin.cpp" />
+    <ClCompile Include="source\modes\MenuModeMultiplayerClient.cpp" />
+    <ClCompile Include="source\modes\MenuModeMultiplayerServer.cpp" />
+    <ClCompile Include="source\modes\MenuModeReplay.cpp" />
+    <ClCompile Include="source\modes\MenuModeSkirmish.cpp" />
+    <ClCompile Include="source\modes\ModeManager.cpp" />
+    <ClCompile Include="source\modes\SettingsWindow.cpp" />
+    <ClCompile Include="source\modes\SFMLToOISListener.cpp" />
+    <ClCompile Include="source\network\ChatEventMessage.cpp" />
+    <ClCompile Include="source\network\ClientNotification.cpp" />
+    <ClCompile Include="source\network\ODClient.cpp" />
+    <ClCompile Include="source\network\ODPacket.cpp" />
+    <ClCompile Include="source\network\ODServer.cpp" />
+    <ClCompile Include="source\network\ODSocketClient.cpp" />
+    <ClCompile Include="source\network\ODSocketServer.cpp" />
+    <ClCompile Include="source\network\ServerMode.cpp" />
+    <ClCompile Include="source\network\ServerNotification.cpp" />
+    <ClCompile Include="source\ODApplication.cpp" />
+    <ClCompile Include="source\renderscene\RenderScene.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneAddEntity.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneAddParticleEffect.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneAddParticleEffectBone.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneAddPointLight.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneAnimationOnce.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneAnimationTime.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneCameraMove.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneGroup.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneManager.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneMenu.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneMoveEntity.cpp" />
+    <ClCompile Include="source\renderscene\RenderScenePosEntity.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneResizeEntity.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneSyncPost.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneSyncWait.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneSyncWaitAnimation.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneTurnEntity.cpp" />
+    <ClCompile Include="source\renderscene\RenderSceneWait.cpp" />
+    <ClCompile Include="source\render\CreatureOverlayStatus.cpp" />
+    <ClCompile Include="source\render\Gui.cpp" />
+    <ClCompile Include="source\render\MovableTextOverlay.cpp" />
+    <ClCompile Include="source\render\ODFrameListener.cpp" />
+    <ClCompile Include="source\render\RenderManager.cpp" />
+    <ClCompile Include="source\render\TextRenderer.cpp" />
+    <ClCompile Include="source\rooms\Room.cpp" />
+    <ClCompile Include="source\rooms\RoomArena.cpp" />
+    <ClCompile Include="source\rooms\RoomBridge.cpp" />
+    <ClCompile Include="source\rooms\RoomBridgeStone.cpp" />
+    <ClCompile Include="source\rooms\RoomBridgeWooden.cpp" />
+    <ClCompile Include="source\rooms\RoomCasino.cpp" />
+    <ClCompile Include="source\rooms\RoomCrypt.cpp" />
+    <ClCompile Include="source\rooms\RoomDormitory.cpp" />
+    <ClCompile Include="source\rooms\RoomDungeonTemple.cpp" />
+    <ClCompile Include="source\rooms\RoomHatchery.cpp" />
+    <ClCompile Include="source\rooms\RoomLibrary.cpp" />
+    <ClCompile Include="source\rooms\RoomManager.cpp" />
+    <ClCompile Include="source\rooms\RoomPortal.cpp" />
+    <ClCompile Include="source\rooms\RoomPortalWave.cpp" />
+    <ClCompile Include="source\rooms\RoomPrison.cpp" />
+    <ClCompile Include="source\rooms\RoomTorture.cpp" />
+    <ClCompile Include="source\rooms\RoomTrainingHall.cpp" />
+    <ClCompile Include="source\rooms\RoomTreasury.cpp" />
+    <ClCompile Include="source\rooms\RoomType.cpp" />
+    <ClCompile Include="source\rooms\RoomWorkshop.cpp" />
+    <ClCompile Include="source\sound\MusicPlayer.cpp" />
+    <ClCompile Include="source\sound\SoundEffectsManager.cpp" />
+    <ClCompile Include="source\spawnconditions\SpawnCondition.cpp" />
+    <ClCompile Include="source\spawnconditions\SpawnConditionCreature.cpp" />
+    <ClCompile Include="source\spawnconditions\SpawnConditionGold.cpp" />
+    <ClCompile Include="source\spawnconditions\SpawnConditionRoom.cpp" />
+    <ClCompile Include="source\spells\Spell.cpp" />
+    <ClCompile Include="source\spells\SpellCallToWar.cpp" />
+    <ClCompile Include="source\spells\SpellCreatureDefense.cpp" />
+    <ClCompile Include="source\spells\SpellCreatureExplosion.cpp" />
+    <ClCompile Include="source\spells\SpellCreatureHaste.cpp" />
+    <ClCompile Include="source\spells\SpellCreatureHeal.cpp" />
+    <ClCompile Include="source\spells\SpellCreatureSlow.cpp" />
+    <ClCompile Include="source\spells\SpellCreatureStrength.cpp" />
+    <ClCompile Include="source\spells\SpellCreatureWeak.cpp" />
+    <ClCompile Include="source\spells\SpellEyeEvil.cpp" />
+    <ClCompile Include="source\spells\SpellManager.cpp" />
+    <ClCompile Include="source\spells\SpellSummonWorker.cpp" />
+    <ClCompile Include="source\spells\SpellType.cpp" />
+    <ClCompile Include="source\traps\Trap.cpp" />
+    <ClCompile Include="source\traps\TrapBoulder.cpp" />
+    <ClCompile Include="source\traps\TrapCannon.cpp" />
+    <ClCompile Include="source\traps\TrapDoor.cpp" />
+    <ClCompile Include="source\traps\TrapManager.cpp" />
+    <ClCompile Include="source\traps\TrapSpike.cpp" />
+    <ClCompile Include="source\traps\TrapType.cpp" />
+    <ClCompile Include="source\utils\ConfigManager.cpp" />
+    <ClCompile Include="source\utils\FrameRateLimiter.cpp" />
+    <ClCompile Include="source\utils\Helper.cpp" />
+    <ClCompile Include="source\utils\LogManager.cpp" />
+    <ClCompile Include="source\utils\LogSinkConsole.cpp" />
+    <ClCompile Include="source\utils\LogSinkFile.cpp" />
+    <ClCompile Include="source\utils\LogSinkOgre.cpp" />
+    <ClCompile Include="source\utils\MasterServer.cpp" />
+    <ClCompile Include="source\utils\Random.cpp" />
+    <ClCompile Include="source\utils\ResourceManager.cpp" />
+    <ClCompile Include="source\utils\StackTraceWinMSVC.cpp" />
+    <ClCompile Include="source\utils\VectorInt64.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

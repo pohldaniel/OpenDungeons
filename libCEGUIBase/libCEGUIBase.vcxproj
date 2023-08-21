@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Affector.cpp" />
+    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\AnimationInstance.cpp" />
+    <ClCompile Include="src\AnimationManager.cpp" />
+    <ClCompile Include="src\Animation_xmlHandler.cpp" />
+    <ClCompile Include="src\Base.cpp" />
+    <ClCompile Include="src\BasicImage.cpp" />
+    <ClCompile Include="src\BasicRenderedStringParser.cpp" />
+    <ClCompile Include="src\BidiVisualMapping.cpp" />
+    <ClCompile Include="src\BoundSlot.cpp" />
+    <ClCompile Include="src\CentredRenderedString.cpp" />
+    <ClCompile Include="src\ChainedXMLHandler.cpp" />
+    <ClCompile Include="src\Clipboard.cpp" />
+    <ClCompile Include="src\Colour.cpp" />
+    <ClCompile Include="src\ColourRect.cpp" />
+    <ClCompile Include="src\CompositeResourceProvider.cpp" />
+    <ClCompile Include="src\Config_xmlHandler.cpp" />
+    <ClCompile Include="src\CoordConverter.cpp" />
+    <ClCompile Include="src\DataContainer.cpp" />
+    <ClCompile Include="src\DefaultLogger.cpp" />
+    <ClCompile Include="src\DefaultRenderedStringParser.cpp" />
+    <ClCompile Include="src\DefaultResourceProvider.cpp" />
+    <ClCompile Include="src\DynamicModule.cpp" />
+    <ClCompile Include="src\Element.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventArgs.cpp" />
+    <ClCompile Include="src\EventSet.cpp" />
+    <ClCompile Include="src\Exceptions.cpp" />
+    <ClCompile Include="src\FactoryModule.cpp" />
+    <ClCompile Include="src\FactoryRegisterer.cpp" />
+    <ClCompile Include="src\falagard\ComponentBase.cpp" />
+    <ClCompile Include="src\falagard\Dimensions.cpp" />
+    <ClCompile Include="src\falagard\EventAction.cpp" />
+    <ClCompile Include="src\falagard\EventLinkDefinition.cpp" />
+    <ClCompile Include="src\falagard\FormattingSetting.cpp" />
+    <ClCompile Include="src\falagard\FrameComponent.cpp" />
+    <ClCompile Include="src\falagard\ImageryComponent.cpp" />
+    <ClCompile Include="src\falagard\ImagerySection.cpp" />
+    <ClCompile Include="src\falagard\LayerSpecification.cpp" />
+    <ClCompile Include="src\falagard\NamedArea.cpp" />
+    <ClCompile Include="src\falagard\PropertyDefinitionBase.cpp" />
+    <ClCompile Include="src\falagard\PropertyInitialiser.cpp" />
+    <ClCompile Include="src\falagard\SectionSpecification.cpp" />
+    <ClCompile Include="src\falagard\StateImagery.cpp" />
+    <ClCompile Include="src\falagard\TextComponent.cpp" />
+    <ClCompile Include="src\falagard\WidgetComponent.cpp" />
+    <ClCompile Include="src\falagard\WidgetLookFeel.cpp" />
+    <ClCompile Include="src\falagard\WidgetLookManager.cpp" />
+    <ClCompile Include="src\falagard\XMLEnumHelper.cpp" />
+    <ClCompile Include="src\falagard\_XMLHandler.cpp" />
+    <ClCompile Include="src\Font.cpp" />
+    <ClCompile Include="src\FontManager.cpp" />
+    <ClCompile Include="src\Font_xmlHandler.cpp" />
+    <ClCompile Include="src\FormattedRenderedString.cpp" />
+    <ClCompile Include="src\GeometryBuffer.cpp" />
+    <ClCompile Include="src\GlobalEventSet.cpp" />
+    <ClCompile Include="src\GUIContext.cpp" />
+    <ClCompile Include="src\GUILayout_xmlHandler.cpp" />
+    <ClCompile Include="src\Image.cpp" />
+    <ClCompile Include="src\ImageCodec.cpp" />
+    <ClCompile Include="src\ImageManager.cpp" />
+    <ClCompile Include="src\JustifiedRenderedString.cpp" />
+    <ClCompile Include="src\JustifiedRenderedStringWordWrapper.cpp" />
+    <ClCompile Include="src\KeyFrame.cpp" />
+    <ClCompile Include="src\LeftAlignedRenderedString.cpp" />
+    <ClCompile Include="src\LinkedEvent.cpp" />
+    <ClCompile Include="src\Logger.cpp" />
+    <ClCompile Include="src\MouseCursor.cpp" />
+    <ClCompile Include="src\NamedElement.cpp" />
+    <ClCompile Include="src\NamedXMLResourceManager.cpp" />
+    <ClCompile Include="src\PixmapFont.cpp" />
+    <ClCompile Include="src\Property.cpp" />
+    <ClCompile Include="src\PropertyHelper.cpp" />
+    <ClCompile Include="src\PropertySet.cpp" />
+    <ClCompile Include="src\Quaternion.cpp" />
+    <ClCompile Include="src\Rect.cpp" />
+    <ClCompile Include="src\RenderedString.cpp" />
+    <ClCompile Include="src\RenderedStringComponent.cpp" />
+    <ClCompile Include="src\RenderedStringImageComponent.cpp" />
+    <ClCompile Include="src\RenderedStringTextComponent.cpp" />
+    <ClCompile Include="src\RenderedStringWidgetComponent.cpp" />
+    <ClCompile Include="src\RenderEffectManager.cpp" />
+    <ClCompile Include="src\RenderingSurface.cpp" />
+    <ClCompile Include="src\RenderingWindow.cpp" />
+    <ClCompile Include="src\RenderQueue.cpp" />
+    <ClCompile Include="src\RenderTarget.cpp" />
+    <ClCompile Include="src\RightAlignedRenderedString.cpp" />
+    <ClCompile Include="src\Scheme.cpp" />
+    <ClCompile Include="src\SchemeManager.cpp" />
+    <ClCompile Include="src\Scheme_xmlHandler.cpp" />
+    <ClCompile Include="src\ScriptModule.cpp" />
+    <ClCompile Include="src\SimpleTimer.cpp" />
+    <ClCompile Include="src\String.cpp" />
+    <ClCompile Include="src\SubscriberSlot.cpp" />
+    <ClCompile Include="src\System.cpp" />
+    <ClCompile Include="src\SystemKeys.cpp" />
+    <ClCompile Include="src\TextUtils.cpp" />
+    <ClCompile Include="src\widgets\ButtonBase.cpp" />
+    <ClCompile Include="src\widgets\ClippedContainer.cpp" />
+    <ClCompile Include="src\widgets\Combobox.cpp" />
+    <ClCompile Include="src\widgets\ComboDropList.cpp" />
+    <ClCompile Include="src\widgets\DefaultWindow.cpp" />
+    <ClCompile Include="src\widgets\DragContainer.cpp" />
+    <ClCompile Include="src\widgets\Editbox.cpp" />
+    <ClCompile Include="src\widgets\FrameWindow.cpp" />
+    <ClCompile Include="src\widgets\GridLayoutContainer.cpp" />
+    <ClCompile Include="src\widgets\GroupBox.cpp" />
+    <ClCompile Include="src\widgets\HorizontalLayoutContainer.cpp" />
+    <ClCompile Include="src\widgets\ItemEntry.cpp" />
+    <ClCompile Include="src\widgets\ItemListBase.cpp" />
+    <ClCompile Include="src\widgets\ItemListbox.cpp" />
+    <ClCompile Include="src\widgets\LayoutCell.cpp" />
+    <ClCompile Include="src\widgets\LayoutContainer.cpp" />
+    <ClCompile Include="src\widgets\Listbox.cpp" />
+    <ClCompile Include="src\widgets\ListboxItem.cpp" />
+    <ClCompile Include="src\widgets\ListboxTextItem.cpp" />
+    <ClCompile Include="src\widgets\ListHeader.cpp" />
+    <ClCompile Include="src\widgets\ListHeaderSegment.cpp" />
+    <ClCompile Include="src\widgets\Menubar.cpp" />
+    <ClCompile Include="src\widgets\MenuBase.cpp" />
+    <ClCompile Include="src\widgets\MenuItem.cpp" />
+    <ClCompile Include="src\widgets\MultiColumnList.cpp" />
+    <ClCompile Include="src\widgets\MultiLineEditbox.cpp" />
+    <ClCompile Include="src\widgets\PopupMenu.cpp" />
+    <ClCompile Include="src\widgets\ProgressBar.cpp" />
+    <ClCompile Include="src\widgets\PushButton.cpp" />
+    <ClCompile Include="src\widgets\RadioButton.cpp" />
+    <ClCompile Include="src\widgets\ScrollablePane.cpp" />
+    <ClCompile Include="src\widgets\Scrollbar.cpp" />
+    <ClCompile Include="src\widgets\ScrolledContainer.cpp" />
+    <ClCompile Include="src\widgets\ScrolledItemListBase.cpp" />
+    <ClCompile Include="src\widgets\SequentialLayoutContainer.cpp" />
+    <ClCompile Include="src\widgets\Slider.cpp" />
+    <ClCompile Include="src\widgets\Spinner.cpp" />
+    <ClCompile Include="src\widgets\TabButton.cpp" />
+    <ClCompile Include="src\widgets\TabControl.cpp" />
+    <ClCompile Include="src\widgets\Thumb.cpp" />
+    <ClCompile Include="src\widgets\Titlebar.cpp" />
+    <ClCompile Include="src\widgets\ToggleButton.cpp" />
+    <ClCompile Include="src\widgets\Tooltip.cpp" />
+    <ClCompile Include="src\widgets\Tree.cpp" />
+    <ClCompile Include="src\widgets\TreeItem.cpp" />
+    <ClCompile Include="src\widgets\VerticalLayoutContainer.cpp" />
+    <ClCompile Include="src\Win32StringTranscoder.cpp" />
+    <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\WindowFactory.cpp" />
+    <ClCompile Include="src\WindowFactoryManager.cpp" />
+    <ClCompile Include="src\WindowManager.cpp" />
+    <ClCompile Include="src\WindowRenderer.cpp" />
+    <ClCompile Include="src\WindowRendererManager.cpp" />
+    <ClCompile Include="src\XMLAttributes.cpp" />
+    <ClCompile Include="src\XMLHandler.cpp" />
+    <ClCompile Include="src\XMLParser.cpp" />
+    <ClCompile Include="src\XMLSerializer.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A4BB4C53-4B15-4EBD-90E1-1E86B0C682BC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>libCEGUIBase</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\lib\x64\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\libd\x64\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\libd\x86\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\lib\x86\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;CEGUI_STATIC;CEGUI_BUILD_STATIC_FACTORY_MODULE;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;CEGUI_STATIC;CEGUI_BUILD_STATIC_FACTORY_MODULE;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;CEGUI_STATIC;CEGUI_BUILD_STATIC_FACTORY_MODULE;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;CEGUI_STATIC;CEGUI_BUILD_STATIC_FACTORY_MODULE;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

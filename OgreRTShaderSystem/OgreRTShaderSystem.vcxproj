@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\OgreRTShaderSystem.h" />
+    <ClInclude Include="include\OgreShaderCGProgramProcessor.h" />
+    <ClInclude Include="include\OgreShaderCGProgramWriter.h" />
+    <ClInclude Include="include\OgreShaderExDualQuaternionSkinning.h" />
+    <ClInclude Include="include\OgreShaderExHardwareSkinning.h" />
+    <ClInclude Include="include\OgreShaderExHardwareSkinningTechnique.h" />
+    <ClInclude Include="include\OgreShaderExIntegratedPSSM3.h" />
+    <ClInclude Include="include\OgreShaderExLayeredBlending.h" />
+    <ClInclude Include="include\OgreShaderExLinearSkinning.h" />
+    <ClInclude Include="include\OgreShaderExNormalMapLighting.h" />
+    <ClInclude Include="include\OgreShaderExPerPixelLighting.h" />
+    <ClInclude Include="include\OgreShaderExTextureAtlasSampler.h" />
+    <ClInclude Include="include\OgreShaderExTriplanarTexturing.h" />
+    <ClInclude Include="include\OgreShaderFFPColour.h" />
+    <ClInclude Include="include\OgreShaderFFPFog.h" />
+    <ClInclude Include="include\OgreShaderFFPLighting.h" />
+    <ClInclude Include="include\OgreShaderFFPRenderState.h" />
+    <ClInclude Include="include\OgreShaderFFPRenderStateBuilder.h" />
+    <ClInclude Include="include\OgreShaderFFPTexturing.h" />
+    <ClInclude Include="include\OgreShaderFFPTransform.h" />
+    <ClInclude Include="include\OgreShaderFunction.h" />
+    <ClInclude Include="include\OgreShaderFunctionAtom.h" />
+    <ClInclude Include="include\OgreShaderGenerator.h" />
+    <ClInclude Include="include\OgreShaderGLSLESProgramProcessor.h" />
+    <ClInclude Include="include\OgreShaderGLSLESProgramWriter.h" />
+    <ClInclude Include="include\OgreShaderGLSLProgramProcessor.h" />
+    <ClInclude Include="include\OgreShaderGLSLProgramWriter.h" />
+    <ClInclude Include="include\OgreShaderHLSLProgramProcessor.h" />
+    <ClInclude Include="include\OgreShaderHLSLProgramWriter.h" />
+    <ClInclude Include="include\OgreShaderMaterialSerializerListener.h" />
+    <ClInclude Include="include\OgreShaderParameter.h" />
+    <ClInclude Include="include\OgreShaderPrerequisites.h" />
+    <ClInclude Include="include\OgreShaderProgram.h" />
+    <ClInclude Include="include\OgreShaderProgramManager.h" />
+    <ClInclude Include="include\OgreShaderProgramProcessor.h" />
+    <ClInclude Include="include\OgreShaderProgramSet.h" />
+    <ClInclude Include="include\OgreShaderProgramWriter.h" />
+    <ClInclude Include="include\OgreShaderProgramWriterManager.h" />
+    <ClInclude Include="include\OgreShaderRenderState.h" />
+    <ClInclude Include="include\OgreShaderScriptTranslator.h" />
+    <ClInclude Include="include\OgreShaderSubRenderState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\OgreShaderCGProgramProcessor.cpp" />
+    <ClCompile Include="src\OgreShaderCGProgramWriter.cpp" />
+    <ClCompile Include="src\OgreShaderExDualQuaternionSkinning.cpp" />
+    <ClCompile Include="src\OgreShaderExHardwareSkinning.cpp" />
+    <ClCompile Include="src\OgreShaderExHardwareSkinningTechnique.cpp" />
+    <ClCompile Include="src\OgreShaderExIntegratedPSSM3.cpp" />
+    <ClCompile Include="src\OgreShaderExLayeredBlending.cpp" />
+    <ClCompile Include="src\OgreShaderExLinearSkinning.cpp" />
+    <ClCompile Include="src\OgreShaderExNormalMapLighting.cpp" />
+    <ClCompile Include="src\OgreShaderExPerPixelLighting.cpp" />
+    <ClCompile Include="src\OgreShaderExTextureAtlasSampler.cpp" />
+    <ClCompile Include="src\OgreShaderExTriplanarTexturing.cpp" />
+    <ClCompile Include="src\OgreShaderFFPColour.cpp" />
+    <ClCompile Include="src\OgreShaderFFPFog.cpp" />
+    <ClCompile Include="src\OgreShaderFFPLighting.cpp" />
+    <ClCompile Include="src\OgreShaderFFPRenderStateBuilder.cpp" />
+    <ClCompile Include="src\OgreShaderFFPTexturing.cpp" />
+    <ClCompile Include="src\OgreShaderFFPTransform.cpp" />
+    <ClCompile Include="src\OgreShaderFunction.cpp" />
+    <ClCompile Include="src\OgreShaderFunctionAtom.cpp" />
+    <ClCompile Include="src\OgreShaderGenerator.cpp" />
+    <ClCompile Include="src\OgreShaderGLSLESProgramProcessor.cpp" />
+    <ClCompile Include="src\OgreShaderGLSLESProgramWriter.cpp" />
+    <ClCompile Include="src\OgreShaderGLSLProgramProcessor.cpp" />
+    <ClCompile Include="src\OgreShaderGLSLProgramWriter.cpp" />
+    <ClCompile Include="src\OgreShaderHLSLProgramProcessor.cpp" />
+    <ClCompile Include="src\OgreShaderHLSLProgramWriter.cpp" />
+    <ClCompile Include="src\OgreShaderMaterialSerializerListener.cpp" />
+    <ClCompile Include="src\OgreShaderParameter.cpp" />
+    <ClCompile Include="src\OgreShaderProgram.cpp" />
+    <ClCompile Include="src\OgreShaderProgramManager.cpp" />
+    <ClCompile Include="src\OgreShaderProgramProcessor.cpp" />
+    <ClCompile Include="src\OgreShaderProgramSet.cpp" />
+    <ClCompile Include="src\OgreShaderProgramWriter.cpp" />
+    <ClCompile Include="src\OgreShaderProgramWriterManager.cpp" />
+    <ClCompile Include="src\OgreShaderRenderState.cpp" />
+    <ClCompile Include="src\OgreShaderScriptTranslator.cpp" />
+    <ClCompile Include="src\OgreShaderSubRenderState.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4bf2deeb-5806-4ad1-9f1b-1311802e360b}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>OgreRTShaderSystem</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\libd\x86\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\libd\x64\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\lib\x86\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\lib\x64\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OgreRTShaderSystem_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\libd\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OgreRTShaderSystem_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\libd\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OgreRTShaderSystem_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OgreRTShaderSystem_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;..\OgreMain;..\OgreMain\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
