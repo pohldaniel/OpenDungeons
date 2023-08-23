@@ -1136,5 +1136,8 @@
     <ClCompile Include="..\libCEGUIBase\src\XMLSerializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\PCRERegexMatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

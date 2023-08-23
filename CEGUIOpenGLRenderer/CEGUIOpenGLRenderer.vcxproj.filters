@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\ApplePBTextureTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GeometryBufferBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GL3FBOTextureTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GL3GeometryBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GL3Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GLFBOTextureTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GLGeometryBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GlmPimpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GLRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\GLXPBTextureTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\RendererBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\RenderTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\ShaderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\StandardShaderFrag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\StandardShaderVert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\StateChangeWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\TextureTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\ViewportTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\RendererModules\OpenGL\WGLPBTextureTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\GeometryBufferBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\GL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\GL3FBOTextureTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\GL3GeometryBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\GL3Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\GLFBOTextureTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\GLGeometryBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\GLRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\RendererBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\ShaderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\StateChangeWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\TextureTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\ViewportTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libCEGUIBase\src\RendererModules\OpenGL\WGLPBTextureTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

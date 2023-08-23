@@ -90,12 +90,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;CEGUI_STATIC;XML_STATIC;SILLY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>source;..\OgreMain\include;..\OgreMain;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;..\libCEGUIBase\include;..\libboost\include;..\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libexpat.lib;libsilly.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;CEGUIBase.lib;CEGUIOgreRenderer.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\libd\x86;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -108,12 +108,12 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;CEGUI_STATIC;XML_STATIC;SILLY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>source;..\OgreMain\include;..\OgreMain;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;..\libCEGUIBase\include;..\libboost\include;..\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libexpat.lib;libsilly.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;CEGUIBase.lib;CEGUIOgreRenderer.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\libd\x64;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -125,10 +125,10 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;CEGUI_STATIC;XML_STATIC;SILLY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;XML_STATIC;SILLY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>source;..\OgreMain\include;..\OgreMain;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;..\libCEGUIBase\include;..\libboost\include;..\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,7 +136,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x86;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libexpat.lib;libsilly.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;CEGUIBase.lib;CEGUIOgreRenderer.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,7 +150,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;OD_VERSION="0.7.1";OD_DATA_PATH=".";OD_PLUGINS_CFG_PATH=".";OIS_DYNAMIC_LIB;OD_USE_SFML_WINDOW;CEGUI_STATIC;XML_STATIC;SILLY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>source;..\OgreMain\include;..\OgreMain;..\OgreOverlay\include;..\OgreRTShaderSystem\include;..\OIS\include;..\libCEGUIBase\include;..\libboost\include;..\SFML-2.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,7 +158,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x64;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libexpat.lib;libsilly.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;CEGUIBase.lib;CEGUIOgreRenderer.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;OPENGL32.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

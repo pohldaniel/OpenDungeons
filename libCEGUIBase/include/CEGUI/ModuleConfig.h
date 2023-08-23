@@ -43,11 +43,11 @@ setting CMake options and regenerating, rather than editing directly.
 // event that we do not have control over)
 //////////////////////////////////////////////////////////////////////////
 /* #undef CEGUI_BUILD_RENDERER_NULL */
-/* #undef CEGUI_BUILD_RENDERER_OPENGL */
-/* #undef CEGUI_BUILD_RENDERER_OPENGL3 */
-#define CEGUI_BUILD_RENDERER_OGRE
+#define CEGUI_BUILD_RENDERER_OPENGL
+#define CEGUI_BUILD_RENDERER_OPENGL3
+/* #undef CEGUI_BUILD_RENDERER_OGRE */
 /* #undef CEGUI_BUILD_RENDERER_IRRLICHT */
-/* #undef CEGUI_BUILD_RENDERER_DIRECT3D9 */
+#define CEGUI_BUILD_RENDERER_DIRECT3D9
 /* #undef CEGUI_BUILD_RENDERER_DIRECT3D10 */
 /* #undef CEGUI_BUILD_RENDERER_DIRECT3D11 */
 /* #undef CEGUI_BUILD_RENDERER_DIRECTFB */

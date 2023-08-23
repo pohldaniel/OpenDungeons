@@ -199,7 +199,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;_MT;GLEW_STATIC;YY_NEVER_INTERACTIVE;RenderSystem_GL_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;..\OgreGLSupport\include;..\OgreGLSupport\include\win32;..\OgreGLSupport\include\GLSL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -217,12 +217,12 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;_MT;GLEW_STATIC;YY_NEVER_INTERACTIVE;RenderSystem_GL_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;..\OgreGLSupport\include;..\OgreGLSupport\include\win32;..\OgreGLSupport\include\GLSL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\libd\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\libd\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>OgreMain.lib;OgreGLSupport.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -237,7 +237,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;_MT;GLEW_STATIC;YY_NEVER_INTERACTIVE;RenderSystem_GL_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;..\OgreGLSupport\include;..\OgreGLSupport\include\win32;..\OgreGLSupport\include\GLSL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -259,7 +259,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OGRE_GLPLUGIN_EXPORTS;_MT;GLEW_STATIC;YY_NEVER_INTERACTIVE;RenderSystem_GL_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;include\Win32;src\StateCacheManager;src\Win32;src\atifs\include;src\nvparse;src\nvparse\winheaders;src\GLSL\include;..\OgreMain;..\OgreMain\include;..\OgreMain\include\Threading;..\OgreGLSupport\include;..\OgreGLSupport\include\win32;..\OgreGLSupport\include\GLSL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

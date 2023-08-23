@@ -2323,7 +2323,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OgreMain_EXPORTS;OGRE_NONCLIENT_BUILD;FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;include;src\nedmalloc;..\libzlib\include;..\libzzip\include;..\libfreetype\include;..\libfreeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -2341,7 +2341,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OgreMain_EXPORTS;OGRE_NONCLIENT_BUILD;FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;include;src\nedmalloc;..\libzlib\include;..\libzzip\include;..\libfreetype\include;..\libfreeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -2361,7 +2361,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OgreMain_EXPORTS;OGRE_NONCLIENT_BUILD;FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;include;src\nedmalloc;..\libzlib\include;..\libzzip\include;..\libfreetype\include;..\libfreeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -2383,7 +2383,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OgreMain_EXPORTS;OGRE_NONCLIENT_BUILD;FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;include;src\nedmalloc;..\libzlib\include;..\libzzip\include;..\libfreetype\include;..\libfreeimage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4661;4251;4275</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4661;4251;4275;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

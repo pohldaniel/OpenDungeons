@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DA48AEDA-79A7-400B-8162-A7752E5AA306}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CEGUICoreWindowRendererSet</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\libd\x86\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\libd\x64\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\lib\x86\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\lib\x64\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;NOMINMAX;CEGUICOREWINDOWRENDERERSET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\libCEGUIBase\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CEGUIBase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libd\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;NOMINMAX;CEGUICOREWINDOWRENDERERSET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\libCEGUIBase\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CEGUIBase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libd\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;NOMINMAX;CEGUICOREWINDOWRENDERERSET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\libCEGUIBase\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CEGUIBase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;NOMINMAX;CEGUICOREWINDOWRENDERERSET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\libCEGUIBase\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CEGUIBase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Button.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Default.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Editbox.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\FrameWindow.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\ItemEntry.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\ItemListbox.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Listbox.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\ListHeader.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\ListHeaderSegment.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Menubar.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\MenuItem.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Module.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\MultiColumnList.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\MultiLineEditbox.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\PopupMenu.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\ProgressBar.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\ScrollablePane.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Scrollbar.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Slider.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Static.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\StaticImage.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\StaticText.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\TabButton.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\TabControl.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Titlebar.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\ToggleButton.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Tooltip.h" />
+    <ClInclude Include="..\libCEGUIBase\include\CEGUI\WindowRendererSets\Core\Tree.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Button.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Default.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Editbox.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\FrameWindow.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\ItemEntry.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\ItemListbox.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Listbox.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\ListHeader.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\ListHeaderSegment.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Menubar.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\MenuItem.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Module.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\MultiColumnList.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\MultiLineEditbox.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\PopupMenu.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\ProgressBar.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\ScrollablePane.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Scrollbar.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Slider.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Static.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\StaticImage.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\StaticText.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\TabButton.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\TabControl.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Titlebar.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\ToggleButton.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Tooltip.cpp" />
+    <ClCompile Include="..\libCEGUIBase\src\WindowRendererSets\Core\Tree.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

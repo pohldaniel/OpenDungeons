@@ -114,10 +114,10 @@ setting CMake options and regenerating, rather than editing directly.
 #   define CEGUI_OGRE_VERSION_MAJOR 1
 #endif
 #ifndef CEGUI_OGRE_VERSION_MINOR
-#   define CEGUI_OGRE_VERSION_MINOR 9
+#   define CEGUI_OGRE_VERSION_MINOR 10
 #endif
 #ifndef CEGUI_OGRE_VERSION_PATCH
-#   define CEGUI_OGRE_VERSION_PATCH 0
+#   define CEGUI_OGRE_VERSION_PATCH 11
 #endif
 #ifndef CEGUI_OGRE_VERSION
 #   define CEGUI_OGRE_VERSION ((CEGUI_OGRE_VERSION_MAJOR << 16) | (CEGUI_OGRE_VERSION_MINOR << 8) | CEGUI_OGRE_VERSION_PATCH)
@@ -138,7 +138,7 @@ setting CMake options and regenerating, rather than editing directly.
 // To disable the use of PCRE (and therefore the validation factilities),
 // comment the following line.  (Attempts to set validation string will throw).
 //////////////////////////////////////////////////////////////////////////
-/* #undef CEGUI_HAS_PCRE_REGEX */
+#define CEGUI_HAS_PCRE_REGEX
 
 //////////////////////////////////////////////////////////////////////////
 // The following controls whether the default logger be (possibly) used.
@@ -176,7 +176,7 @@ setting CMake options and regenerating, rather than editing directly.
 /* #undef CEGUI_USE_FRIBIDI */
 
 // Controls whether to use GLEW as an OpenGL loading library.
-/* #undef CEGUI_USE_GLEW */
+#define CEGUI_USE_GLEW
 
 // Controls whether to use Epoxy as an OpenGL loading library.
 /* #undef CEGUI_USE_EPOXY */
