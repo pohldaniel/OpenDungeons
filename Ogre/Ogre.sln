@@ -187,6 +187,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample_Water", "Samples\Sam
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaseSample", "BaseSample\BaseSample.vcxproj", "{AC242F15-BC88-4812-9155-0145E8602294}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaseCEGUI", "BaseCEGUI\BaseCEGUI.vcxproj", "{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -907,6 +909,14 @@ Global
 		{AC242F15-BC88-4812-9155-0145E8602294}.Release|x64.Build.0 = Release|x64
 		{AC242F15-BC88-4812-9155-0145E8602294}.Release|x86.ActiveCfg = Release|Win32
 		{AC242F15-BC88-4812-9155-0145E8602294}.Release|x86.Build.0 = Release|Win32
+		{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}.Debug|x64.ActiveCfg = Debug|x64
+		{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}.Debug|x64.Build.0 = Debug|x64
+		{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}.Debug|x86.ActiveCfg = Debug|Win32
+		{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}.Debug|x86.Build.0 = Debug|Win32
+		{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}.Release|x64.ActiveCfg = Release|x64
+		{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}.Release|x64.Build.0 = Release|x64
+		{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}.Release|x86.ActiveCfg = Release|Win32
+		{92FE56C7-5BD2-48DD-8E5B-81E4C2C0897C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

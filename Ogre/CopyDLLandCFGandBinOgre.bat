@@ -83,3 +83,4 @@ copy OgreData\quakemap.cfg binOgre
 
 copy Release\SampleBrowser.exe binOgre
 copy Release\BaseSample.exe binOgre
+copy Release\BaseCEGUI.exe binOgre
