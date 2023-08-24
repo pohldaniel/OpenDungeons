@@ -2,12 +2,13 @@
 
 This repository contains a Visual Studio 2015 setup of https://github.com/OpenDungeons/OpenDungeons and it's dependencies. After compiling keep in mind CopyDLLandCFGandDataBinOgre.bat, CopyDLLandCFGandDataBinCEGUI.bat and 02CopyDLLandCFGandDataBin.bat for generating the respective bin folder. It should be clear that the Copyright of OpenDungeons and of it's dependencies are not in my hand.
 
-**Important:**  The build is splitted up in three solutuins opendungeons, Ogre, CEGUI and works only with x86 in release mode. You will at first build the dependencies out of the opendungeons solution and go ahead with the Ogre solutuion and after that with the CEGUI solution. Than you have to setup the libboost folder see below. The last step will be the project OpenDungeons out of the opendungeons solution. Ogre and CEGUI should work in debug and x64 mode. I have never tested it.
+**Important:**  The build is splitted up in three solutions opendungeons, Ogre, CEGUI and works only with x86 in release mode. You will at first build the dependencies out of the opendungeons solution and go ahead with the Ogre solutuion and after that with the CEGUI solution. Than you have to setup the libboost folder see below. The last step will be the project OpenDungeons out of the opendungeons solution. Ogre and CEGUI should work in debug and x64 mode. I have never tested it.
 
 Used major libraries <br/>
 
 &emsp;[https://github.com/OGRECave/ogre/releases/tag/v1.10.11](https://github.com/OGRECave/ogre/releases/tag/v1.10.11)<br/>
 &emsp;[https://github.com/cegui/cegui/releases/tag/v0-8-7](https://github.com/cegui/cegui/releases/tag/v0-8-7)<br/>
+&emsp;[https://github.com/wgois/OIS/releases/tag/v1.5.1](https://github.com/wgois/OIS/releases/tag/v1.5.1)<br/>
 &emsp;FreeImag 3.18.0 [https://freeimage.sourceforge.io/download.html](https://freeimage.sourceforge.io/download.html)<br/>
 &emsp;MyGui 3.4.0 [http://mygui.info](http://mygui.info)<br/>
 &emsp;SDL2 2.0.22 [https://www.libsdl.org](https://www.libsdl.org)<br/>
