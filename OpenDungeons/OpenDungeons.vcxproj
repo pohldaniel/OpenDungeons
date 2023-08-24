@@ -95,7 +95,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libsilly.lib;libexpat.lib;libpcre.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OPENGL32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libsilly.lib;libexpat.lib;libpcre.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\libd\x86;..\Ogre\libd\x86;..\CEGUI\libd\x86;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -113,7 +113,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libsilly.lib;libexpat.lib;libpcre.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OPENGL32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libsilly.lib;libexpat.lib;libpcre.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\libd\x64;..\Ogre\libd\x64;..\CEGUI\libd\x64;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -136,7 +136,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x86;..\Ogre\lib\x86;..\CEGUI\lib\x86;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libsilly.lib;libexpat.lib;libpcre.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OPENGL32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libsilly.lib;libexpat.lib;libpcre.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,7 +158,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x64;..\CEGUI\lib\x64;..\libboost\lib;..\SFML-2.4.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libsilly.lib;libexpat.lib;libpcre.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OPENGL32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OIS.lib;libCEGUIOgreRenderer.lib;libCEGUIBase.lib;libCEGUIExpatParser.lib;libCEGUISILLYImageCodec.lib;libCEGUICommonDialogs.lib;libCEGUICoreWindowRendererSet.lib;libsilly.lib;libexpat.lib;libpcre.lib;libpng.lib;libjpeg.lib;libzlib.lib;libfreetype.lib;sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;winmm.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

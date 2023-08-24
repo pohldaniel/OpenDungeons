@@ -15,6 +15,7 @@ copy Ogre\lib\x86\Plugin_PCZSceneManager.dll OpenDungeons
 copy Ogre\lib\x86\RenderSystem_Direct3D9.dll OpenDungeons
 copy Ogre\lib\x86\RenderSystem_Direct3D11.dll OpenDungeons
 copy Ogre\lib\x86\RenderSystem_GL.dll OpenDungeons
+copy Ogre\lib\x86\RenderSystem_GL3Plus.dll OpenDungeons
 
 REM Dynamic CEGUI
 REM copy Ogre\lib\x86\CEGUIBase.dll OpenDungeons

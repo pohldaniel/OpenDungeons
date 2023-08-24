@@ -18,6 +18,7 @@ copy lib\x86\Plugin_PCZSceneManager.dll binOgre
 copy lib\x86\RenderSystem_Direct3D9.dll binOgre
 copy lib\x86\RenderSystem_Direct3D11.dll binOgre
 copy lib\x86\RenderSystem_GL.dll binOgre
+copy lib\x86\RenderSystem_GL3Plus.dll binOgre
 copy lib\x86\SDL2.dll binOgre
 
 copy lib\x86\Sample_AtomicCounters.dll binOgre

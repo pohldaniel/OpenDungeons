@@ -15,6 +15,7 @@ copy Ogre\lib\x86\Plugin_PCZSceneManager.dll bin
 copy Ogre\lib\x86\RenderSystem_Direct3D9.dll bin
 copy Ogre\lib\x86\RenderSystem_Direct3D11.dll bin
 copy Ogre\lib\x86\RenderSystem_GL.dll bin
+copy Ogre\lib\x86\RenderSystem_GL3Plus.dll bin
 
 REM Dynamic CEGUI
 REM copy CEGUI\lib\x86\CEGUIBase.dll bin
