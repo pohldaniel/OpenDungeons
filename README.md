@@ -14,7 +14,7 @@ Used major libraries <br/>
 
 **Installing Boost:** Out of the "VS Native Command Prompt"
 
-Change the Directory to the downloaddirectory of Boost with "cd boost_1_81_0", type
+Change the Directory to the downloaddirectory of Boost with "cd boost_1_66_0", type
 
   &emsp;bootstrap.bat
 
