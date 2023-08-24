@@ -7,6 +7,7 @@ This repository contains a Visual Studio 2015 setup of https://github.com/OpenDu
 Used major libraries <br/>
 
 &emsp;[https://github.com/OGRECave/ogre/releases/tag/v1.10.11](https://github.com/OGRECave/ogre/releases/tag/v1.10.11)<br/>
+&emsp;[https://github.com/cegui/cegui/releases/tag/v0-8-7](https://github.com/cegui/cegui/releases/tag/v0-8-7)<br/>
 &emsp;FreeImag 3.18.0 [https://freeimage.sourceforge.io/download.html](https://freeimage.sourceforge.io/download.html)<br/>
 &emsp;MyGui 3.4.0 [http://mygui.info](http://mygui.info)<br/>
 &emsp;SDL2 2.0.22 [https://www.libsdl.org](https://www.libsdl.org)<br/>
