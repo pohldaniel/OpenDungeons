@@ -21,6 +21,15 @@
     <ClInclude Include="TutorialApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InputContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SdkCameraMan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SdkTrays.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseApplication.cpp">
