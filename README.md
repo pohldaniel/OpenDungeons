@@ -2,7 +2,7 @@
 
 This repository contains a Visual Studio 2015 setup of https://github.com/OpenDungeons/OpenDungeons and it's dependencies. After compiling keep in mind CopyDLLandCFGandDataBinOgre.bat, CopyDLLandCFGandDataBinCEGUI.bat and 02CopyDLLandCFGandDataBin.bat for generating the respective bin folder. It should be clear that the Copyright of OpenDungeons and of it's dependencies are not in my hand.
 
-**Important:**  The build is splitted up im three solutuins opendungeons, Ogre, CEGUI and works only with x86 in release mode. You will at first build the dependencies out of the opendungeons solution and go ahead with the Ogre solutuion and after that with the CEGUI solution. Than you have to setup the libboost folder see below. The last step will be the project OpenDungeons out of the opendungeons solution. Ogre and CEGUI should work in debug and x64 mode. I have never tested it.
+**Important:**  The build is splitted up in three solutuins opendungeons, Ogre, CEGUI and works only with x86 in release mode. You will at first build the dependencies out of the opendungeons solution and go ahead with the Ogre solutuion and after that with the CEGUI solution. Than you have to setup the libboost folder see below. The last step will be the project OpenDungeons out of the opendungeons solution. Ogre and CEGUI should work in debug and x64 mode. I have never tested it.
 
 Used major libraries <br/>
 
