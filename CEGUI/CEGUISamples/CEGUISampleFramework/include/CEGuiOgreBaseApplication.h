@@ -87,7 +87,7 @@ public:
 
 protected:
     // override from base class since we use a non-default resource provider.
-    void initialiseResourceGroupDirectories();
+    void initialiseResourceGroupDirectories(const CEGUI::String& dataPathPrefixOverride);
 
     // Implementation of base class abstract methods.
     void destroyWindow();

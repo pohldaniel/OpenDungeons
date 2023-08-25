@@ -186,7 +186,7 @@ void CEGuiOgreBaseApplication::endRendering()
 }
 
 //----------------------------------------------------------------------------//
-void CEGuiOgreBaseApplication::initialiseResourceGroupDirectories()
+void CEGuiOgreBaseApplication::initialiseResourceGroupDirectories(const CEGUI::String& dataPathPrefixOverride)
 {
     using namespace Ogre;
     ResourceGroupManager& rgm = ResourceGroupManager::getSingleton();
@@ -205,13 +205,13 @@ void CEGuiOgreBaseApplication::initialiseResourceGroupDirectories()
 
     // add CEGUI sample framework datafile dirs as resource locations
     ResourceGroupManager::getSingleton().addResourceLocation("./", "FileSystem");
-
+	initDataPathPrefix(dataPathPrefixOverride);
     CEGUI::String dataPathPrefix(getDataPathPrefix());
         
-    /* for each resource type, set a resource group directory. We cast strings
-       to "const CEGUI::utf8*" in order to support general Unicode strings,
-       rather than only ASCII strings (even though currently they're all ASCII).
-       */
+	// for each resource type, set a resource group directory. We cast strings
+	//  to "const CEGUI::utf8*" in order to support general Unicode strings,
+	//  rather than only ASCII strings (even though currently they're all ASCII).
+	//  
     ResourceGroupManager::getSingleton().addResourceLocation((dataPathPrefix
       +reinterpret_cast<const CEGUI::utf8*>("/schemes/")).c_str(),
       "FileSystem", "schemes");

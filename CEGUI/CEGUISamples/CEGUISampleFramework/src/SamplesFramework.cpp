@@ -649,8 +649,13 @@ void SamplesFramework::renderSampleGUIContexts()
 }
 
 //----------------------------------------------------------------------------//
+int count2 = 0;
 void SamplesFramework::displaySampleBrowserLayoutLoadProgress()
 {
+	if (count2 == 0) {
+		count2++;
+		initialiseLoadScreenLayout();
+	}
     int totalNum = d_samples.size() + 2;
 
     CEGUI::String loadText = CEGUI::String("Loading SampleBrowser skin ...");

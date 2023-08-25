@@ -11,8 +11,6 @@ copy lib\x86\CEGUIOpenGLRenderer.dll binCEGUI
 copy lib\x86\CEGUIOgreRenderer.dll binCEGUI
 
 copy ..\Ogre\OgreData\plugins.cfg binCEGUI
-copy ..\Ogre\OgreData\resources.cfg binCEGUI
-copy CEGUIData\samples.cfg binCEGUI
 
 copy ..\Ogre\lib\x86\OgreMain.dll binCEGUI
 copy ..\Ogre\lib\x86\OgreOverlay.dll binCEGUI
