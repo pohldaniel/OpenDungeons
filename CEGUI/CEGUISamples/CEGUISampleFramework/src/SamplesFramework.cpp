@@ -115,6 +115,9 @@ bool SamplesFramework::initialise(const CEGUI::String& logFile,
     if (SamplesFrameworkBase::initialise(logFile, dataPathPrefixOverride))
     {
         initialiseLoadScreenLayout();
+
+        d_baseApp->postInit();
+
         return true;
     }
     return false;
@@ -649,13 +652,8 @@ void SamplesFramework::renderSampleGUIContexts()
 }
 
 //----------------------------------------------------------------------------//
-int count2 = 0;
 void SamplesFramework::displaySampleBrowserLayoutLoadProgress()
 {
-	if (count2 == 0) {
-		count2++;
-		initialiseLoadScreenLayout();
-	}
     int totalNum = d_samples.size() + 2;
 
     CEGUI::String loadText = CEGUI::String("Loading SampleBrowser skin ...");

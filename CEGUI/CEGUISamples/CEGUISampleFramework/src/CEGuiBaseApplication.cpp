@@ -166,6 +166,11 @@ bool CEGuiBaseApplication::init(SamplesFrameworkBase* sampleApp,
 }
 
 //----------------------------------------------------------------------------//
+void CEGuiBaseApplication::postInit() {
+
+}
+
+//----------------------------------------------------------------------------//
 void CEGuiBaseApplication::cleanup()
 {
     if (d_renderer)

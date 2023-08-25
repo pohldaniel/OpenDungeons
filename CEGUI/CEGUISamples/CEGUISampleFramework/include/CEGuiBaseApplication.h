@@ -97,6 +97,12 @@ public:
     virtual bool init(SamplesFrameworkBase* sampleApp,
                       const CEGUI::String& logFile,
                       const CEGUI::String& dataPathPrefixOverride);
+	/*!
+	
+    \brief
+        Ogre needs an additional init step cuz d_ogreRoot->startRendering() can't run before initialiseLoadScreenLayout()
+    */
+    virtual void postInit();
 
     /*!
     \brief

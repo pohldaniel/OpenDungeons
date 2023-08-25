@@ -72,9 +72,8 @@ public:
     //! Destructor.
     ~CEGuiOgreBaseApplication();
 
-    bool init(SamplesFrameworkBase* sampleApp, const CEGUI::String &logFile,
-              const CEGUI::String &dataPathPrefixOverride);
-
+    bool init(SamplesFrameworkBase* sampleApp, const CEGUI::String &logFile, const CEGUI::String &dataPathPrefixOverride) override;
+	void postInit() override; 
     void destroyRenderer();
 
     //! called by the frame listener to perform requried per-frame updates.
@@ -87,7 +86,7 @@ public:
 
 protected:
     // override from base class since we use a non-default resource provider.
-    void initialiseResourceGroupDirectories(const CEGUI::String& dataPathPrefixOverride);
+    void initialiseResourceGroupDirectories(const CEGUI::String& dataPathPrefixOverride) override;
 
     // Implementation of base class abstract methods.
     void destroyWindow();

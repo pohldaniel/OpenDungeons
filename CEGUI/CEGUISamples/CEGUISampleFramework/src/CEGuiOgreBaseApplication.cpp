@@ -140,15 +140,18 @@ bool CEGuiOgreBaseApplication::init(SamplesFrameworkBase* sampleApp,
 
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-    // start rendering via Ogre3D engine.
-    CEGUI_TRY
-    {
-        d_ogreRoot->startRendering();
-    }
-    CEGUI_CATCH(...)
-    {}
-
     return true;
+}
+
+void CEGuiOgreBaseApplication::postInit() {
+	// start rendering via Ogre3D engine.
+	CEGUI_TRY
+	{
+		d_ogreRoot->startRendering();
+	}
+		CEGUI_CATCH(...)
+	{}
+
 }
 
 //----------------------------------------------------------------------------//
